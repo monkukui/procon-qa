@@ -61,12 +61,11 @@ a:hover {
 .question-panel {
 }
 .box-ac{
-  width: 75%;
   padding: 0.5em 1em;
   margin: 2em 0;
   color: #5d627b;
   background: white;
-  border-top: solid 10px #5cb85c;
+  border-top: solid 5px #5cb85c;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
 }
 .box-ac p {
@@ -76,12 +75,11 @@ a:hover {
   
 
 .box-wa {
-  width: 75%;
   padding: 0.5em 1em;
   margin: 2em 0;
   color: #5d627b;
   background: white;
-  border-top: solid 10px #f0ad4e;
+  border-top: solid 5px #f0ad4e;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
 }
 .box-wa p {

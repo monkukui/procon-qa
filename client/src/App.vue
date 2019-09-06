@@ -2,10 +2,8 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
+        <span>PROCON</span>
+        <span class="font-weight-light">QA</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn

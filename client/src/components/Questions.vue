@@ -90,6 +90,9 @@ export default class Questions extends Vue {
 
 <style scoped>
 .questions {
+  width: 55%;
   margin: 0px 0px 20px-24px;
+  position: relative;
+  left: 20%;
 }
 </style>
