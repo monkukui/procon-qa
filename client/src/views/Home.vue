@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <TopInfo />
-    <Questions />
+    <div class="main-contents">
+      <Questions />
+    </div>
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Questions from '@/components/Questions.vue';
 import TopInfo from '@/components/TopInfo.vue';
+
 @Component({
   components: {
     TopInfo,
@@ -18,3 +20,9 @@ import TopInfo from '@/components/TopInfo.vue';
 export default class Home extends Vue {
 }
 </script>
+
+<style scoped>
+.home {
+  margin: 5%;
+}
+</style>

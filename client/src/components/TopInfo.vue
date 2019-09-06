@@ -36,4 +36,8 @@ export default class TopInfo extends Vue {
 </script>
 
 <style scoped>
+.top {
+  position: relative;
+  left: 25%;
+}
 </style>
