@@ -1,50 +1,59 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>PROCON</span>
-        <span class="font-weight-light">QA</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="#"
-      >
-        <span class="mr-2">Login</span>
-      </v-btn>
-      <v-btn
-        text
-        href="#"
-      >
-        <span class="mr-2">SignUp</span>
-      </v-btn>
-    </v-app-bar>
-    
-    <v-content class="content">
+<!-- App.vue -->
+
+<v-app>
+  <v-navigation-drawer app :dark="tr">
+    <!-- -->
+  </v-navigation-drawer>
+
+  <v-app-bar app :absolute="tr">
+    <!-- -->
+    <v-toolbar-title class="headline text-uppercase">
+      <span>PROCON</span>
+      <span class="font-weight-light">QA</span>
+    </v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn
+      text
+      href="#"
+    >
+      <span class="mr-2">Login</span>
+    </v-btn>
+    <v-btn
+      text
+      href="#"
+    >
+      <span class="mr-2">SignUp</span>
+    </v-btn>
+  </v-app-bar>
+
+  <!-- Sizes your content based upon application components -->
+  <v-content>
+
+    <!-- Provides the application the proper gutter -->
+    <v-container fluid>
+
+      <!-- If using vue-router -->
       <router-view></router-view>
-    </v-content>
-  </v-app>
+    </v-container>
+  </v-content>
+
+  <v-footer app>
+    <!-- -->
+  </v-footer>
+</v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
-import Home from './views/Home.vue';
-
 
 export default Vue.extend({
-  name: 'App',
-  components: {
-    HelloWorld,
-    Home,
-  },
-  data: () => ({
-    //
-  }),
+  data(): function() {
+    return {
+      tr: true,
+    }
+  }
 });
 </script>
 <style>
-.content {
-  margin: 20px;
-}
 </style>
