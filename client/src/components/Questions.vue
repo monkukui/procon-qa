@@ -27,13 +27,39 @@
       questionedTime="2019/05/26 11:24:12"
       :answered="fal"
     />
-
-    <PagiNation 
-      :curPageId="curPageId"
-      totalItemNum=123
-      numberOfDisplay=5
-      @changePageId="changePageId"
+    <QuestionPanel
+      title="TypeScript 型エラー"
+      body='string 型で定義した変数に, url query から取得して代入したいです.
+            このとき, 型が undefined になる可能性があって (string になるとは限らない) コンパイルエラーとなってしまいます
+            どうしたらいいでしょうか??
+            '
+      questionedTime="2019/05/26 11:24:12"
+      :answered="fal"
     />
+    <QuestionPanel
+      title="TypeScript 型エラー"
+      body='string 型で定義した変数に, url query から取得して代入したいです.
+            このとき, 型が undefined になる可能性があって (string になるとは限らない) コンパイルエラーとなってしまいます
+            どうしたらいいでしょうか??
+            '
+      questionedTime="2019/05/26 11:24:12"
+      :answered="fal"
+    />
+    <QuestionPanel
+      title="TypeScript 型エラー"
+      body='string 型で定義した変数に, url query から取得して代入したいです.
+            このとき, 型が undefined になる可能性があって (string になるとは限らない) コンパイルエラーとなってしまいます
+            どうしたらいいでしょうか??
+            '
+      questionedTime="2019/05/26 11:24:12"
+      :answered="fal"
+    />
+    <v-pagination
+      v-model="curPageId"
+      :length="15"
+      :total-visible="7"
+      circle
+    ></v-pagination>
   </div>
 </template>
 
