@@ -1,9 +1,10 @@
 <template>
   <div class="top">
-    <OriginalButton
-      contents="質問する"
+    <v-btn
+      depressed large 
+      color="primary"
       @click="openModal"
-    />
+    >質問する</v-btn>
     <QuestionModal
       v-if="canDisplayModal"
       @closeModal="closeModal"

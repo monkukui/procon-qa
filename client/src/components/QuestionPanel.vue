@@ -7,7 +7,7 @@
       <span class="small">質問日時: {{ questionedTime }}</span>
     </div>
     <div v-else class="box-wa">
-      <h4><a @click="openQuestionPage" href="javascript:void(0);">{{ title }}</a></h4>
+      <h4><a class="title" @click="openQuestionPage" href="javascript:void(0);">{{ title }}</a></h4>
       <hr>
       <p>{{ body }}</p>
       <span class="small">質問日時: {{ questionedTime }}</span>
@@ -59,7 +59,6 @@ a:hover {
 }
 
 .question-panel {
-  font-size: 75%;
 }
 .box-ac{
   width: 75%;
