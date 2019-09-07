@@ -1,12 +1,80 @@
 <template>
 <!-- App.vue -->
-
 <v-app>
   <v-navigation-drawer app :dark="tr">
+    <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            メニュー
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            サブタイトル
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list
+        dense
+        nav
+      >
+        <v-list-item
+          key="ホーム"
+          link
+          to="/"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>ホーム</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item
+          key="マイページ"
+          link
+          to="/mypage"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>マイページ</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        
+        <v-list-item
+          key="タグ検索"
+          link
+          to="/tagsearch"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-magnify</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>タグ検索</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        
+        <v-list-item
+          key="このサイトについて"
+          link
+          to="/about"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-information</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>このサイトについて</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     <!-- -->
   </v-navigation-drawer>
 
-  <v-app-bar app :absolute="tr">
+  <v-app-bar app>
     <!-- -->
     <v-toolbar-title class="headline text-uppercase">
       <span>PROCON</span>
@@ -15,15 +83,15 @@
     <v-spacer></v-spacer>
     <v-btn
       text
-      href="#"
+      to="login"
     >
-      <span class="mr-2">Login</span>
+      <span class="mr-2">ログイン</span>
     </v-btn>
     <v-btn
-      text
-      href="#"
+     text
+     to="signup"
     >
-      <span class="mr-2">SignUp</span>
+      <span class="mr-2">登録</span>
     </v-btn>
   </v-app-bar>
 
@@ -51,8 +119,14 @@ export default Vue.extend({
   data(): function() {
     return {
       tr: true,
-    }
-  }
+      items: [
+        { title: 'ホーム', icon: 'mdi-home' },
+        { title: 'マイページ', icon: 'mdi-image' },
+        { title: 'このサイトについて', icon: 'mdi-help-box' },
+      ],
+      right: null,
+    };
+  },
 });
 </script>
 <style>

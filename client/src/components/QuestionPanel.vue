@@ -1,6 +1,27 @@
 <template>
   <div class="question-panel">
-    <div v-if="answered" class="box-ac">
+    <v-card
+      max-width="1010"
+      class="mx-auto"
+      color="white"
+    >
+      <v-card-title>
+        <a class="title" @click="openQuestionPage">{{ title }}</a>
+      </v-card-title>
+      <v-btn
+        v-for="tag in tags"  
+        class="tag"
+        color="blue-grey lighten-4"
+        x-small
+      >
+        {{ tag }}
+      </v-btn>
+      
+      <v-divider class="mx-4"></v-divider>
+      <v-card-text>質問日時: {{ questionedTime }}</v-card-text>
+    </v-card>
+
+    <!--div v-if="answered" class="box-ac">
       <h4><a class="title" @click="openQuestionPage" href="javascript:void(0);">{{ title }}</a></h4>
       <hr>
       <p>{{ body }}</p>
@@ -11,7 +32,7 @@
       <hr>
       <p>{{ body }}</p>
       <span class="small">質問日時: {{ questionedTime }}</span>
-    </div>
+    </div-->
   </div>
 </template>
 
@@ -29,6 +50,12 @@ export default class QuestionPanel extends Vue {
   @Prop()
   private answered!: boolean;
 
+  private tags: string[] = [
+    'AtCoder',
+    'ABC',
+    'C++',
+  ];
+
   private openQuestionPage(): void {
     this.$router.push({
       path: '/question',
@@ -44,13 +71,21 @@ export default class QuestionPanel extends Vue {
 </script>
 
 <style scoped>
+.question-panel {
+  margin: 3%;
+}
 
-a {
-  color: #005999;
+.tag {
+  margin-bottom: 1%;
+  margin-left: 2%;
+}
+
+.title {
+  color: #0288D1;
   text-decoration: none;
 }
-a:hover {
-  color: #0077cc;
+.title:hover {
+  color: #29B6F6;
   text-decoration: none;
 }
 

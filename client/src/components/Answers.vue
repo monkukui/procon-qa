@@ -30,7 +30,7 @@ export default class Answers extends Vue {
 </script>
 
 <style scoped>
-.questions {
+.answers {
   margin: 0px 0px 20px-24px;
 }
 </style>
