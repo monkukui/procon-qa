@@ -21,18 +21,6 @@
       <v-card-text>質問日時: {{ questionedTime }}</v-card-text>
     </v-card>
 
-    <!--div v-if="answered" class="box-ac">
-      <h4><a class="title" @click="openQuestionPage" href="javascript:void(0);">{{ title }}</a></h4>
-      <hr>
-      <p>{{ body }}</p>
-      <span class="small">質問日時: {{ questionedTime }}</span>
-    </div>
-    <div v-else class="box-wa">
-      <h4><a class="title" @click="openQuestionPage" href="javascript:void(0);">{{ title }}</a></h4>
-      <hr>
-      <p>{{ body }}</p>
-      <span class="small">質問日時: {{ questionedTime }}</span>
-    </div-->
   </div>
 </template>
 
@@ -50,12 +38,17 @@ export default class QuestionPanel extends Vue {
   @Prop()
   private answered!: boolean;
 
+  // FIXME
   private tags: string[] = [
     'AtCoder',
     'ABC',
     'C++',
   ];
 
+  // TODO query じゃなくて, param にしようか...?
+  // じゃないと tags: string[] が渡せない
+  // いや, tags: string[] を渡す必要はないと思う
+  // id だけ渡すことができれば, DB からエイっと検索 !!
   private openQuestionPage(): void {
     this.$router.push({
       path: '/question',
@@ -94,32 +87,6 @@ export default class QuestionPanel extends Vue {
 }
 
 .question-panel {
-}
-.box-ac{
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  color: #5d627b;
-  background: white;
-  border-top: solid 5px #5cb85c;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
-}
-.box-ac p {
-  margin: 0; 
-  padding: 0;
-}
-  
-
-.box-wa {
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  color: #5d627b;
-  background: white;
-  border-top: solid 5px #f0ad4e;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
-}
-.box-wa p {
-  margin: 0; 
-  padding: 0;
 }
   
 </style>

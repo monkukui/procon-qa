@@ -1,12 +1,13 @@
 <template>
   <div class="question-panel-detail">
+
     <v-card
       max-width="1010"
       class="mx-auto"
       color="white"
     >
       <v-card-title>
-        <a class="title" @click="openQuestionPage">{{ title }}</a>
+        {{ title }}
       </v-card-title>
       <v-btn
         v-for="tag in tags"  
@@ -37,6 +38,13 @@ export default class QuestionPanel extends Vue {
   private questionedTime!: string;
   @Prop()
   private answered!: boolean;
+  
+  private tags: string[] = [
+    'AtCoder',
+    'ABC',
+    'C++',
+  ];
+
 
   private openQuestionPage(): void {
     this.$router.push({
@@ -57,20 +65,11 @@ export default class QuestionPanel extends Vue {
   font-size: 75%;
 }
 .question-panel-detail {
+  margin: 3%;
 }
 
-.box{
-  width: 75%;
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  color: #5d627b;
-  background: white;
-  border-top: solid 10px #5d627b;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+.tag {
+  margin-bottom: 1%;
+  margin-left: 2%;
 }
-.box p {
-  margin: 0; 
-  padding: 0;
-}
-  
 </style>

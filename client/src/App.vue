@@ -78,7 +78,7 @@
     <!-- -->
     <v-toolbar-title class="headline text-uppercase">
       <span>PROCON</span>
-      <span class="font-weight-light">QA</span>
+      <span class="font-weight-light">-QA</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn
@@ -113,21 +113,20 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 
-export default Vue.extend({
-  data(): function() {
-    return {
-      tr: true,
-      items: [
-        { title: 'ホーム', icon: 'mdi-home' },
-        { title: 'マイページ', icon: 'mdi-image' },
-        { title: 'このサイトについて', icon: 'mdi-help-box' },
-      ],
-      right: null,
-    };
+import { Component, Prop, Vue, Emit, Watch} from 'vue-property-decorator';
+@Component({
+  components: {
   },
-});
+})
+export default class App extends Vue {
+
+  private tr: boolean = true;
+  private fal: boolean = false;
+
+}
+</script>
+
 </script>
 <style>
 </style>

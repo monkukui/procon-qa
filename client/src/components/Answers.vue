@@ -1,6 +1,6 @@
 <template>
   <div class="answers">
-    <p>{{ numOfAnswers }} 件の回答</p>
+    
     <AnswerPanelDetail
       body="それは自明では?"
       answeredTime="2019/05.26 11:11:21"

@@ -21,6 +21,5 @@ export default class Home extends Vue {
 
 <style scoped>
 .home {
-  margin: 5%;
 }
 </style>
