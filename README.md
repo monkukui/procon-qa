@@ -25,5 +25,4 @@ Users {
   pass: string (仮)
   rate: int (仮)
 }
-
 ```
