@@ -29,4 +29,5 @@ Users {
 
 ### TODO
 
-- [] hoge
+- [ ] hoge
+- [x] huga
