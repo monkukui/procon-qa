@@ -1,15 +1,11 @@
 <template>
   <div class="question">
-    <TopInfo />
-    <p>個別の質問ページ</p>
     <QuestionPanelDetail
       :title="title"
       :body="body"
       :questionedTime="questionedTime"
     />
-    <br>
 
-    <!-- Answers を作る -->
     <Answers />
     <AnswerForm />
   </div>
@@ -17,16 +13,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import TopInfo from '@/components/TopInfo.vue';
 import QuestionPanelDetail from '@/components/QuestionPanelDetail.vue';
-import AnswerForm from '@/components/AnswerForm.vue';
 import Answers from '@/components/Answers.vue';
 
 @Component({
   components: {
-    TopInfo,
     QuestionPanelDetail,
-    AnswerForm,
     Answers,
   },
 })

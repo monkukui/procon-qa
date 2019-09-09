@@ -1,11 +1,18 @@
 <template>
   <div class="answer-panel-detail">
-    <div class="box">
-      <h4>回答</h4>
-      <hr>
-      <p>{{ body }}</p>
-      <span class="small">回答日時: {{ answeredTime }}</span>
-    </div>
+    <v-card
+      max-width="1010"
+      class="mx-auto"
+      color="white"
+    >
+      <v-card-title>
+        回答
+      </v-card-title>
+      
+      <v-divider class="mx-4"></v-divider>
+      <v-card-text>{{ body }}</v-card-text>
+      <v-card-text>回答日時: {{ questionedTime }}</v-card-text>
+    </v-card>
   </div>
 </template>
 
@@ -28,21 +35,7 @@ export default class AnswerPanelDetail extends Vue {
 }
 
 .answer-panel-detail {
-  font-size: 75%;
-}
-
-.box{
-  width: 75%;
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  color: #5d627b;
-  background: white;
-  border-top: solid 10px #5d627b;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
-}
-.box p {
-  margin: 0; 
-  padding: 0;
+  margin: 2%;
 }
   
 </style>

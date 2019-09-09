@@ -1,13 +1,6 @@
 <template>
   <div class="questions">
     
-    <v-pagination
-      v-model="curPageId"
-      :length="15"
-      :total-visible="7"
-      circle
-    ></v-pagination>
-
     <QuestionPanel
       v-if="curPageId!=1"
       title="spritekitを用いたMac向けのアプリでキーボードの同時入力を処理したい"
@@ -71,7 +64,7 @@
     />
     <v-pagination
       v-model="curPageId"
-      :length="15"
+      :length="331"
       :total-visible="7"
       circle
     ></v-pagination>
@@ -81,13 +74,11 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch} from 'vue-property-decorator';
 import QuestionPanel from '@/components/QuestionPanel.vue';
-import PagiNation from '@/components/PagiNation.vue';
 
 
 @Component({
   components: {
     QuestionPanel,
-    PagiNation,
   },
 })
 export default class Questions extends Vue {
@@ -105,8 +96,5 @@ export default class Questions extends Vue {
 
 <style scoped>
 .questions {
-  width: 75%;
-  margin: 0px 0px 20px-24px;
-  position: relative;
 }
 </style>

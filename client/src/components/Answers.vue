@@ -1,6 +1,6 @@
 <template>
   <div class="answers">
-    <p>{{ numOfAnswers }} 件の回答</p>
+    
     <AnswerPanelDetail
       body="それは自明では?"
       answeredTime="2019/05.26 11:11:21"
@@ -30,7 +30,7 @@ export default class Answers extends Vue {
 </script>
 
 <style scoped>
-.questions {
+.answers {
   margin: 0px 0px 20px-24px;
 }
 </style>

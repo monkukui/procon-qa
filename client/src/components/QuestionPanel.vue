@@ -1,17 +1,26 @@
 <template>
   <div class="question-panel">
-    <div v-if="answered" class="box-ac">
-      <h4><a class="title" @click="openQuestionPage" href="javascript:void(0);">{{ title }}</a></h4>
-      <hr>
-      <p>{{ body }}</p>
-      <span class="small">質問日時: {{ questionedTime }}</span>
-    </div>
-    <div v-else class="box-wa">
-      <h4><a class="title" @click="openQuestionPage" href="javascript:void(0);">{{ title }}</a></h4>
-      <hr>
-      <p>{{ body }}</p>
-      <span class="small">質問日時: {{ questionedTime }}</span>
-    </div>
+    <v-card
+      max-width="1010"
+      class="mx-auto"
+      color="white"
+    >
+      <v-card-title>
+        <a class="title" @click="openQuestionPage">{{ title }}</a>
+      </v-card-title>
+      <v-btn
+        v-for="tag in tags"  
+        class="tag"
+        color="blue-grey lighten-4"
+        x-small
+      >
+        {{ tag }}
+      </v-btn>
+      
+      <v-divider class="mx-4"></v-divider>
+      <v-card-text>質問日時: {{ questionedTime }}</v-card-text>
+    </v-card>
+
   </div>
 </template>
 
@@ -29,6 +38,17 @@ export default class QuestionPanel extends Vue {
   @Prop()
   private answered!: boolean;
 
+  // FIXME
+  private tags: string[] = [
+    'AtCoder',
+    'ABC',
+    'C++',
+  ];
+
+  // TODO query じゃなくて, param にしようか...?
+  // じゃないと tags: string[] が渡せない
+  // いや, tags: string[] を渡す必要はないと思う
+  // id だけ渡すことができれば, DB からエイっと検索 !!
   private openQuestionPage(): void {
     this.$router.push({
       path: '/question',
@@ -44,13 +64,21 @@ export default class QuestionPanel extends Vue {
 </script>
 
 <style scoped>
+.question-panel {
+  margin: 3%;
+}
 
-a {
-  color: #005999;
+.tag {
+  margin-bottom: 1%;
+  margin-left: 2%;
+}
+
+.title {
+  color: #0288D1;
   text-decoration: none;
 }
-a:hover {
-  color: #0077cc;
+.title:hover {
+  color: #29B6F6;
   text-decoration: none;
 }
 
@@ -59,32 +87,6 @@ a:hover {
 }
 
 .question-panel {
-}
-.box-ac{
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  color: #5d627b;
-  background: white;
-  border-top: solid 5px #5cb85c;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
-}
-.box-ac p {
-  margin: 0; 
-  padding: 0;
-}
-  
-
-.box-wa {
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  color: #5d627b;
-  background: white;
-  border-top: solid 5px #f0ad4e;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
-}
-.box-wa p {
-  margin: 0; 
-  padding: 0;
 }
   
 </style>

@@ -1,11 +1,27 @@
 <template>
   <div class="question-panel-detail">
-    <div class="box">
-      <h4>{{ title }}</h4>
-      <hr>
-      <p>{{ body }}</p>
-      <span class="small">質問日時: {{ questionedTime }}</span>
-    </div>
+
+    <v-card
+      max-width="1010"
+      class="mx-auto"
+      color="white"
+    >
+      <v-card-title>
+        {{ title }}
+      </v-card-title>
+      <v-btn
+        v-for="tag in tags"  
+        class="tag"
+        color="blue-grey lighten-4"
+        x-small
+      >
+        {{ tag }}
+      </v-btn>
+      
+      <v-divider class="mx-4"></v-divider>
+      <v-card-text>{{ body }}</v-card-text>
+      <v-card-text>質問日時: {{ questionedTime }}</v-card-text>
+    </v-card>
   </div>
 </template>
 
@@ -22,6 +38,13 @@ export default class QuestionPanel extends Vue {
   private questionedTime!: string;
   @Prop()
   private answered!: boolean;
+  
+  private tags: string[] = [
+    'AtCoder',
+    'ABC',
+    'C++',
+  ];
+
 
   private openQuestionPage(): void {
     this.$router.push({
@@ -42,21 +65,11 @@ export default class QuestionPanel extends Vue {
   font-size: 75%;
 }
 .question-panel-detail {
-  font-size: 75%;
+  margin: 3%;
 }
 
-.box{
-  width: 75%;
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  color: #5d627b;
-  background: white;
-  border-top: solid 10px #5d627b;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+.tag {
+  margin-bottom: 1%;
+  margin-left: 2%;
 }
-.box p {
-  margin: 0; 
-  padding: 0;
-}
-  
 </style>
