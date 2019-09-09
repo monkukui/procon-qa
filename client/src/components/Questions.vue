@@ -1,6 +1,13 @@
 <template>
   <div class="questions">
     
+    <v-pagination
+      v-model="curPageId"
+      :length="331"
+      :total-visible="7"
+      circle
+    ></v-pagination>
+
     <QuestionPanel
       v-if="curPageId!=1"
       title="spritekitを用いたMac向けのアプリでキーボードの同時入力を処理したい"
