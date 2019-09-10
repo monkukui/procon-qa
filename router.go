@@ -29,5 +29,8 @@ func newRouter() *echo.Echo {
     api.DELETE("/todos/:id", handler.DeleteTodo)
     api.PUT("/todos/:id/completed", handler.UpdateTodo)
 
+    // ここから変更した
+    api.GET("/questions", handler.GetQuestions)
+
 	return e
 }

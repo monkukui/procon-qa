@@ -83,3 +83,13 @@ func UpdateTodo(c echo.Context) error {
 
     return c.NoContent(http.StatusNoContent)
 }
+
+func GetQuestions(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	todos := model.FindTodos(&model.Todo{UID: uid})
+	return c.JSON(http.StatusOK, todos)
+}
