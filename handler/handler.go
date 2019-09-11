@@ -152,3 +152,27 @@ func PostQuestion(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, question)
 }
+
+// 質問を削除する
+func DeleteQuestion(c echo.Context) error {
+  fmt.Println("delete を読みだした")
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+    fmt.Println("161")
+		return echo.ErrNotFound
+	}
+
+	questionID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+    fmt.Println("167")
+		return echo.ErrNotFound
+	}
+
+  // ID: questionID, UID: uid とすることで, 別のユーザが他人の投稿を削除できないようになってる 
+	if err := model.DeleteQuestion(&model.Question{ID: questionID, UID: uid}); err != nil {
+    fmt.Println("173")
+		return echo.ErrNotFound
+	}
+
+	return c.NoContent(http.StatusNoContent)
+}

@@ -22,6 +22,15 @@
       <v-card-text>url: {{ question.url }}</v-card-text>
       <v-card-text>ステータス: {{ question.state }}</v-card-text>
       <v-card-text>回答状況: {{ question.completed }}</v-card-text>
+      
+      <!-- 暫定的な削除ボタン -->
+      <!-- TODO 自分の投稿じゃないと見れないようにする -->
+      <v-btn
+        color="red"
+        @click="deleteQuestion"
+      >
+        削除
+      </v-btn>
     </v-card>
     
   </div>
@@ -39,8 +48,11 @@ export default class QuestionPanel extends Vue {
   private question = {};
 
   private created(): void {
-    // TODO api/question/:id (GET) を叩く
     this.questionId = Number(this.$route.query['questionId']);
+    this.createQuestion();
+  }
+  
+  private createQuestion(): void {
     const url = 'api/question/' + String(this.questionId);
     const headers = {'Authorization': `Bearer ${this.getToken()}`};
 
@@ -51,6 +63,18 @@ export default class QuestionPanel extends Vue {
       return []
     }).then(json => {
       this.question = json;
+    })
+  }
+
+  private deleteQuestion(): void {
+    const url = 'api/question/' + String(this.questionId);
+    const method = 'DELETE'
+    const headers = {'Authorization': `Bearer ${this.getToken()}`}
+
+    fetch(url, {method, headers}).then(response => {
+      if(response.ok) {
+        this.$router.push('./');
+      }
     })
   }
   
