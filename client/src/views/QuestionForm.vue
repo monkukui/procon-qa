@@ -120,6 +120,10 @@
 </template>
 
 <script>
+
+// TODO ts にする ... ? 
+// 正直 ts にするのめんどくさくなってきた
+
   export default {
     data () {
       const defaultForm = Object.freeze({
@@ -153,16 +157,46 @@
         )
       },
     },
-
     methods: {
       resetForm () {
-        this.form = Object.assign({}, this.defaultForm)
-        this.$refs.form.reset()
+        this.form = Object.assign({}, this.defaultForm);
+        this.$refs.form.reset();
+      },
+      getToken() {
+        return localStorage.getItem('token');
       },
       submit () {
+        
+        // TODO ここに POST question の api 処理を記述する
+        const url = 'api/questions';
+        const method = 'POST';
+        const headers = {
+          'Authorization': `Bearer ${this.getToken()}`,
+          'Content-Type': 'application/json; charset=UTF-8'
+        }
+        const body = JSON.stringify({
+          title: this.form.title,
+          body: this.form.body,
+        });
+        
+        console.log(body);
+
+        fetch(url, {method, headers, body}).then(response => {
+          if(response.ok) {
+            return response.json();
+          }
+        }).then(json => {
+          if(typeof json === 'undefined') {
+            return;
+          }
+          this.todos.push(json);
+          this.newTodo = '';
+        });
+
+
         console.log(this.form);
-        this.snackbar = true
-        this.resetForm()
+        this.snackbar = true;
+        this.resetForm();
       },
     },
   }

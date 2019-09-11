@@ -95,6 +95,12 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn
+      color="primary"
+      to="questionform"
+    >
+      <span class="mr-2">質問する</span>
+    </v-btn>
+    <v-btn
       text
       to="login"
     >

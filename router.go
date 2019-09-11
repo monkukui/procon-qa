@@ -3,7 +3,7 @@ package main
 import (
     "github.com/labstack/echo"
     "github.com/labstack/echo/middleware"
-    "github.com/x-color/simple-webapp/handler"
+    "github.com/monkukui/procon-qa/handler"
 )
 
 func newRouter() *echo.Echo {
@@ -14,7 +14,6 @@ func newRouter() *echo.Echo {
 
     e.Static("/js", "client/dist/js")
     e.Static("/css", "client/dist/css")
-
     e.File("/", "client/dist/index.html")
     e.File("/signup", "public/signup.html")
     e.POST("/signup", handler.Signup)
@@ -28,9 +27,8 @@ func newRouter() *echo.Echo {
     api.POST("/todos", handler.AddTodo)
     api.DELETE("/todos/:id", handler.DeleteTodo)
     api.PUT("/todos/:id/completed", handler.UpdateTodo)
-
     // ここから変更した
-    api.GET("/questions", handler.GetQuestions)
-
+    api.GET("/questions", handler.GetAllQuestions)
+    api.POST("/questions", handler.PostQuestion)
 	return e
 }

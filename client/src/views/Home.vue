@@ -27,7 +27,7 @@ export default class Home extends Vue {
     return localStorage.getItem('token');
   }
   private logout(): void {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   }
 }
 </script>

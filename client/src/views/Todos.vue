@@ -1,6 +1,7 @@
 <template>
 <div id="todo-list">
-  <h1 id="title">{{ user }}'s Todos</h1>
+  <h1>閉鎖されました</h1>
+  <!--h1 id="title">{{ user }}'s Todos</h1>
   <div>
     <input type="text" name="name" v-model="newTodo" placeholder="new todo">
     <button type="button" name="add" @click="postTodo">Add</button>
@@ -15,11 +16,12 @@
       <button type="button" name="delete" @click="deleteTodo(todo.id)">X</button>
     </li>
   </ul>
-  <button type="button" name="logout" @click="logout()">logout</button>
+  <button type="button" name="logout" @click="logout()">logout</button-->
 </div>
 </template>
 
 <script lang="ts">
+/*
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
@@ -34,75 +36,74 @@ export default class Todos extends Vue {
   private completedTodos: string[] = []; 
   
   private created(): void {
-      const date = new Date()
-      const claims = JSON.parse(atob(this.getToken().split('.')[1]))
-      this.user = claims.name
-      if(claims.exp < Math.floor(date.getTime() / 1000)) {
-        this.logout()
-      } else {
-        this.getTodos()
-      }
+    const date = new Date();
+    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+    this.user = claims.name;
+    if(claims.exp < Math.floor(date.getTime() / 1000)) {
+      this.logout();
+    } else {
+      this.getTodos();
+    }
   }
   
   private getTodos(): void {
-    const url = 'api/todos'
-    const headers = {'Authorization': `Bearer ${this.getToken()}`}
+    const url = 'api/todos';
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then(response => {
       if(response.ok) {
-        return response.json()
+        return response.json();
       }
-      return []
+      return [];
     }).then(json => {
-      this.todos = json
+      this.todos = json;
     })
   }
   private postTodo(): void {
-    const url = 'api/todos'
-    const method = 'POST'
+    const url = 'api/todos';
+    const method = 'POST';
     const headers = {
-      'Authorization': `Bearer ${this.getToken()}`,
-      'Content-Type': 'application/json; charset=UTF-8'
+      'Authorization': `Bearer ${this.getToken()}`,;
+      'Content-Type': 'application/json; charset=UTF-8';
     }
-    const body = JSON.stringify({name: this.newTodo})
+    const body = JSON.stringify({name: this.newTodo});
 
     fetch(url, {method, headers, body}).then(response => {
       if(response.ok) {
-        return response.json()
+        return response.json();
       }
     }).then(json => {
       if(typeof json === 'undefined') {
-        return
+        return;
       }
-      this.todos.push(json)
-      this.newTodo = ''
-    })
+      this.todos.push(json);
+      this.newTodo = '';
+    });
   }
-  deleteTodo(id) {
-    const url = `api/todos/${id}`
-    const method = 'DELETE'
-    const headers = {'Authorization': `Bearer ${this.getToken()}`}
+  private deleteTodo(id: number): void {
+    const url = `api/todos/${id}`;
+    const method = 'DELETE';
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
 
     fetch(url, {method, headers}).then(response => {
       if(response.ok) {
-        this.todos = this.todos.filter(todo => todo.id !== id)
+        this.todos = this.todos.filter(todo => todo.id !== id);
       }
     })
   }
-  checkTodo(id) {
-    const url = `api/todos/${id}/completed`
-    const method = 'PUT'
-    const headers = {'Authorization': `Bearer ${this.getToken()}`}
+  private checkTodo(id: number): void {
+    const url = `api/todos/${id}/completed`;
+    const method = 'PUT';
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
 
-    fetch(url, {method, headers})
+    fetch(url, {method, headers});
   }
-  getToken() {
-      return localStorage.getItem('token')
+  private getToken: any {
+    return localStorage.getItem('token');
   }
-  logout() {
-    localStorage.removeItem('token')
-    location.href = '/'
+  private logout(): void {
+    localStorage.removeItem('token');
   }
 
-}
+}*/
 </script>

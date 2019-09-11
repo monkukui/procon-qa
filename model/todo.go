@@ -9,6 +9,7 @@ type Todo struct {
 	Completed bool   `json:"completed"`
 }
 
+
 type Todos []Todo
 
 func CreateTodo(todo *Todo) {
@@ -18,6 +19,7 @@ func CreateTodo(todo *Todo) {
 func FindTodos(t *Todo) Todos {
 	var todos Todos
 	db.Where(t).Find(&todos)
+  fmt.Println(todos)
 	return todos
 }
 

@@ -38,14 +38,11 @@ export default class QuestionPanel extends Vue {
   private questionedTime!: string;
   @Prop()
   private answered!: boolean;
-  
   private tags: string[] = [
     'AtCoder',
     'ABC',
     'C++',
   ];
-
-
   private openQuestionPage(): void {
     this.$router.push({
       path: '/question',
