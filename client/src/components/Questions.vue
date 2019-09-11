@@ -1,74 +1,15 @@
 <template>
   <div class="questions">
     
-    <v-pagination
-      v-model="curPageId"
-      :length="331"
-      :total-visible="7"
-      circle
-    ></v-pagination>
+    <div v-for="(value, index) in questions" :key=index>
+      <!-- answerd とか, questionedTime とかの命名規則を揃える -->
+      <QuestionPanel
+        :title="value.title"
+        :body="value.body"
+        :questionedTime="value.date"
+      />
+    </div>
 
-    <QuestionPanel
-      v-if="curPageId!=1"
-      title="spritekitを用いたMac向けのアプリでキーボードの同時入力を処理したい"
-      body="吾輩は猫である, 名前はまだない"
-      questionedTime="2019/05/26 11:24:12"
-      :answered="fal"
-    />
-    <QuestionPanel
-      v-if="curPageId!=2"
-      title="for of を使ったReverse String"
-      body="世界の果てまでイッテ急"
-      questionedTime="2019/05/26 11:24:12"
-      :answered="fal"
-    />
-    <QuestionPanel
-      v-if="curPageId!=3"
-      title="AjaxのJavaScriptが動きません"
-      body="そこはかとなく先塗るちを"
-      questionedTime="2019/05/26 11:24:12"
-      :answered="tr"
-    />
-    <QuestionPanel
-      v-if="curPageId!=4"
-      title="TypeScript 型エラー"
-      body='string 型で定義した変数に, url query から取得して代入したいです.
-            このとき, 型が undefined になる可能性があって (string になるとは限らない) コンパイルエラーとなってしまいます
-            どうしたらいいでしょうか??
-            '
-      questionedTime="2019/05/26 11:24:12"
-      :answered="fal"
-    />
-    <QuestionPanel
-      v-if="curPageId!=5"
-      title="TypeScript 型エラー"
-      body='string 型で定義した変数に, url query から取得して代入したいです.
-            このとき, 型が undefined になる可能性があって (string になるとは限らない) コンパイルエラーとなってしまいます
-            どうしたらいいでしょうか??
-            '
-      questionedTime="2019/05/26 11:24:12"
-      :answered="fal"
-    />
-    <QuestionPanel
-      v-if="curPageId!=6"
-      title="TypeScript 型エラー"
-      body='string 型で定義した変数に, url query から取得して代入したいです.
-            このとき, 型が undefined になる可能性があって (string になるとは限らない) コンパイルエラーとなってしまいます
-            どうしたらいいでしょうか??
-            '
-      questionedTime="2019/05/26 11:24:12"
-      :answered="fal"
-    />
-    <QuestionPanel
-      v-if="curPageId!=7"
-      title="TypeScript 型エラー"
-      body='string 型で定義した変数に, url query から取得して代入したいです.
-            このとき, 型が undefined になる可能性があって (string になるとは限らない) コンパイルエラーとなってしまいます
-            どうしたらいいでしょうか??
-            '
-      questionedTime="2019/05/26 11:24:12"
-      :answered="fal"
-    />
     <v-pagination
       v-model="curPageId"
       :length="331"
@@ -97,6 +38,31 @@ export default class Questions extends Vue {
   private curPageId: number = 1;
   private changePageId(id: number): void {
     this.curPageId = id;
+  }
+
+  private user: string = '';
+  // FIXME any
+  private questions = [];
+
+  private created(): void {
+    this.getQuestions();
+  }
+  
+  private getQuestions(): void {
+    const url = 'api/questions';
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+
+    fetch(url, {headers}).then(response => {
+      if(response.ok) {
+        return response.json();
+      }
+      return []
+    }).then(json => {
+      this.questions = json;
+    })
+  }
+  private getToken(): any {
+    return localStorage.getItem('token');
   }
 }
 </script>

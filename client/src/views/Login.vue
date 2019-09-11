@@ -22,10 +22,10 @@ export default class Login extends Vue {
   private password: string = '';
 
   private login(): void {
-    const url = '/login'
-    const method = 'POST'
+    const url = '/login';
+    const method = 'POST';
     const headers = {
-      'Content-Type': 'application/json; charset=UTF-8'
+      'Content-Type': 'application/json; charset=UTF-8',
     }
     const body = JSON.stringify({
       name: this.name,
@@ -34,18 +34,18 @@ export default class Login extends Vue {
 
     fetch(url, {method, headers, body}).then(response => {
       if(response.ok) {
-        return response.json()
+        return response.json();
       } else {
-        alert('Faild to login. Please retry')
-        this.name = ''
-        this.password = ''
-        return {token: ''}
+        alert('Faild to login. Please retry');
+        this.name = '';
+        this.password = '';
+        return {token: ''};
       }
     }).then(json => {
       const token = json.token
       if(token.length > 0) {
-        localStorage.setItem('token', token)
-        this.$router.push('/')
+        localStorage.setItem('token', token);
+        this.$router.push('/');
       }
     })
   }

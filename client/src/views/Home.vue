@@ -19,7 +19,6 @@ import Questions from '@/components/Questions.vue';
 })
 export default class Home extends Vue {
   private user: string = '名無しのヨッシー';
-
   private mounted(): void {
     const claims = JSON.parse(atob(this.getToken().split('.')[1]));
     this.user = claims.name;
@@ -28,7 +27,7 @@ export default class Home extends Vue {
     return localStorage.getItem('token');
   }
   private logout(): void {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   }
 }
 </script>

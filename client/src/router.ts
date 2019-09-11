@@ -5,6 +5,7 @@ import Question from './views/Question.vue';
 import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import QuestionForm from './views/QuestionForm.vue';
+import Todos from './views/Todos.vue';
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/questionform',
       name: 'questionform',
       component: QuestionForm,
+    },
+    {
+      path: '/todos',
+      name: 'todos',
+      component: Todos,
     },
     {
       path: '/about',

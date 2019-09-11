@@ -70,6 +70,19 @@
             <v-list-item-title>このサイトについて</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        
+        <v-list-item
+          key="todo"
+          link
+          to="/todos"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-information</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>todo</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     <!-- -->
   </v-navigation-drawer>
@@ -81,6 +94,12 @@
       <span class="font-weight-light">-QA</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
+    <v-btn
+      color="primary"
+      to="questionform"
+    >
+      <span class="mr-2">質問する</span>
+    </v-btn>
     <v-btn
       text
       to="login"
