@@ -6,19 +6,18 @@
       color="white"
     >
       <v-card-title>
-        <a class="title" @click="openQuestionPage">{{ title }}</a>
+        <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link >
       </v-card-title>
       <v-btn
-        v-for="tag in tags"  
         class="tag"
         color="blue-grey lighten-4"
         x-small
       >
-        {{ tag }}
+        タグ(仮)
       </v-btn>
       
       <v-divider class="mx-4"></v-divider>
-      <v-card-text>質問日時: {{ questionedTime }}</v-card-text>
+      <v-card-text>質問日時: {{ question.date }}</v-card-text>
     </v-card>
 
   </div>
@@ -30,34 +29,28 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 @Component
 export default class QuestionPanel extends Vue {
   @Prop()
-  private title!: string;
-  @Prop()
-  private body!: string;
-  @Prop()
-  private questionedTime!: string;
-  @Prop()
-  private answered!: boolean;
+  private questionId!: number;
+  
+  // データベース Question 通り
+  private question = {};
 
-  // FIXME
-  private tags: string[] = [
-    'AtCoder',
-    'ABC',
-    'C++',
-  ];
+  private created(): void {
+    // TODO api/question/:id (GET) を叩く
+    const url = 'api/question/' + String(this.questionId);
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
 
-  // TODO query じゃなくて, param にしようか...?
-  // じゃないと tags: string[] が渡せない
-  // いや, tags: string[] を渡す必要はないと思う
-  // id だけ渡すことができれば, DB からエイっと検索 !!
-  private openQuestionPage(): void {
-    this.$router.push({
-      path: '/question',
-      query: {
-        title: this.title,
-        body: this.body,
-        questionedTime: this.questionedTime,
-      },
-    });
+    fetch(url, {headers}).then(response => {
+      if(response.ok) {
+        return response.json();
+      }
+      return []
+    }).then(json => {
+      this.question = json;
+    })
+  }
+  
+  private getToken(): any {
+    return localStorage.getItem('token');
   }
 
 }

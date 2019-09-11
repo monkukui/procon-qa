@@ -4,19 +4,24 @@ package model
 
 import "fmt"
 
+
+// 質問テーブル
 type Question struct {
-  UID       int    `json:"uid"`
-  TID       int    `json:"tid"`
-	ID        int    `json:"id" gorm:"praimaly_key"`
+  UID       int    `json:"uid"`                          // User Id
+  TID       int    `json:"tid"`                          // Tag Id
+	ID        int    `json:"id" gorm:"praimaly_key"`       // Id (インクリメント)
+
+  // 以下, 質問の構成要素たち
 	Title     string `json:"title"`
 	Body      string `json:"body"`
 	Url       string `json:"url"`
+  State     string `json:"state"`
   Date      string `json:"date"`
 	Completed bool   `json:"completed"`
 }
 
+// Question の配列として定義
 type Questions []Question
-
 
 // question を作成
 func CreateQuestion(q *Question) {

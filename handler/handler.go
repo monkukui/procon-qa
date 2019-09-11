@@ -93,17 +93,35 @@ func UpdateTodo(c echo.Context) error {
 
 
 // 以下自作
-// 質問をぜん取得する
+// 質問を全取得する
 func GetAllQuestions(c echo.Context) error {
-	uid := userIDFromToken(c)
+	// todos := model.FindTodos(&model.Todo{UID: uid})
+  // &model.Question{} とすることで, 条件なしで取得する <=> 全取得 となる
+  uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+  questions := model.FindQuestions(&model.Question{})
+	return c.JSON(http.StatusOK, questions)
+}
+
+// 質問を 1 つ 取得する
+func GetQuestion(c echo.Context) error {
+
+  uid := userIDFromToken(c)
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
-	// todos := model.FindTodos(&model.Todo{UID: uid})
-  // &model.Question{} とすることで, 条件なしで取得する <=> 全取得 となる
-  questions := model.FindQuestions(&model.Question{})
-	return c.JSON(http.StatusOK, questions)
+  QuestionID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  fmt.Println(QuestionID)
+  question := model.FindQuestions(&model.Question{ID: QuestionID})[0]
+  fmt.Println(question)
+  return c.JSON(http.StatusOK, question)
 }
 
 // 質問を投稿する

@@ -140,7 +140,7 @@
           title: [val => (val || '').length > 0 || 'この項目は必須です'],
           body: [val => (val || '').length > 0 || 'この項目は必須です'],
         },
-        states: ['AC', 'WA', 'TLE', 'MLE', 'PE', 'a', 'b', 'c', 'd', 'e'],
+        states: ['CE', 'MLE', 'TLE', 'RE', 'OLE', 'IE', 'WA', 'AC', 'WJ', 'WR'],
         conditions: false,
         content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
         snackbar: false,
@@ -153,7 +153,8 @@
       formIsValid () {
         return (
           this.form.title &&
-          this.form.body
+          this.form.body &&
+          this.form.terms
         )
       },
     },
@@ -177,6 +178,9 @@
         const body = JSON.stringify({
           title: this.form.title,
           body: this.form.body,
+          date: '1111/11/11-12:12:12',
+          state: this.form.state,
+          url: this.form.url,
         });
         
         console.log(body);
