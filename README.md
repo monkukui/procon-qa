@@ -27,9 +27,10 @@ Questions {
 Answers {
   id: int ( primary_key )
   uid: int
-  qid
+  qid: int
 
   body: string
+  date: string
 }
 
 tags {
