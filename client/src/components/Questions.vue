@@ -3,10 +3,10 @@
     
     <div v-for="(value, index) in questions" :key=index>
       <!-- answerd とか, questionedTime とかの命名規則を揃える -->
+
+      <!-- 子コンポーネントには QuestionId だけを渡す-->
       <QuestionPanel
-        :title="value.title"
-        :body="value.body"
-        :questionedTime="value.date"
+        :questionId="value.id"
       />
     </div>
 
