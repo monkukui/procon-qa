@@ -104,6 +104,11 @@ Users {
 }
 ```
 
+質問を削除する (DELETE)
+
+```
+/api/question/<question_id>
+```
 
 ### TODO
 
