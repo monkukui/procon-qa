@@ -88,14 +88,14 @@ Users {
 ```
 質問を投稿する (POST)
 ```
- /api/questions
- {
-    title: "タイトル"
-    body: "本文"
-    date: "yyyy/mm/dd-hh:mm:ss"
-    state: "WA"
-    url: "https://atcoder.jp/contests/jsc2019-qual/submissions/7120555"
- }
+/api/questions
+{
+  title: "タイトル"
+  body: "本文"
+  date: "yyyy/mm/dd-hh:mm:ss"
+  state: "WA"
+  url: "https://atcoder.jp/contests/jsc2019-qual/submissions/7120555"
+}
 ```
 
 
