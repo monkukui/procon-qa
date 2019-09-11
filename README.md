@@ -7,8 +7,8 @@ go run main.go router.go
 ```
 Questions {
   id: int ( primary_key )
-  user_id: int
-  tag_id: int
+  uid: int
+  tid: int
   
   title: string
   body: string
@@ -20,8 +20,8 @@ Questions {
 
 Answers {
   id: int ( primary_key )
-  user_id: int
-  question_id
+  uid: int
+  qid
 
   body: string
 }
