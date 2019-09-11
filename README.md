@@ -15,7 +15,7 @@ Questions {
   date: string
   state: string
   url: string
-  state: int (未完了, 回答中, 解決済み)
+  completed: boolean
 }
 
 Answers {
