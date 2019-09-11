@@ -105,6 +105,7 @@ Users {
 ```
 
 質問を削除する (DELETE)
+自分の投稿じゃない場合, 404 がかえる
 
 ```
 /api/question/<question_id>
