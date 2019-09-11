@@ -2,6 +2,12 @@
 ```
 go run main.go router.go
 ```
+`dist/` 以下の静的なファイルを参照する.
+client 側を変更したら, 
+```
+npm run build
+```
+を実行して, `dist/` に反映させる.
 
 ### DB 設計
 ```
