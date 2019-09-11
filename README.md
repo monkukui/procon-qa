@@ -78,6 +78,36 @@ Users {
 ]
 ```
 
+質問をページ取得する (GET)
+```
+/api/questions/<page(1-indexed)>
+
+[
+  {
+    "uid":1,
+    "tid":2,
+    "id":3,
+    "title":"タイトル1",
+    "body":"本文1",
+    "url":"https://atcoder/abc123/proba",
+    "state":"",
+    "date":"1996/05/26",
+    "completed":true
+  },
+  {
+    "uid":1,
+    "tid":0,
+    "id":4,
+    "title":"aa",
+    "body":"bb",
+    "url":"",
+    "state":"",
+    "date":"",
+    "completed":false
+  },
+]
+```
+
 質問を 1 つ取得する (GET)
 ```
 /api/question/<question_id>
