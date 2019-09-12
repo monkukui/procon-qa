@@ -105,6 +105,24 @@ func GetAllQuestions(c echo.Context) error {
 	return c.JSON(http.StatusOK, questions)
 }
 
+// 質問をページ取得する
+func GetQuestionsWithPage(c echo.Context) error {
+  uid := userIDFromToken(c)
+  if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+    return echo.ErrNotFound
+  }
+
+  PageID, err := strconv.Atoi(c.Param("page"))  // ページ番号 (1-indexed)
+  PageLength := 5                               // 1 ページあたりの長さ
+
+  if err != nil {
+		return echo.ErrNotFound
+	}
+
+  questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength)
+	return c.JSON(http.StatusOK, questions)
+}
+
 // 質問を 1 つ 取得する
 func GetQuestion(c echo.Context) error {
 
@@ -118,9 +136,7 @@ func GetQuestion(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  fmt.Println(QuestionID)
   question := model.FindQuestions(&model.Question{ID: QuestionID})[0]
-  fmt.Println(question)
   return c.JSON(http.StatusOK, question)
 }
 
@@ -155,7 +171,6 @@ func PostQuestion(c echo.Context) error {
 
 // 質問を削除する
 func DeleteQuestion(c echo.Context) error {
-  fmt.Println("delete を読みだした")
 	uid := userIDFromToken(c)
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
     fmt.Println("161")
