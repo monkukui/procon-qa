@@ -29,8 +29,10 @@ func newRouter() *echo.Echo {
   api.PUT("/todos/:id/completed", handler.UpdateTodo)
 
   // ここから変更した
-  api.GET("/questions", handler.GetAllQuestions) // 質問の全取得
-  api.GET("/question/:id", handler.GetQuestion)  // 質問を 1 つ取得
-  api.POST("/questions", handler.PostQuestion)   // 質問の投稿
+  api.GET("/questions", handler.GetAllQuestions)          // 質問の全取得
+  api.GET("/questions/:page", handler.GetQuestionsWithPage)    // 質問をページ全取得
+  api.GET("/question/:id", handler.GetQuestion)           // 質問を 1 つ取得
+  api.POST("/questions", handler.PostQuestion)            // 質問の投稿
+  api.DELETE("/question/:id", handler.DeleteQuestion)     // 質問の削除
 	return e
 }

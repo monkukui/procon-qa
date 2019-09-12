@@ -4,7 +4,6 @@ package model
 
 import "fmt"
 
-
 // 質問テーブル
 type Question struct {
   UID       int    `json:"uid"`                          // User Id
@@ -33,7 +32,14 @@ func CreateQuestion(q *Question) {
 func FindQuestions(q *Question) Questions {
   var questions Questions
   db.Where(q).Find(&questions)
-  fmt.Println(questions)
+  return questions
+}
+
+// 条件を満たす「質問」を, 固定長取得する
+// TODO 実装
+func FindQuestionsWithPage(q *Question, page int, length int) Questions {
+  var questions Questions
+  db.Where(q).Limit(length).Offset(length * (page - 1)).Find(&questions)
   return questions
 }
 

@@ -193,7 +193,6 @@
           if(typeof json === 'undefined') {
             return;
           }
-          this.todos.push(json);
           this.newTodo = '';
         });
 

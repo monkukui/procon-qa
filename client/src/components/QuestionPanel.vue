@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator';
 
 @Component
 export default class QuestionPanel extends Vue {
@@ -34,7 +34,18 @@ export default class QuestionPanel extends Vue {
   // データベース Question 通り
   private question = {};
 
+  // コンポーネントが作られた時に呼び出される関数
   private created(): void {
+    this.init();
+  }
+
+  // questionId が変更されたらば,表示を変える
+  @Watch('questionId')
+  private idChanged(): void {
+    this.init();
+  }
+
+  private init(): void {
     // TODO api/question/:id (GET) を叩く
     const url = 'api/question/' + String(this.questionId);
     const headers = {'Authorization': `Bearer ${this.getToken()}`};
@@ -48,6 +59,8 @@ export default class QuestionPanel extends Vue {
       this.question = json;
     })
   }
+
+
   
   private getToken(): any {
     return localStorage.getItem('token');

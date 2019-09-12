@@ -105,6 +105,24 @@ func GetAllQuestions(c echo.Context) error {
 	return c.JSON(http.StatusOK, questions)
 }
 
+// 質問をページ取得する
+func GetQuestionsWithPage(c echo.Context) error {
+  uid := userIDFromToken(c)
+  if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+    return echo.ErrNotFound
+  }
+
+  PageID, err := strconv.Atoi(c.Param("page"))  // ページ番号 (1-indexed)
+  PageLength := 5                               // 1 ページあたりの長さ
+
+  if err != nil {
+		return echo.ErrNotFound
+	}
+
+  questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength)
+	return c.JSON(http.StatusOK, questions)
+}
+
 // 質問を 1 つ 取得する
 func GetQuestion(c echo.Context) error {
 
@@ -118,9 +136,7 @@ func GetQuestion(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  fmt.Println(QuestionID)
   question := model.FindQuestions(&model.Question{ID: QuestionID})[0]
-  fmt.Println(question)
   return c.JSON(http.StatusOK, question)
 }
 
@@ -151,4 +167,27 @@ func PostQuestion(c echo.Context) error {
   model.CreateQuestion(question)
 
 	return c.JSON(http.StatusCreated, question)
+}
+
+// 質問を削除する
+func DeleteQuestion(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+    fmt.Println("161")
+		return echo.ErrNotFound
+	}
+
+	questionID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+    fmt.Println("167")
+		return echo.ErrNotFound
+	}
+
+  // ID: questionID, UID: uid とすることで, 別のユーザが他人の投稿を削除できないようになってる 
+	if err := model.DeleteQuestion(&model.Question{ID: questionID, UID: uid}); err != nil {
+    fmt.Println("173")
+		return echo.ErrNotFound
+	}
+
+	return c.NoContent(http.StatusNoContent)
 }
