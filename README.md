@@ -7,21 +7,21 @@ go run main.go router.go
 ```
 Questions {
   id: int ( primary_key )
-  user_id: int
-  tag_id: int
+  uid: int
+  tid: int
   
   title: string
   body: string
   date: string
   state: string
   url: string
-  state: int (未完了, 回答中, 解決済み)
+  completed: boolean
 }
 
 Answers {
   id: int ( primary_key )
-  user_id: int
-  question_id
+  uid: int
+  qid
 
   body: string
 }
@@ -39,17 +39,77 @@ Users {
 }
 ```
 
+### API
+
+質問を全取得する (GET)
+```
+/api/questions
+
+[
+  {
+    "uid":1,
+    "tid":2,
+    "id":3,
+    "title":"タイトル1",
+    "body":"本文1",
+    "url":"https://atcoder/abc123/proba",
+    "state":"",
+    "date":"1996/05/26",
+    "completed":true
+  },
+  {
+    "uid":1,
+    "tid":0,
+    "id":4,
+    "title":"aa",
+    "body":"bb",
+    "url":"",
+    "state":"",
+    "date":"",
+    "completed":false
+  },
+]
+```
+
+質問を 1 つ取得する (GET)
+```
+/api/question/<question_id>
+{
+  "uid":1,
+  "tid":2,
+  "id":3,
+  "title":"タイトル1",
+  "body":"本文1",
+  "url":"https://atcoder/abc123/proba",
+  "state":"",
+  "date":"1996/05/26",
+  "completed":true
+},
+```
+質問を投稿する (POST)
+```
+/api/questions
+{
+  title: "タイトル"
+  body: "本文"
+  date: "yyyy/mm/dd-hh:mm:ss"
+  state: "WA"
+  url: "https://atcoder.jp/contests/jsc2019-qual/submissions/7120555"
+}
+```
+
+
 ### TODO
 
 #### 優先度高
 
-- [ ] (GET) 質問の全取得
+- [x] (GET) 質問の全取得
 - [ ] (GET) 質問の固定長取得 (10 個ほど)
-- [ ] (GET) 質問を 1 つ取得
+- [x] (GET) 質問を 1 つ取得
 - [ ] (GET) 未回答の質問を全取得
 - [ ] (GET) 特定のユーザが投稿した質問の全取得
 - [ ] (GET) 特定の質問に対する, 回答の全取得
-- [ ] (POST) 質問の投稿
+- [x] (POST) 質問の投稿
 - [ ] (POST) 回答の投稿
 - [ ] (PUT) 質問の編集
 - [ ] (PUT) 回答の編集
