@@ -11,12 +11,10 @@ import (
 	// どこを参照しているんだろう.....
 	// "github.com/x-color/simple-webapp/model"
 	// ? できたのか ?
-	"fmt"
 	"github.com/monkukui/procon-qa/model"
 )
 
 func AddTodo(c echo.Context) error {
-	fmt.Println(c)
 	todo := new(model.Todo)
 	if err := c.Bind(todo); err != nil {
 		return err
@@ -172,19 +170,16 @@ func PostQuestion(c echo.Context) error {
 func DeleteQuestion(c echo.Context) error {
 	uid := userIDFromToken(c)
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		fmt.Println("161")
 		return echo.ErrNotFound
 	}
 
 	questionID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		fmt.Println("167")
 		return echo.ErrNotFound
 	}
 
 	// ID: questionID, UID: uid とすることで, 別のユーザが他人の投稿を削除できないようになってる
 	if err := model.DeleteQuestion(&model.Question{ID: questionID, UID: uid}); err != nil {
-		fmt.Println("173")
 		return echo.ErrNotFound
 	}
 
@@ -205,6 +200,5 @@ func GetUser(c echo.Context) error {
 
 	user := model.FindUser(&model.User{ID: UserID})
 
-	fmt.Println(user)
 	return c.JSON(http.StatusOK, user)
 }

@@ -15,7 +15,7 @@
 
     <v-pagination
       v-model="curPageId"
-      :length="331"
+      :length="20"
       :total-visible="7"
       circle
     ></v-pagination>
