@@ -36,12 +36,12 @@ func Signup(c echo.Context) error {
 		}
 	}
 
-    if u := model.FindUser(&model.User{Name: user.Name}); u.ID != 0 {
-        return &echo.HTTPError{
+	if u := model.FindUser(&model.User{Name: user.Name}); u.ID != 0 {
+		return &echo.HTTPError{
 			Code:    http.StatusConflict,
 			Message: "name already exists",
 		}
-    }
+	}
 
 	model.CreateUser(user)
 	user.Password = ""
