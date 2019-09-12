@@ -48,6 +48,7 @@ Users {
 
 ### API
 
+## GET
 質問を全取得する (GET)
 ```
 /api/questions
@@ -123,6 +124,17 @@ Users {
   "completed":true
 },
 ```
+ユーザー 1 つを取得する (GET)
+```
+/api/user/<user_id>
+{
+  "id":3,
+  "name":"monkukui",
+  "password":"mon"
+}
+```
+
+## POST
 質問を投稿する (POST)
 ```
 /api/questions
@@ -135,12 +147,15 @@ Users {
 }
 ```
 
+## DELETE
 質問を削除する (DELETE)
 自分の投稿じゃない場合, 404 がかえる
 
 ```
 /api/question/<question_id>
 ```
+
+
 
 ### TODO
 
