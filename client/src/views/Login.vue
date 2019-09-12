@@ -1,7 +1,6 @@
 <template>
   <div class="login">
     <p>LOGIN</p>
-    <p>LOGIN</p>
     <input v-model="name" />
     <input v-model="password" />
     <button type="button" name="button" @click="login">login</button>

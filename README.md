@@ -2,6 +2,12 @@
 ```
 go run main.go router.go
 ```
+`dist/` 以下の静的なファイルを参照する.
+client 側を変更したら, 
+```
+npm run build
+```
+を実行して, `dist/` に反映させる.
 
 ### DB 設計
 ```
@@ -21,9 +27,10 @@ Questions {
 Answers {
   id: int ( primary_key )
   uid: int
-  qid
+  qid: int
 
   body: string
+  date: string
 }
 
 tags {
@@ -44,6 +51,36 @@ Users {
 質問を全取得する (GET)
 ```
 /api/questions
+
+[
+  {
+    "uid":1,
+    "tid":2,
+    "id":3,
+    "title":"タイトル1",
+    "body":"本文1",
+    "url":"https://atcoder/abc123/proba",
+    "state":"",
+    "date":"1996/05/26",
+    "completed":true
+  },
+  {
+    "uid":1,
+    "tid":0,
+    "id":4,
+    "title":"aa",
+    "body":"bb",
+    "url":"",
+    "state":"",
+    "date":"",
+    "completed":false
+  },
+]
+```
+
+質問をページ取得する (GET)
+```
+/api/questions/<page(1-indexed)>
 
 [
   {
@@ -98,6 +135,12 @@ Users {
 }
 ```
 
+質問を削除する (DELETE)
+自分の投稿じゃない場合, 404 がかえる
+
+```
+/api/question/<question_id>
+```
 
 ### TODO
 
@@ -113,7 +156,7 @@ Users {
 - [ ] (POST) 回答の投稿
 - [ ] (PUT) 質問の編集
 - [ ] (PUT) 回答の編集
-- [ ] (DELETE) 質問の削除
+- [X] (DELETE) 質問の削除
 - [ ] (DELETE) 回答の削除
 
 ####  優先度中
