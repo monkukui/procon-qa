@@ -22,6 +22,7 @@
       <v-card-text>url: {{ question.url }}</v-card-text>
       <v-card-text>ステータス: {{ question.state }}</v-card-text>
       <v-card-text>回答状況: {{ question.completed }}</v-card-text>
+      <v-card-text>質問者: {{ userName }}</v-card-text>
       
       <!-- 暫定的な削除ボタン -->
       <!-- TODO 自分の投稿じゃないと見れないようにする -->
@@ -43,9 +44,12 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 export default class QuestionPanel extends Vue {
   // 元々 string として良いのでは ??
   private questionId: number;
-
+  
   // データベース Question 通り
   private question = {};
+  
+  // 質問者の名前
+  private userName: string = '';
 
   private created(): void {
     this.questionId = Number(this.$route.query['questionId']);
@@ -63,6 +67,21 @@ export default class QuestionPanel extends Vue {
       return []
     }).then(json => {
       this.question = json;
+      this.setUser();
+    })
+  }
+
+  private setUser(): void {
+    
+    const url = 'api/user/' + String(this.question.uid);
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then(response => {
+      if(response.ok) {
+        return response.json();
+      }
+      return []
+    }).then(json => {
+      this.userName = json.name;
     })
   }
 
