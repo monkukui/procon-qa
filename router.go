@@ -37,7 +37,10 @@ func newRouter() *echo.Echo {
 	api.POST("/questions", handler.PostQuestion)              // 質問の投稿
 	api.DELETE("/question/:id", handler.DeleteQuestion)       // 質問の削除
 
-	// users
+  // answer TODO 実装
+	// api.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
+
+  // users
 	api.GET("/user/:uid", handler.GetUser) // user_id から ユーザー名を取得
 	return e
 }

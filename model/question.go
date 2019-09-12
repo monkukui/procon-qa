@@ -36,14 +36,14 @@ func FindQuestions(q *Question) Questions {
 }
 
 // 条件を満たす「質問」を, 固定長取得する
-// TODO 実装
+// page := ページ番号( 1-indexed ),  length := 1 ページあたりのアイテム数
 func FindQuestionsWithPage(q *Question, page int, length int) Questions {
 	var questions Questions
 	db.Where(q).Limit(length).Offset(length * (page - 1)).Find(&questions)
 	return questions
 }
 
-// questions を 1 つ削除
+// question を 1 つ削除
 func DeleteQuestion(q *Question) error {
 	if rows := db.Where(q).Delete(&Question{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to delete", q)
