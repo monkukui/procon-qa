@@ -1,7 +1,14 @@
 <template>
   <div class="answers">
     
-    <AnswerPanelDetail
+    {{ answers }}
+    <div v-for="(value, index) in answers" :key=index>
+      <AnswerPanelDetail
+        :answerId="value.id"
+      />
+    </div>
+    
+    <!--AnswerPanelDetail
       body="それは自明では?"
       answeredTime="2019/05.26 11:11:21"
     />
@@ -12,7 +19,7 @@
     <AnswerPanelDetail 
       body="流石に自明すぎわロタ"
       answeredTime="2019/05.26 11:11:21"
-    />
+    /-->
   </div>
 </template>
 
@@ -25,7 +32,37 @@ import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
   },
 })
 export default class Answers extends Vue {
-  private numOfAnswers: number = 3;
+  
+  private questionId: number;
+  private answers = [];
+
+  private created(): void {
+    this.questionId = Number(this.$route.query['questionId']);
+    this.getAnswers();
+  }
+  
+  // 質問をページ取得する
+  private getAnswers(): void {
+    const url = 'api/answers/' + String(this.questionId);
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+
+    fetch(url, {headers}).then(response => {
+      if(response.ok) {
+        return response.json();
+      }
+      return []
+    }).then(json => {
+      this.answers = [];
+      this.answers = json;
+    })
+  }
+
+
+
+  private getToken(): any {
+    return localStorage.getItem('token');
+  }
+  
 }
 </script>
 
