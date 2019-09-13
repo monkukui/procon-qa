@@ -91,7 +91,7 @@
     <!-- -->
     <v-toolbar-title class="headline text-uppercase">
       <span>PROCON</span>
-      <span class="font-weight-light">-QA</span>
+      <span class="font-weight-light">QA</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn

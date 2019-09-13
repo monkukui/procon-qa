@@ -15,11 +15,14 @@
 import { Component, Vue } from 'vue-property-decorator';
 import QuestionPanelDetail from '@/components/QuestionPanelDetail.vue';
 import Answers from '@/components/Answers.vue';
+import AnswerForm from '@/components/AnswerForm.vue';
+
 
 @Component({
   components: {
     QuestionPanelDetail,
     Answers,
+    AnswerForm,
   },
 })
 export default class Question extends Vue {

@@ -168,7 +168,6 @@
       },
       submit () {
         
-        // TODO ここに POST question の api 処理を記述する
         const url = 'api/questions';
         const method = 'POST';
         const headers = {
@@ -183,8 +182,6 @@
           url: this.form.url,
         });
         
-        console.log(body);
-
         fetch(url, {method, headers, body}).then(response => {
           if(response.ok) {
             return response.json();
@@ -193,11 +190,8 @@
           if(typeof json === 'undefined') {
             return;
           }
-          this.newTodo = '';
         });
 
-
-        console.log(this.form);
         this.snackbar = true;
         this.resetForm();
       },

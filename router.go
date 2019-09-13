@@ -38,8 +38,9 @@ func newRouter() *echo.Echo {
 	api.DELETE("/question/:id", handler.DeleteQuestion)       // 質問の削除
 
   // answer TODO 実装
-	// api.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
-
+	api.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
+	api.GET("/answer/:id", handler.GetAnswer)                 // 回答を 1 つ取得
+	api.POST("/answers", handler.PostAnswer)    // 回答の投稿
   // users
 	api.GET("/user/:uid", handler.GetUser) // user_id から ユーザー名を取得
 	return e
