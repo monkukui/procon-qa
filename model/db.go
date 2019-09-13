@@ -14,7 +14,6 @@ func init() {
 		panic("failed to connect database")
 	}
 	db.AutoMigrate(&User{})
-	db.AutoMigrate(&Todo{})
 	db.AutoMigrate(&Question{}) // Question データベースを作成してみる
 	db.AutoMigrate(&Answer{}) // Answer データベースを作成してみる
 }
