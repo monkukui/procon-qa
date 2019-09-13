@@ -6,12 +6,13 @@
       color="white"
     >
       <v-card-title>
-        回答
+        {{ answer.body }}
       </v-card-title>
       
       <v-divider class="mx-4"></v-divider>
-      <v-card-text>{{ body }}</v-card-text>
-      <v-card-text>回答日時: {{ questionedTime }}</v-card-text>
+      <v-card-text>回答日時: {{ answer.date }}</v-card-text>
+      <v-card-text>回答者: {{ userName }}</v-card-text>
+      <v-card-text>{{ answer.favo }} ファボ</v-card-text>
     </v-card>
   </div>
 </template>
@@ -22,9 +23,58 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 @Component
 export default class AnswerPanelDetail extends Vue {
   @Prop()
-  private body!: string;
-  @Prop()
-  private answeredTime!: string;
+  private answerId!: number;
+  
+  private answer = {};
+  /*
+    "uid": number,
+    "qid": number,
+    "id": number,
+    "body": string,
+    "date": string,
+    "favo": number,
+  */
+
+  private userName: string = '';
+
+  private created(): void {
+    this.createAnswer();
+  }
+
+  
+  private createAnswer(): void {
+    const url = 'api/answer/' + String(this.answerId);
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+
+    fetch(url, {headers}).then(response => {
+      if(response.ok) {
+        return response.json();
+      }
+      return []
+    }).then(json => {
+      this.answer = json;
+      this.setUser();
+    })
+  }
+  
+  private setUser(): void {
+    
+    const url = 'api/user/' + String(this.answer.uid);
+    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then(response => {
+      if(response.ok) {
+        return response.json();
+      }
+      return []
+    }).then(json => {
+      this.userName = json.name;
+    })
+  }
+  
+  private getToken(): any {
+    return localStorage.getItem('token');
+  }
+
 }
 </script>
 

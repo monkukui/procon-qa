@@ -153,6 +153,23 @@ func GetAnswersForQuestion(c echo.Context) error {
 	return c.JSON(http.StatusOK, answers)
 }
 
+// 回答を 1 つ 取得する
+func GetAnswer(c echo.Context) error {
+
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	AnswerID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	answer := model.FindAnswers(&model.Answer{ID: AnswerID})[0]
+	return c.JSON(http.StatusOK, answer)
+}
+
 
 // 質問を投稿する
 func PostQuestion(c echo.Context) error {

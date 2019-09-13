@@ -1,25 +1,10 @@
 <template>
   <div class="answers">
-    
-    {{ answers }}
     <div v-for="(value, index) in answers" :key=index>
       <AnswerPanelDetail
         :answerId="value.id"
       />
     </div>
-    
-    <!--AnswerPanelDetail
-      body="それは自明では?"
-      answeredTime="2019/05.26 11:11:21"
-    />
-    <AnswerPanelDetail
-      body="自明でしょ"
-      answeredTime="2019/05.26 11:11:21"
-    />
-    <AnswerPanelDetail 
-      body="流石に自明すぎわロタ"
-      answeredTime="2019/05.26 11:11:21"
-    /-->
   </div>
 </template>
 

@@ -80,8 +80,6 @@ export default class QuestionPanel extends Vue {
       this.userName = json.name;
       console.log(this.userName);
     })
-
-  private getToken(): any {
   }
 
   private getToken(): any {
