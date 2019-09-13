@@ -124,6 +124,13 @@ Users {
   "completed":true
 },
 ```
+回答を 1 つ取得する (GET)
+```
+/api/answer/<answer_id>
+
+```
+
+
 ユーザー 1 つを取得する (GET)
 ```
 /api/user/<user_id>
