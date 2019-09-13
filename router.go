@@ -19,15 +19,9 @@ func newRouter() *echo.Echo {
 	e.POST("/signup", handler.Signup)
 	e.File("/login", "public/login.html")
 	e.POST("/login", handler.Login)
-	e.File("/todos", "public/todos.html")
 
-	api := e.Group("/api")
+  api := e.Group("/api")
 	api.Use(middleware.JWTWithConfig(handler.Config))
-	api.GET("/todos", handler.GetTodos)
-	api.POST("/todos", handler.AddTodo)
-	api.DELETE("/todos/:id", handler.DeleteTodo)
-	api.PUT("/todos/:id/completed", handler.UpdateTodo)
-
 	// ここから変更した
 
 	// questions
