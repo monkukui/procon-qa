@@ -146,6 +146,16 @@ Users {
   url: "https://atcoder.jp/contests/jsc2019-qual/submissions/7120555"
 }
 ```
+回答を投稿する (POST)
+```
+/api/answers
+{
+  body: "本文"
+  date: "yyyy/mm/dd-hh:mm:ss"
+  qid: 3
+  favo: 0
+}
+```
 
 ## DELETE
 質問を削除する (DELETE)
@@ -169,7 +179,7 @@ Users {
 - [ ] (GET) 特定の質問に対する, 回答の全取得
 - [x] (GET) ユーザを 1 つ取得
 - [x] (POST) 質問の投稿
-- [ ] (POST) 回答の投稿
+- [x] (POST) 回答の投稿
 - [ ] (PUT) 質問の編集
 - [ ] (PUT) 回答の編集
 - [X] (DELETE) 質問の削除
