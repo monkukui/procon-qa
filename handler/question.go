@@ -14,8 +14,6 @@ import (
 	"github.com/monkukui/procon-qa/model"
 )
 
-
-// 以下自作
 // 質問を全取得する
 func GetAllQuestions(c echo.Context) error {
 	// todos := model.FindTodos(&model.Todo{UID: uid})
@@ -63,40 +61,6 @@ func GetQuestion(c echo.Context) error {
 	return c.JSON(http.StatusOK, question)
 }
 
-// 質問に紐ずいた, 回答を全取得する
-func GetAnswersForQuestion(c echo.Context) error {
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
-
-	QuestionID, err := strconv.Atoi(c.Param("qid"))
-	if err != nil {
-		return echo.ErrNotFound
-	}
-
-	answers := model.FindAnswers(&model.Answer{QID: QuestionID})
-	return c.JSON(http.StatusOK, answers)
-}
-
-// 回答を 1 つ 取得する
-func GetAnswer(c echo.Context) error {
-
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
-
-	AnswerID, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		return echo.ErrNotFound
-	}
-
-	answer := model.FindAnswers(&model.Answer{ID: AnswerID})[0]
-	return c.JSON(http.StatusOK, answer)
-}
-
-
 // 質問を投稿する
 func PostQuestion(c echo.Context) error {
 	question := new(model.Question)
@@ -126,36 +90,6 @@ func PostQuestion(c echo.Context) error {
 	return c.JSON(http.StatusCreated, question)
 }
 
-// 回答を投稿する
-func PostAnswer(c echo.Context) error {
-	answer := new(model.Answer)
-
-	// answer に 送信されてきたデータを bind している
-	if err := c.Bind(answer); err != nil {
-		return err
-	}
-
-	// 妥当性判定
-	// Body が空欄ではないことをチェックする
-	if answer.Body == "" {
-		return &echo.HTTPError{
-			Code:    http.StatusBadRequest,
-			Message: "invalid to or message fields",
-		}
-	}
-
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
-
-  // 回答者をユーザーに設定
-	answer.UID = uid
-	model.CreateAnswer(answer)
-
-	return c.JSON(http.StatusCreated, answer)
-}
-
 
 // 質問を削除する
 func DeleteQuestion(c echo.Context) error {
@@ -175,21 +109,4 @@ func DeleteQuestion(c echo.Context) error {
 	}
 
 	return c.NoContent(http.StatusNoContent)
-}
-
-func GetUser(c echo.Context) error {
-
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
-
-	UserID, err := strconv.Atoi(c.Param("uid"))
-	if err != nil {
-		return echo.ErrNotFound
-	}
-
-	user := model.FindUser(&model.User{ID: UserID})
-
-	return c.JSON(http.StatusOK, user)
 }
