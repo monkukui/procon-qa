@@ -79,7 +79,7 @@
     <!-- -->
     <v-toolbar-title class="headline text-uppercase">
       <span>PROCON</span>
-      <span class="font-weight-light">QA</span>
+      <span class="font-weight-light">QA {{ user }}</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn
@@ -89,6 +89,14 @@
       <span class="mr-2">質問する</span>
     </v-btn>
     <v-btn
+      v-if="user"
+      text
+      @click="logout"
+    >
+      <span class="mr-2">ログアウト</span>
+    </v-btn>
+    <v-btn
+      v-if="!user"
       text
       to="login"
     >
@@ -130,6 +138,21 @@ export default class App extends Vue {
 
   private tr: boolean = true;
   private fal: boolean = false;
+
+  private user: string = '';
+  private created(): void {
+    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+    this.user = claims.name;
+  }
+  private getToken(): any {
+    return localStorage.getItem('token');
+  }
+  private logout(): void {
+    localStorage.removeItem('token');
+  }
+  private isLoggedIn(): boolean {
+    return false;
+  }
 
 }
 </script>
