@@ -1,5 +1,4 @@
 <template>
-  <p> hogehogehogehoge </p>
   <div class="answers">
     <div v-for="(value, index) in answers" :key=index>
       <AnswerPanelDetail
