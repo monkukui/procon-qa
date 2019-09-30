@@ -17,12 +17,12 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 })
 export default class AnswerForm extends Vue {
-  
+
   private questionId: number;
-  private text: string = '';  
-  
+  private text: string = '';
+
   private created(): void {
-    this.questionId = Number(this.$route.query['questionId']);
+    this.questionId = Number(this.$route.query.questionId);
   }
 
   private getToken(): void {
@@ -33,8 +33,8 @@ export default class AnswerForm extends Vue {
     const method = 'POST';
     const headers = {
       'Authorization': `Bearer ${this.getToken()}`,
-      'Content-Type': 'application/json; charset=UTF-8'
-    }
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
 
     const body = JSON.stringify({
       body: this.text,
@@ -42,13 +42,13 @@ export default class AnswerForm extends Vue {
       date: 'yyyy/mm/dd-hh/mm/ss',
       qid: this.questionId,
     });
-    
-    fetch(url, {method, headers, body}).then(response => {
-      if(response.ok) {
+
+    fetch(url, {method, headers, body}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-    }).then(json => {
-      if(typeof json === 'undefined') {
+    }).then((json) => {
+      if (typeof json === 'undefined') {
         return;
       }
     });

@@ -44,59 +44,59 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 export default class QuestionPanel extends Vue {
   // 元々 string として良いのでは ??
   private questionId: number;
-  
+
   // データベース Question 通り
   private question = {};
-  
+
   // 質問者の名前
   private userName: string = '';
 
   private created(): void {
-    this.questionId = Number(this.$route.query['questionId']);
+    this.questionId = Number(this.$route.query.questionId);
     this.createQuestion();
   }
-  
+
   private createQuestion(): void {
     const url = 'api/question/' + String(this.questionId);
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
 
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
+      return [];
+    }).then((json) => {
       this.question = json;
       this.setUser();
-    })
+    });
   }
 
   private setUser(): void {
-    
+
     const url = 'api/user/' + String(this.question.uid);
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
+      return [];
+    }).then((json) => {
       this.userName = json.name;
-    })
+    });
   }
 
   private deleteQuestion(): void {
     const url = 'api/question/' + String(this.questionId);
-    const method = 'DELETE'
-    const headers = {'Authorization': `Bearer ${this.getToken()}`}
+    const method = 'DELETE';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
 
-    fetch(url, {method, headers}).then(response => {
-      if(response.ok) {
+    fetch(url, {method, headers}).then((response) => {
+      if (response.ok) {
         this.$router.push('./');
       }
-    })
+    });
   }
-  
+
   private getToken(): any {
     return localStorage.getItem('token');
   }

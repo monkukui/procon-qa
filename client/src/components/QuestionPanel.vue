@@ -31,16 +31,16 @@ import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator';
 export default class QuestionPanel extends Vue {
   @Prop()
   private questionId!: number;
-  
+
   // データベース Question 通り
   private question = {};
-  
+
   // 質問者の名前
   private userName: string = '';
 
   // コンポーネントが作られた時に呼び出される関数
   private created(): void {
-    this.init(); 
+    this.init();
   }
 
   // questionId が変更されたらば,表示を変える
@@ -52,34 +52,31 @@ export default class QuestionPanel extends Vue {
   private init(): void {
     // TODO api/question/:id (GET) を叩く
     const url = 'api/question/' + String(this.questionId);
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
 
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
+      return [];
+    }).then((json) => {
       this.question = json;
       this.setUser();
-    })
+    });
   }
 
   private setUser(): void {
-    
+
     const url = 'api/user/' + String(this.question.uid);
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
-      console.log(this.question);
-      console.log(this.userName);
+      return [];
+    }).then((json) => {
       this.userName = json.name;
-      console.log(this.userName);
-    })
+    });
   }
 
   private getToken(): any {

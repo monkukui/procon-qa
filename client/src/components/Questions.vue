@@ -46,48 +46,48 @@ export default class Questions extends Vue {
   private fal: boolean = false;
 
   private curPageId: number = 1;
-  private changePageId(id: number): void {
-    this.curPageId = id;
-  }
 
   private user: string = '';
   // FIXME any
   private questions = [];
+  private changePageId(id: number): void {
+    this.curPageId = id;
+  }
 
   private created(): void {
-    //this.getQuestions();
+    // this.getQuestions();
     this.getQuestionsWithPage();
   }
-  
+
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
     const url = 'api/questions/' + String(this.curPageId);
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
 
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
+      return [];
+    }).then((json) => {
       this.questions = [];
       this.questions = json;
-    })
+    });
   }
-  
+
   // 質問を全取得する
   private getQuestions(): void {
     const url = 'api/questions';
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
 
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
+      return [];
+    }).then((json) => {
       this.questions = json;
-    })
+    });
   }
   private getToken(): any {
     return localStorage.getItem('token');
