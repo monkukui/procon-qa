@@ -24,7 +24,7 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 export default class AnswerPanelDetail extends Vue {
   @Prop()
   private answerId!: number;
-  
+
   private answer = {};
   /*
     "uid": number,
@@ -41,36 +41,36 @@ export default class AnswerPanelDetail extends Vue {
     this.createAnswer();
   }
 
-  
+
   private createAnswer(): void {
     const url = 'api/answer/' + String(this.answerId);
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
 
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
+      return [];
+    }).then((json) => {
       this.answer = json;
       this.setUser();
-    })
+    });
   }
-  
+
   private setUser(): void {
-    
+
     const url = 'api/user/' + String(this.answer.uid);
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
+      return [];
+    }).then((json) => {
       this.userName = json.name;
-    })
+    });
   }
-  
+
   private getToken(): any {
     return localStorage.getItem('token');
   }

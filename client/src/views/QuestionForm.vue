@@ -120,10 +120,8 @@
 </template>
 
 <script>
-
 // TODO ts にする ... ? 
 // 正直 ts にするのめんどくさくなってきた
-
   export default {
     data () {
       const defaultForm = Object.freeze({
@@ -133,7 +131,6 @@
         url: '',
         terms: false,
       })
-
       return {
         form: Object.assign({}, defaultForm),
         rules: {
@@ -148,7 +145,6 @@
         defaultForm,
       }
     },
-
     computed: {
       formIsValid () {
         return (
@@ -191,7 +187,6 @@
             return;
           }
         });
-
         this.snackbar = true;
         this.resetForm();
       },

@@ -16,7 +16,7 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 })
 export default class Login extends Vue {
-  
+
   private name: string = '';
   private password: string = '';
 
@@ -25,14 +25,14 @@ export default class Login extends Vue {
     const method = 'POST';
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
-    }
+    };
     const body = JSON.stringify({
       name: this.name,
       password: this.password,
-    })
+    });
 
-    fetch(url, {method, headers, body}).then(response => {
-      if(response.ok) {
+    fetch(url, {method, headers, body}).then((response) => {
+      if (response.ok) {
         return response.json();
       } else {
         alert('Faild to login. Please retry');
@@ -40,13 +40,13 @@ export default class Login extends Vue {
         this.password = '';
         return {token: ''};
       }
-    }).then(json => {
-      const token = json.token
-      if(token.length > 0) {
+    }).then((json) => {
+      const token = json.token;
+      if (token.length > 0) {
         localStorage.setItem('token', token);
         this.$router.push('/');
       }
-    })
+    });
   }
 }
 </script>

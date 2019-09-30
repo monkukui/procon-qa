@@ -17,29 +17,29 @@ import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
   },
 })
 export default class Answers extends Vue {
-  
+
   private questionId: number;
   private answers = [];
 
   private created(): void {
-    this.questionId = Number(this.$route.query['questionId']);
+    this.questionId = Number(this.$route.query.questionId);
     this.getAnswers();
   }
-  
+
   // 質問をページ取得する
   private getAnswers(): void {
     const url = 'api/answers/' + String(this.questionId);
-    const headers = {'Authorization': `Bearer ${this.getToken()}`};
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
 
-    fetch(url, {headers}).then(response => {
-      if(response.ok) {
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
         return response.json();
       }
-      return []
-    }).then(json => {
+      return [];
+    }).then((json) => {
       this.answers = [];
       this.answers = json;
-    })
+    });
   }
 
 
@@ -47,7 +47,7 @@ export default class Answers extends Vue {
   private getToken(): any {
     return localStorage.getItem('token');
   }
-  
+
 }
 </script>
 
