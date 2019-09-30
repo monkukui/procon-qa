@@ -1,5 +1,4 @@
 <template>
-  <p> hogehogehogehoge </p>
   <div class="answers">
     <div v-for="(value, index) in answers" :key=index>
       <AnswerPanelDetail
@@ -29,9 +28,9 @@ export default class Answers extends Vue {
 
   // 質問をページ取得する
   private getAnswers(): void {
+
     const url = 'api/answers/' + String(this.questionId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
-
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
         return response.json();
