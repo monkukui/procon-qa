@@ -32,11 +32,17 @@
         </v-col>
         <v-col md="1">
           <SquarePanel
+            v-if="question.completed"
+            message="解決済"
+          />
+          <SquarePanel
+            v-else
             message="未解決"
           />
         </v-col>
+        <div class="flex-grow-1"></div>
         <div style="margin-left:auto; margin-right: 5%; margin-top: 5%;">
-          <span>質問日時: {{ question.date }} 投稿者: {{ userName }}</span>
+          <span>{{ question.date }} {{ userName }}</span>
         </div>
       </v-row>
     </v-card>

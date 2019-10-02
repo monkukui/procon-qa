@@ -12,7 +12,7 @@
           <div
             class="display-100 flex-grow-1 text-center"
           >
-            <div style="color: white;"  md="4">
+            <div style="color: white;" class="font-weight-bold">
               {{ message }}
               {{ num }}
             </div>
