@@ -1,6 +1,6 @@
 <template>
   <v-card
-    max-width="3000"
+    max-width="1000"
     class="mx-auto"
   >
     <v-list-item>
@@ -17,22 +17,7 @@
     <v-row>
       <v-col> 
         <v-card-text>
-          {{ question.body }} bodybodybodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
-          bodybodybodybody
+          {{ question.body }}
         </v-card-text>
         <v-btn
           class="tag"
@@ -57,7 +42,7 @@
         </v-btn>
       </v-col>
       <v-col>
-        <v-card-text>URL: {{ question.url }}</v-card-text>
+        <v-card-text>URL: <a :href="question.url">{{ question.url }}</a></v-card-text>
         <v-card-text>ステータス: {{ question.state }}</v-card-text>
         <v-card-text>質問日時: {{ question.date }}</v-card-text>
         <v-card-text>回答状況: {{ question.completed }}</v-card-text> <!-- solved にしたら？ -->
@@ -88,45 +73,6 @@
     </v-card-actions>
   </v-card>
 </template>
-
-
-<!--template>
-  <div class="question-panel-detail">
-    <v-card
-      max-width="3000"
-      class="mx-auto"
-      color="white"
-    >
-      <v-card-title>
-        {{ question.title }} titletitletitletitle
-      </v-card-title>
-      <v-card-text>質問日時 {{ question.date }} hoeghogehoge 閲覧数 3</v-card-text>
-      
-      <v-divider class="mx-4"></v-divider>
-      <v-card-text>{{ question.body }}hogeogeogehogheohgoehgoehgohehgoehgeo</v-card-text>
-      <v-btn
-        class="tag"
-        color="blue-grey lighten-4"
-        x-small
-      >
-        tag (仮)
-      </v-btn>
-      <v-card-text>質問日時: {{ question.date }}</v-card-text>
-      <v-card-text>url: {{ question.url }}</v-card-text>
-      <v-card-text>ステータス: {{ question.state }}</v-card-text>
-      <v-card-text>回答状況: {{ question.completed }}</v-card-text>
-      <v-card-text>質問者: {{ userName }}</v-card-text>
-      
-      <v-btn
-        color="red"
-        @click="deleteQuestion"
-      >
-        削除
-      </v-btn>
-    </v-card>
-    
-  </div>
-</template-->
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
