@@ -4,9 +4,8 @@
       <v-card
         class="d-flex align-center"
         :color="color"
-        height="60"
-        width="60"
         @click="toggle"
+        height="60"
       >
         <v-scroll-y-transition>
           <div

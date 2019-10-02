@@ -4,18 +4,16 @@
     class="mx-auto"
   >
     <v-list-item>
-      <v-list-item-avatar color="grey">M</v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="headline">
           {{ question.title }}
         </v-list-item-title>
-        <v-list-item-subtitle>{{ question.user }}monkukui</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
     <v-divider class="mx-4"></v-divider>
 
     <v-row>
-      <v-col> 
+      <v-col md="8"> 
         <v-card-text>
           {{ question.body }}
         </v-card-text>
@@ -41,35 +39,38 @@
           tag (仮)
         </v-btn>
       </v-col>
-      <v-col>
+      <v-col md="4">
         <v-card-text>URL: <a :href="question.url">{{ question.url }}</a></v-card-text>
         <v-card-text>ステータス: {{ question.state }}</v-card-text>
-        <v-card-text>質問日時: {{ question.date }}</v-card-text>
-        <v-card-text>回答状況: {{ question.completed }}</v-card-text> <!-- solved にしたら？ -->
+        <v-card
+          class="mx-auto"
+          max-width="300"
+          outlined
+          color="teal lighten-5"
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div>質問者</div>
+              <v-list-item-title class="headline mb-1">{{ question.user }}</v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-avatar
+              circle
+              size="80"
+              color="grey"
+            ></v-list-item-avatar>
+          </v-list-item>
+        </v-card>
       </v-col>
     </v-row>
-
+    
     <v-card-actions>
-      <v-btn
-        text
-        color="deep-purple accent-4"
-      >
-        Read
-      </v-btn>
-      <v-btn
-        text
-        color="deep-purple accent-4"
-      >
-        Bookmark
-      </v-btn>
-      <div class="flex-grow-1"></div>
-
+      <v-card-text>投稿日時: {{ question.date }}</v-card-text>
       <v-btn icon>
         <v-icon>mdi-heart</v-icon>
       </v-btn>
       <v-btn icon>
         <v-icon>mdi-share-variant</v-icon>
-      </v-btn>
+      </v-btn> 
     </v-card-actions>
   </v-card>
 </template>
