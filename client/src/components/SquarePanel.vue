@@ -11,7 +11,6 @@
         <v-scroll-y-transition>
           <div
             class="display-100 flex-grow-1 text-center"
-            
           >
             <div style="color: white;"  md="4">
               {{ message }}

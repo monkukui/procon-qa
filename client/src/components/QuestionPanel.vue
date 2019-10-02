@@ -35,6 +35,9 @@
             message="未解決"
           />
         </v-col>
+        <div style="margin-left:auto; margin-right: 5%; margin-top: 5%;">
+          <span>質問日時: {{ question.date }} 投稿者: {{ userName }}</span>
+        </div>
       </v-row>
     </v-card>
     
