@@ -15,13 +15,12 @@
       >
         tag (仮)
       </v-btn>
-      
       <v-divider class="mx-4"></v-divider>
       <v-card-text>{{ question.body }}</v-card-text>
       <v-card-text>質問日時: {{ question.date }}</v-card-text>
-      <v-card-text>url: {{ question.url }}</v-card-text>
+      <v-card-text>URL: {{ question.url }}</v-card-text>
       <v-card-text>ステータス: {{ question.state }}</v-card-text>
-      <v-card-text>回答状況: {{ question.completed }}</v-card-text>
+      <v-card-text>回答状況: {{ question.completed }}</v-card-text> <!-- solved にしたら？ -->
       <v-card-text>質問者: {{ userName }}</v-card-text>
       
       <!-- 暫定的な削除ボタン -->
