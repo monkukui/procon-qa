@@ -1,7 +1,7 @@
 <template>
   <div class="question-panel">
     <v-card
-      max-width="1010"
+      max-width="1000"
       class="mx-auto"
       color="white"
     >
@@ -15,25 +15,60 @@
       >
         タグ {{ question.tid }}
       </v-btn>
-      
       <v-divider class="mx-4"></v-divider>
-      <v-card-text>質問日時: {{ question.date }}</v-card-text>
-      <v-card-text>質問者: {{ userName }}</v-card-text>
+  
+      <v-row style="margin-left: 1%;">
+        <v-col md="1">
+          <SquarePanel 
+            message="回答数"
+            num=3
+          />
+        </v-col>
+        <v-col md="1">
+          <SquarePanel 
+            message="閲覧数"
+            num=10
+          />
+        </v-col>
+        <v-col md="1">
+          <SquarePanel
+            v-if="question.completed"
+            message="解決済"
+          />
+          <SquarePanel
+            v-else
+            message="未解決"
+          />
+        </v-col>
+        <div class="flex-grow-1"></div>
+        <div style="margin-left:auto; margin-right: 5%; margin-top: 5%;">
+          <span>{{ question.date }} {{ userName }}</span>
+        </div>
+      </v-row>
     </v-card>
-
+    
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator';
+import SquarePanel from '@/components/SquarePanel.vue';
 
-@Component
+@Component({
+  components: {
+    SquarePanel,
+  },
+})
 export default class QuestionPanel extends Vue {
   @Prop()
   private questionId!: number;
 
   // データベース Question 通り
-  private question = {};
+  private question = {
+    title: 'title title title title title',
+    body: 'body body body body body',
+    completed: false,
+  };
 
   // 質問者の名前
   private userName: string = '';

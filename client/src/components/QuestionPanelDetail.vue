@@ -1,46 +1,89 @@
 <template>
-  <div class="question-panel-detail">
-    <v-card
-      max-width="1010"
-      class="mx-auto"
-      color="white"
-    >
-      <v-card-title>
-        {{ question.title }}
-      </v-card-title>
-      <v-btn
-        class="tag"
-        color="blue-grey lighten-4"
-        x-small
-      >
-        tag (仮)
-      </v-btn>
-      
-      <v-divider class="mx-4"></v-divider>
-      <v-card-text>{{ question.body }}</v-card-text>
-      <v-card-text>質問日時: {{ question.date }}</v-card-text>
-      <v-card-text>url: {{ question.url }}</v-card-text>
-      <v-card-text>ステータス: {{ question.state }}</v-card-text>
-      <v-card-text>回答状況: {{ question.completed }}</v-card-text>
-      <v-card-text>質問者: {{ userName }}</v-card-text>
-      
-      <!-- 暫定的な削除ボタン -->
-      <!-- TODO 自分の投稿じゃないと見れないようにする -->
-      <v-btn
-        color="red"
-        @click="deleteQuestion"
-      >
-        削除
-      </v-btn>
-    </v-card>
+  <v-card
+    max-width="1000"
+    class="mx-auto"
+  >
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title class="headline">
+          {{ question.title }}
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <v-divider class="mx-4"></v-divider>
+
+    <v-row>
+      <v-col md="8"> 
+        <v-card-text>
+          {{ question.body }}
+        </v-card-text>
+        <v-btn
+          class="tag"
+          color="blue-grey lighten-4"
+          x-small
+        >
+          tag (仮)
+        </v-btn>
+        <v-btn
+          class="tag"
+          color="blue-grey lighten-4"
+          x-small
+        >
+          tag (仮)
+        </v-btn>
+        <v-btn
+          class="tag"
+          color="blue-grey lighten-4"
+          x-small
+        >
+          tag (仮)
+        </v-btn>
+      </v-col>
+      <v-col md="4">
+        <v-card-text>URL: <a :href="question.url">{{ question.url }}</a></v-card-text>
+        <v-card-text>ステータス: {{ question.state }}</v-card-text>
+        <v-card
+          class="mx-auto"
+          max-width="300"
+          outlined
+          color="teal lighten-5"
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div>質問者</div>
+              <v-list-item-title class="headline mb-1">{{ question.user }}</v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-avatar
+              circle
+              size="80"
+              color="grey"
+            ></v-list-item-avatar>
+          </v-list-item>
+        </v-card>
+      </v-col>
+    </v-row>
     
-  </div>
+    <v-card-actions>
+      <v-card-text>投稿日時: {{ question.date }}</v-card-text>
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-share-variant</v-icon>
+      </v-btn> 
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import SquarePanel from '@/components/SquarePanel.vue';
 
-@Component
+@Component({
+  components: {
+    SquarePanel,
+  },
+})
 export default class QuestionPanel extends Vue {
   // 元々 string として良いのでは ??
   private questionId: number;

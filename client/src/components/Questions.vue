@@ -33,7 +33,6 @@
 import { Component, Prop, Vue, Emit, Watch} from 'vue-property-decorator';
 import QuestionPanel from '@/components/QuestionPanel.vue';
 
-
 @Component({
   components: {
     QuestionPanel,
@@ -61,7 +60,7 @@ export default class Questions extends Vue {
 
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
-    const url = 'api/questions/' + String(this.curPageId);
+    const url = '/api/questions/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
@@ -77,7 +76,7 @@ export default class Questions extends Vue {
 
   // 質問を全取得する
   private getQuestions(): void {
-    const url = 'api/questions';
+    const url = '/api/questions/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {

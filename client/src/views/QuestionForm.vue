@@ -1,8 +1,7 @@
 <template>
   <div class="question-form">
     <v-card flat>
-      <v-snackbar
-        v-model="snackbar"
+      <v-snackbar v-model="snackbar"
         absolute
         top
         right
@@ -146,6 +145,20 @@
       }
     },
     computed: {
+      getDate () {
+        let now = new Date();
+        var Year = String(now.getFullYear());
+        var Month = String(now.getMonth()+1);
+        var Day = String(now.getDate());
+        var Hour = String(now.getHours());
+        var Min = String(now.getMinutes());
+        var Sec = String(now.getSeconds());
+
+        if(Hour.length == 1) Hour = '0' + Hour;
+        if(Min.length == 1) Min = '0' + Hour;
+        if(Sec.length == 1) Sec = '0' + Hour;
+        return Year + '年' + Month + '月' + Day + '日' + Hour + ':' + Min + ':' + Sec;
+      },
       formIsValid () {
         return (
           this.form.title &&
@@ -155,7 +168,7 @@
       },
     },
     methods: {
-      resetForm () {
+      resetForm() {
         this.form = Object.assign({}, this.defaultForm);
         this.$refs.form.reset();
       },
@@ -173,7 +186,7 @@
         const body = JSON.stringify({
           title: this.form.title,
           body: this.form.body,
-          date: '1111/11/11-12:12:12',
+          date: this.getDate,
           state: this.form.state,
           url: this.form.url,
         });

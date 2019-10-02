@@ -1,18 +1,47 @@
 <template>
   <div class="answer-panel-detail">
     <v-card
-      max-width="1010"
+      max-width="1000"
       class="mx-auto"
-      color="white"
     >
-      <v-card-title>
-        {{ answer.body }}
-      </v-card-title>
-      
-      <v-divider class="mx-4"></v-divider>
-      <v-card-text>回答日時: {{ answer.date }}</v-card-text>
-      <v-card-text>回答者: {{ userName }}</v-card-text>
-      <v-card-text>{{ answer.favo }} ファボ</v-card-text>
+
+    <v-row>
+      <v-col md="8"> 
+        <v-card-text>
+          {{ answer.body }}
+        </v-card-text>
+      </v-col>
+      <v-col md="4">
+        <v-card
+          class="mx-auto"
+          max-width="300"
+          outlined
+          color="teal lighten-5"
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div>回答者</div>
+              <v-list-item-title class="headline mb-1">{{ answer.user }}</v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-avatar
+              circle
+              size="80"
+              color="grey"
+            ></v-list-item-avatar>
+          </v-list-item>
+        </v-card>
+      </v-col>
+    </v-row>
+    
+    <v-card-actions>
+      <v-card-text>投稿日時: {{ answer.date }}</v-card-text>
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-share-variant</v-icon>
+      </v-btn> 
+    </v-card-actions>
     </v-card>
   </div>
 </template>
