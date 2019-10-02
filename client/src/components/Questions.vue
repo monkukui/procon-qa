@@ -4,12 +4,12 @@
     <!--div v-for="question in questions">
       {{ question }}
     </div-->
-    <v-pagination
+    <!--v-pagination
       v-model="curPageId"
       :length="20"
       :total-visible="7"
       circle
-    ></v-pagination>
+    ></v-pagination-->
 
     <div v-for="(value, index) in questions" :key=index>
       <!-- answerd とか, questionedTime とかの命名規則を揃える -->

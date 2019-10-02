@@ -21,7 +21,7 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div>回答者</div>
-              <v-list-item-title class="headline mb-1">{{ answer.user }}</v-list-item-title>
+              <v-list-item-title class="headline mb-1">{{ userName }}</v-list-item-title>
             </v-list-item-content>
             <v-list-item-avatar
               circle
@@ -34,7 +34,7 @@
     </v-row>
     
     <v-card-actions>
-      <v-card-text>投稿日時: {{ answer.date }}</v-card-text>
+      <v-card-text>投稿日時: {{ userName }}</v-card-text>
       <v-btn icon>
         <v-icon>mdi-heart</v-icon>
       </v-btn>
