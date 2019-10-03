@@ -22,22 +22,26 @@
           <SquarePanel 
             message="回答数"
             num=3
+            color="blue-grey"
           />
         </v-col>
         <v-col md="1">
           <SquarePanel 
             message="閲覧数"
             num=10
+            color="blue-grey"
           />
         </v-col>
         <v-col md="1">
           <SquarePanel
             v-if="question.completed"
             message="解決済"
+            color="#5cb85c"
           />
           <SquarePanel
-            v-else
+            v-if="!question.completed"
             message="未解決"
+            color="#f0ad4e"
           />
         </v-col>
         <div class="flex-grow-1"></div>

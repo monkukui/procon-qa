@@ -30,8 +30,9 @@ func newRouter() *echo.Echo {
 	api.GET("/question/:id", handler.GetQuestion)             // 質問を 1 つ取得
 	api.POST("/questions", handler.PostQuestion)              // 質問の投稿
 	api.DELETE("/question/:id", handler.DeleteQuestion)       // 質問の削除
+	api.PUT("/question/:id/completed", handler.UpdateQuestionCompleted)  // 質問の更新
 
-  // answer TODO 実装
+  // answers
 	api.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
 	api.GET("/answer/:id", handler.GetAnswer)                 // 回答を 1 つ取得
 	api.POST("/answers", handler.PostAnswer)    // 回答の投稿

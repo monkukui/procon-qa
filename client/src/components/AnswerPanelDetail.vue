@@ -16,7 +16,7 @@
           class="mx-auto"
           max-width="300"
           outlined
-          color="teal lighten-5"
+          color="deep-orange lighten-5"
         >
           <v-list-item three-line>
             <v-list-item-content>

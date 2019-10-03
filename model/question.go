@@ -57,6 +57,8 @@ func UpdateQuestion(q *Question) error {
 		"title":     q.Title,
 		"body":      q.Body,
 		"url":       q.Url,
+    "state":     q.State,
+    "date":      q.Date,
 		"completed": q.Completed,
 	}).RowsAffected
 	if rows == 0 {
