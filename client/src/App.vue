@@ -121,13 +121,11 @@
     </v-container>
   </v-content>
 
-  <v-footer app>
-    <v-col
-      class="text-center"
-      cols="12"
-    >
-      {{ new Date().getFullYear() }} — <strong>PROCONQA</strong>
-    </v-col>
+  <v-footer
+    app
+  >
+  <div class="flex-grow-1"></div>
+    <div>&copy; monkukui {{ new Date().getFullYear() }}</div>
   </v-footer>
 </v-app>
 </template>

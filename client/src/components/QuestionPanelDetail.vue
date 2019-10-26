@@ -69,7 +69,7 @@
         <v-icon>mdi-heart</v-icon>
       </v-btn>
       <v-btn icon>
-        <v-icon>mdi-share-variant</v-icon>
+        <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
       </v-btn> 
     </v-card-actions>
   </v-card>
@@ -97,6 +97,13 @@ export default class QuestionPanel extends Vue {
   private created(): void {
     this.questionId = Number(this.$route.query.questionId);
     this.createQuestion();
+  }
+
+  private updateQuestionCompleted(): void {
+    const url = 'api/question/' + String(this.questionId) + '/completed';
+    const method = 'PUT';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {method, headers});
   }
 
   private createQuestion(): void {

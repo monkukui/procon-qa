@@ -1,10 +1,18 @@
 <template>
   <div class="answer-form">
-    <input v-model="text" />
+    
+    <v-textarea
+      v-model="text"
+      color="blue darken-2"
+      label="回答"
+      required
+      width="7px"
+    ></v-textarea>
     <v-btn
       color="primary"
       @click="answer"
       x-large
+
     >回答する</v-btn>
   </div>
 </template>

@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
-  //"fmt"
+  "fmt"
 	"github.com/labstack/echo"
 	// c-color さんに依存しちゃってる...
 	// なんとか再現性があるように作り変えることができないもんかね...?
@@ -85,11 +85,11 @@ func PostQuestion(c echo.Context) error {
 	}
 
 	question.UID = uid
+  question.Completed = false;
 	model.CreateQuestion(question)
 
 	return c.JSON(http.StatusCreated, question)
 }
-
 
 // 質問を削除する
 func DeleteQuestion(c echo.Context) error {
@@ -109,4 +109,30 @@ func DeleteQuestion(c echo.Context) error {
 	}
 
 	return c.NoContent(http.StatusNoContent)
+}
+
+func UpdateQuestionCompleted(c echo.Context) error {
+
+  uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+  questionID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  questions := model.FindQuestions(&model.Question{ID: questionID, UID: uid})
+  fmt.Println(len(questions))
+  if len(questions) == 0 {
+    return echo.ErrNotFound
+  }
+  question := questions[0]
+  question.Completed = !questions[0].Completed
+  if err := model.UpdateQuestion(&question); err != nil {
+    return echo.ErrNotFound
+  }
+
+  return c.NoContent(http.StatusNoContent)
 }

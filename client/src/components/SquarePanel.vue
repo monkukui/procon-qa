@@ -4,7 +4,6 @@
       <v-card
         class="d-flex align-center"
         :color="color"
-        @click="toggle"
         height="60"
       >
         <v-scroll-y-transition>
@@ -35,13 +34,8 @@ export default class SquarePanel extends Vue {
   private num: number;
   @Prop()
   private message: string;
-
-  private color: string = 'blue-grey';
-
-  private created(): void {
-    if(this.message == '解決済') this.color = '#5cb85c';
-    else if(this.message == '未解決') this.color = '#f0ad4e';
-  }
+  @Prop()
+  private color: string;
 }
 </script>
 
