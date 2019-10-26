@@ -98,11 +98,11 @@ export default class QuestionPanel extends Vue {
     this.questionId = Number(this.$route.query.questionId);
     this.createQuestion();
   }
-  
+
   private updateQuestionCompleted(): void {
     const url = 'api/question/' + String(this.questionId) + '/completed';
     const method = 'PUT';
-    const headers = {'Authorization': `Bearer ${this.getToken()}`}
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {method, headers});
   }
 
