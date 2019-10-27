@@ -39,7 +39,7 @@ tags {
 }
 
 Users {
-  id: int (primary_key)
+  uid: int (primary_key)
   name: string
   pass: string (仮)
   rate: int (仮)
