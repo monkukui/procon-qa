@@ -5,6 +5,7 @@ import Question from './views/Question.vue';
 import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import QuestionForm from './views/QuestionForm.vue';
+import MyPage from './views/MyPage.vue';
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/questionform',
       name: 'questionform',
       component: QuestionForm,
+    },
+    {
+      path: '/mypage',
+      name: 'mypage',
+      component: MyPage,
     },
     {
       path: '/about',
