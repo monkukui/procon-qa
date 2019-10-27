@@ -1,16 +1,8 @@
 <template>
-  <div class="questions">
+  <div class="user-questions">
+    <hr>
+    <h1>質問一覧</h1>
     
-    <!--div v-for="question in questions">
-      {{ question }}
-    </div-->
-    <!--v-pagination
-      v-model="curPageId"
-      :length="20"
-      :total-visible="7"
-      circle
-    ></v-pagination-->
-
     <div v-for="(value, index) in questions" :key=index>
       <!-- answerd とか, questionedTime とかの命名規則を揃える -->
       <!-- 子コンポーネントには QuestionId だけを渡す-->
@@ -57,7 +49,7 @@ export default class Questions extends Vue {
 
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
-    const url = '/api/questions/' + String(this.curPageId);
+    const url = '/api/user-questions/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {

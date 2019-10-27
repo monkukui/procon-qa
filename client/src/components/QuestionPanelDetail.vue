@@ -84,7 +84,7 @@ import SquarePanel from '@/components/SquarePanel.vue';
     SquarePanel,
   },
 })
-export default class QuestionPanel extends Vue {
+export default class QuestionPanelDetail extends Vue {
   // 元々 string として良いのでは ??
   private questionId: number;
 

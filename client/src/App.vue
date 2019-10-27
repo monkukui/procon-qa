@@ -129,10 +129,28 @@
   </v-content>
 </v-app>
 </template>
-<script>
-  export default {
-    data: () => ({
-      drawer: null,
-    }),
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+@Component({
+  components: {
+  },
+})
+export default class App extends Vue {
+  private drawer: any = null;
+  private user: string = '';
+  private created(): void {
+    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+    this.user = claims.name;
   }
+  private getToken(): any {
+    return localStorage.getItem('token');
+  }
+  private logout(): void {
+    localStorage.removeItem('token');
+  }
+  private isLoggedIn(): boolean {
+    return false;
+  }
+
+}
 </script>
