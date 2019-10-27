@@ -30,6 +30,24 @@ func GetAnswersForQuestion(c echo.Context) error {
 	return c.JSON(http.StatusOK, answers)
 }
 
+// userId/pageId で質問をページ取得する
+func GetUserAnswersWithPage(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
+	PageLength := 5                              // 1 ページあたりの長さ
+
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  answers := model.FindAnswersWithPage(&model.Answer{UID: uid}, PageID, PageLength)
+	return c.JSON(http.StatusOK, answers)
+}
+
 // 回答を 1 つ 取得する
 func GetAnswer(c echo.Context) error {
 

@@ -44,6 +44,24 @@ func GetQuestionsWithPage(c echo.Context) error {
 	return c.JSON(http.StatusOK, questions)
 }
 
+// pageId で質問をページ取得する
+func GetUserQuestionsWithPage(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
+	PageLength := 5                              // 1 ページあたりの長さ
+
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength)
+	return c.JSON(http.StatusOK, questions)
+}
+
 // 質問を 1 つ 取得する
 func GetQuestion(c echo.Context) error {
 
