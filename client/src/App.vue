@@ -1,7 +1,12 @@
 <template>
 <!-- App.vue -->
 <v-app>
-  <v-navigation-drawer app :dark="tr">
+  <v-navigation-drawer
+    app
+    dark
+    v-model="drawer"
+    :clipped="$vuetify.breakpoint.lgAndUp"
+  >
     <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
@@ -75,7 +80,10 @@
     <!-- -->
   </v-navigation-drawer>
 
-  <v-app-bar app>
+  <v-app-bar
+    app
+    :clipped-left="$vuetify.breakpoint.lgAndUp"
+  >
     <!-- -->
     <v-toolbar-title class="headline text-uppercase">
       <span>PROCON</span>
@@ -112,21 +120,12 @@
 
   <!-- Sizes your content based upon application components -->
   <v-content>
-
     <!-- Provides the application the proper gutter -->
     <v-container fluid>
-
       <!-- If using vue-router -->
       <router-view></router-view>
     </v-container>
   </v-content>
-
-  <v-footer
-    app
-  >
-  <div class="flex-grow-1"></div>
-    <div>&copy; monkukui {{ new Date().getFullYear() }}</div>
-  </v-footer>
 </v-app>
 </template>
 
