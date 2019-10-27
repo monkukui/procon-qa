@@ -86,8 +86,9 @@
   >
     <!-- -->
     <v-toolbar-title class="headline text-uppercase">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <span>PROCON</span>
-      <span class="font-weight-light">QA {{ user }}</span>
+      <span class="font-weight-light">QA</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn
@@ -128,37 +129,10 @@
   </v-content>
 </v-app>
 </template>
-
-<script lang="ts">
-
-import { Component, Prop, Vue, Emit, Watch} from 'vue-property-decorator';
-@Component({
-  components: {
-  },
-})
-export default class App extends Vue {
-
-  private tr: boolean = true;
-  private fal: boolean = false;
-
-  private user: string = '';
-  private created(): void {
-    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
-    this.user = claims.name;
+<script>
+  export default {
+    data: () => ({
+      drawer: null,
+    }),
   }
-  private getToken(): any {
-    return localStorage.getItem('token');
-  }
-  private logout(): void {
-    localStorage.removeItem('token');
-  }
-  private isLoggedIn(): boolean {
-    return false;
-  }
-
-}
 </script>
-
-</script>
-<style>
-</style>
