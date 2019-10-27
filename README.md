@@ -109,6 +109,36 @@ Users {
 ]
 ```
 
+ユーザーに紐ずいた質問をページ取得する (GET)
+```
+/api/user-questions/<page(1-indexed)>
+
+[
+  {
+    "uid":1,
+    "tid":2,
+    "id":3,
+    "title":"タイトル1",
+    "body":"本文1",
+    "url":"https://atcoder/abc123/proba",
+    "state":"",
+    "date":"1996/05/26",
+    "completed":true
+  },
+  {
+    "uid":1,
+    "tid":0,
+    "id":4,
+    "title":"aa",
+    "body":"bb",
+    "url":"",
+    "state":"",
+    "date":"",
+    "completed":false
+  },
+]
+```
+
 質問を 1 つ取得する (GET)
 ```
 /api/question/<question_id>
@@ -222,7 +252,7 @@ Users {
 - [x] (GET) 質問を 1 つ取得
 - [x] (GET) 回答を 1 つ取得
 - [ ] (GET) 未回答の質問を全取得
-- [ ] (GET) 特定のユーザが投稿した質問の全取得
+- [x] (GET) 特定のユーザが投稿した質問の全取得
 - [x] (GET) 特定の質問に対する, 回答の全取得
 - [x] (GET) ユーザを 1 つ取得
 - [x] (POST) 質問の投稿
