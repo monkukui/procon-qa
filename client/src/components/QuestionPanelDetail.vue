@@ -86,10 +86,10 @@ import SquarePanel from '@/components/SquarePanel.vue';
 })
 export default class QuestionPanelDetail extends Vue {
   // 元々 string として良いのでは ??
-  private questionId: number;
+  private questionId!: number;
 
   // データベース Question 通り
-  private question = {};
+  private question: any = {};
 
   // 質問者の名前
   private userName: string = '';

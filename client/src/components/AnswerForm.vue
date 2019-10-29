@@ -26,14 +26,14 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class AnswerForm extends Vue {
 
-  private questionId: number;
+  private questionId!: number;
   private text: string = '';
 
   private created(): void {
     this.questionId = Number(this.$route.query.questionId);
   }
 
-  private getToken(): void {
+  private getToken(): string | null {
     return localStorage.getItem('token');
   }
   private answer(): void {

@@ -25,17 +25,14 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
-@Component({
-  componens: {
-  },
-})
+@Component
 export default class SquarePanel extends Vue {
   @Prop()
-  private num: number;
+  private num!: number;
   @Prop()
-  private message: string;
+  private message!: string;
   @Prop()
-  private color: string;
+  private color!: string;
 }
 </script>
 
