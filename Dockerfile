@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY client/package*.json ./
 
-RUN npm install --verbose
+RUN npm install
 
 COPY ./client ./
 
@@ -34,4 +34,4 @@ COPY --from=build-go /app/main ./main
 
 EXPOSE 8080
 
-ENTRYPOINT ["./main"]
+CMD ./main
