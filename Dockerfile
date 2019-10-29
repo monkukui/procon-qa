@@ -32,6 +32,6 @@ COPY --from=build-js /app/dist ./dist
 
 COPY --from=build-go /app/main ./main
 
-EXPOSE 5000
+EXPOSE 8080
 
-CMD ./main
+CMD ["./main"]
