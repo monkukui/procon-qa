@@ -48,13 +48,21 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import {Answer} from '@/models/Answer.ts';
 
 @Component
 export default class AnswerPanelDetail extends Vue {
   @Prop()
   private answerId!: number;
 
-  private answer = {};
+  private answer: Answer = {
+    id: 0,
+    uid: 0,
+    qid: 0,
+
+    body: '',
+    date: '',
+  };
   /*
     "uid": number,
     "qid": number,

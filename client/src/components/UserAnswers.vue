@@ -65,7 +65,7 @@ export default class Answers extends Vue {
   // ページが変われば, 質問を取得し直す
   @Watch('curPageId')
   private pageChanged(): void {
-    this.getQuestionsWithPage();
+    this.getAnswersWithPage();
   }
 }
 </script>

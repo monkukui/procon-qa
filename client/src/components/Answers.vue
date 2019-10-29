@@ -18,7 +18,7 @@ import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
 })
 export default class Answers extends Vue {
 
-  private questionId: number;
+  private questionId!: number;
   private answers = [];
 
   private created(): void {

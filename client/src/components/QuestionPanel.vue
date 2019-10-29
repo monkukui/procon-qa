@@ -57,6 +57,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator';
 import SquarePanel from '@/components/SquarePanel.vue';
+import {Question} from '@/models/Question.ts';
 
 @Component({
   components: {
@@ -64,14 +65,16 @@ import SquarePanel from '@/components/SquarePanel.vue';
   },
 })
 export default class QuestionPanel extends Vue {
-  @Prop()
+  @Prop({required: true})
   private questionId!: number;
 
   // データベース Question 通り
-  private question = {
+  private question: Question = {
+    id: 0,
     title: 'title title title title title',
     body: 'body body body body body',
     completed: false,
+    date: '',
   };
 
   // 質問者の名前
