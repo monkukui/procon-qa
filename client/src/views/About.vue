@@ -1,10 +1,10 @@
 <template>
   <div class="about">
-    <h1>UI テストページ</h1>
-    <QuestionPanel />
+    <h1>準備中</h1>
+    <!--QuestionPanel />
     <QuestionPanelDetail />
     <AnswerPanelDetail />
-    <AnswerForm />
+    <AnswerForm /-->
   </div>
 </template>
 
