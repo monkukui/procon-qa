@@ -6,6 +6,7 @@ import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import QuestionForm from './views/QuestionForm.vue';
 import MyPage from './views/MyPage.vue';
+import TagSearch from './views/TagSearch.vue';
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/mypage',
       name: 'mypage',
       component: MyPage,
+    },
+    {
+      path: '/tagsearch',
+      name: 'tagsearch',
+      component: TagSearch,
     },
     {
       path: '/about',
