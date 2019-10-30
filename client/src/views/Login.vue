@@ -1,11 +1,34 @@
 <template>
   <div class="login">
-    <p>LOGIN</p>
-    <input v-model="name" />
-    <input v-model="password" />
-    <button type="button" name="button" @click="login">login</button>
-    {{ name }}
-    {{ password }}
+    <h1>ログイン</h1>
+    <hr>
+    <v-container>
+      <v-row>
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="name"
+            :counter="10"
+            label="ユーザ名"
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="password"
+            :counter="10"
+            label="パスワード"
+            required
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-btn large color="primary" @click="login">ログイン</v-btn> または <v-btn outlined depressed large to="/signup">新規登録</v-btn>
   </div>
 </template>
 
