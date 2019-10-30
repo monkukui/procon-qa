@@ -68,6 +68,7 @@ export default class Login extends Vue {
       if (token.length > 0) {
         localStorage.setItem('token', token);
         this.$router.push('/');
+        location.reload();
       }
     });
   }

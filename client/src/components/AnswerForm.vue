@@ -61,6 +61,8 @@ export default class AnswerForm extends Vue {
       }
     });
 
+    location.reload();
+
   }
 }
 </script>

@@ -62,10 +62,7 @@
               >
                 <template v-slot:label>
                   <div @click.stop="">
-                    Do you accept the
-                    <a href="javascript:;" @click.stop="terms = true">terms</a>
-                    and
-                    <a href="javascript:;" @click.stop="conditions = true">conditions?</a>
+                    <a href="javascript:;" @click.stop="terms = true">誓約書</a>に同意しますか?
                   </div>
                 </template>
               </v-checkbox>
@@ -138,7 +135,7 @@
         },
         states: ['CE', 'MLE', 'TLE', 'RE', 'OLE', 'IE', 'WA', 'AC', 'WJ', 'WR'],
         conditions: false,
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
+        content: `誓約書`,
         snackbar: false,
         terms: false,
         defaultForm,
