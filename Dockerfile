@@ -28,7 +28,7 @@ FROM busybox
 
 WORKDIR /app
 
-COPY --from=build-js /app/dist ./dist
+COPY --from=build-js /app/dist ./client/dist
 
 COPY --from=build-go /app/main ./main
 
