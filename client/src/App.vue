@@ -112,8 +112,9 @@
       <span class="mr-2">ログイン</span>
     </v-btn>
     <v-btn
-     text
-     to="signup"
+      v-if="!user"
+      text
+      to="signup"
     >
       <span class="mr-2">登録</span>
     </v-btn>
@@ -147,6 +148,7 @@ export default class App extends Vue {
   }
   private logout(): void {
     localStorage.removeItem('token');
+    location.reload();
   }
   private isLoggedIn(): boolean {
     return false;
