@@ -1,6 +1,6 @@
 <template>
   <div class="mypage">
-    <h1>{{ userName }} id : {{ userId }}</h1>
+    <h1>{{ userName }}</h1>
     <UserQuestions />
     <UserAnswers />
   </div>
@@ -19,7 +19,7 @@ import UserAnswers from '@/components/UserAnswers.vue';
 })
 export default class MyPage extends Vue {
   private userName: string = '';
-  private userId: number = 3;
+  private userId: number = 0;
   private created(): void {
     const claims = JSON.parse(atob(this.getToken().split('.')[1]));
     this.userName = claims.name;
