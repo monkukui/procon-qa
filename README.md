@@ -1,13 +1,51 @@
-### サーバ起動
+### サーバ起動 (開発環境)
+
+#### postgresSQL の起動
+必要に応じて `postgres` をインストールする必要あり
+```
+postgres -D /usr/local/var/postgres
+```
+実行
+`hoge` と言う名前の DB だけ作成する
+
+#### バックエンド
+`/main.go` の中身を
+```
+package main
+
+import (
+  // "os"
+)
+
+func main() {
+  router := newRouter()
+
+  // 本番環境はこっち (os を import する)
+  // router.Logger.Fatal(router.Start(":"+os.Getenv("PORT")))
+
+  // 開発環境はこっち (os の import を外す)
+  router.Logger.Fatal(router.Start(":8080"))
+}
+
+```
+に書き換える
 ```
 go run main.go router.go
 ```
-`dist/` 以下の静的なファイルを参照する.
-client 側を変更したら, 
+を実行
+
+#### フロントエンド
 ```
-npm run build
+npm run serve
 ```
-を実行して, `dist/` に反映させる.
+を実行
+
+### 本番環境 (Docker + heroku)
+`/main.go` を適時書き換えて, git の master push をすれば勝手にデプロイされる
+Dockerfile に色々書いてある
+Docker の起動の仕方は以下に記す
+`docker image build -t procon-qa ./ `
+`docker container run -it -p 8080:8080 --rm --name procon-qa procon-qa`
 
 ### DB 設計
 ```
