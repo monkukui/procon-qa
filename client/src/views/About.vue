@@ -1,31 +1,49 @@
 <template>
-  <div class="about">
-    <h1>準備中</h1>
-    <!--QuestionPanel />
-    <QuestionPanelDetail />
-    <AnswerPanelDetail />
-    <AnswerForm /-->
+  <div class="mavonEditor">
+    <mavon-editor :toolbars="markdownOption" v-model="handbook" language="en"/>
   </div>
 </template>
-
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import QuestionPanelDetail from '@/components/QuestionPanelDetail.vue';
-import QuestionPanel from '@/components/QuestionPanel.vue';
-import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
-import AnswerForm from '@/components/AnswerForm.vue';
-
-@Component({
-  components: {
-    QuestionPanel,
-    QuestionPanelDetail,
-    AnswerPanelDetail,
-    AnswerForm,
-  },
-})
-export default class About extends Vue {
-}
+<script>
+export default {
+  data() {
+    return {
+      markdownOption: {
+        bold: true,
+        italic: true,
+        header: true,
+        underline: true,
+        strikethrough: true,
+        mark: true,
+        superscript: true,
+        subscript: true,
+        quote: true,
+        ol: true,
+        ul: true,
+        link: true,
+        imagelink: true,
+        code: true,
+        table: true,
+        help: true,
+        alignleft: true,
+        aligncenter: true,
+        alignright: true,
+        subfield: true,
+        preview: true,
+        // false
+        undo: false,
+        redo: false,
+        fullscreen: false,
+        readmodel: false,
+        htmlcode: false,
+        trash: false,
+        save: false,
+        navigation: false,
+      },
+      handbook: "#### how to use mavonEditor in nuxt.js"
+    };
+  }
+};
 </script>
 
-<style>
+<style scoped>
 </style>
