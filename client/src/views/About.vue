@@ -1,12 +1,25 @@
 <template>
   <div class="mavonEditor">
-    <mavon-editor :toolbars="markdownOption" v-model="handbook" language="en"/>
+    <mavon-editor
+      :toolbars="markdownOption" 
+      v-model="handbook" 
+      language="en"
+      previewBackground="aaaaaa"
+      defaultOpen="preview"
+      :toolbarsFlag="fa"
+      :editable="tr"
+      :subfield="fa"
+
+    />
+    {{ handbook }}
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      tr: true,
+      fa: false,
       markdownOption: {
         bold: true,
         italic: true,

@@ -15,7 +15,14 @@
     <v-row>
       <v-col md="8"> 
         <v-card-text>
-          {{ question.body }}
+          <mavon-editor 
+            :toolbars="markdownOption" 
+            v-model="question.body"
+            defaultOpen="preview"
+            :toolbarsFlag="fa"
+            :editable="tr"
+            :subfield="fa"
+          />
         </v-card-text>
         <v-btn
           class="tag"
@@ -85,6 +92,11 @@ import SquarePanel from '@/components/SquarePanel.vue';
   },
 })
 export default class QuestionPanelDetail extends Vue {
+
+  // これどうやねん
+  private fa: boolean = false;
+  private tr: boolean = true;
+
   // 元々 string として良いのでは ??
   private questionId!: number;
 
