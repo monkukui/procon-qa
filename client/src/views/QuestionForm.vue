@@ -7,110 +7,55 @@
         right
         color="success"
       >
-        <span>Registration successful!</span>
+        <span>質問を投稿しました!!</span>
         <v-icon dark>mdi-checkbox-marked-circle</v-icon>
       </v-snackbar>
       <v-form ref="form" @submit.prevent="submit">
         <v-container fluid>
           <v-row>
-            <v-col cols="12" sm="7">
+            <v-col cols="12" sm="8">
               <v-text-field
                 v-model="form.title"
                 :rules="rules.title"
                 color="blue darken-2"
                 label="タイトル"
                 required
+                single-line
+                outlined
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" sm="7">
-              <v-textarea
+            <v-col cols="12" sm="8">
+              <mavon-editor
+                :toolbars="markdownOption"
                 v-model="form.body"
-                :rules="rules.body"
-                color="teal"
-                required
-              >
-                <template v-slot:label>
-                  <div>
-                    本文
-                  </div>
-                </template>
-              </v-textarea>
+                language="en"
+              />
             </v-col>
 
-            <v-col cols="12" sm="6">
-              <v-select
-                v-model="form.state"
-                :items="states"
-                color="pink"
-                label="ステータス(任意)"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="6">
+            <v-col cols="12" sm="8">
               <v-text-field
                 v-model="form.url"
                 :rules="rules.url"
-                color="pink"
+                color="blue darken-2"
                 label="URL(任意)"
+                single-line
+                outlined
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12">
-              <v-checkbox
-                v-model="form.terms"
-                color="green"
-              >
-                <template v-slot:label>
-                  <div @click.stop="">
-                    <a href="javascript:;" @click.stop="terms = true">誓約書</a>に同意しますか?
-                  </div>
-                </template>
-              </v-checkbox>
+            <v-col cols="12" sm="8">
+              <v-btn
+                :disabled="!formIsValid"
+                color="primary"
+                type="submit"
+                x-large
+              >送信</v-btn>
+
             </v-col>
           </v-row>
         </v-container>
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn
-            :disabled="!formIsValid"
-            color="primary"
-            type="submit"
-            x-large
-          >送信</v-btn>
-        </v-card-actions>
       </v-form>
-      <v-dialog v-model="terms" width="70%">
-        <v-card>
-          <v-card-title class="title">Terms</v-card-title>
-          <v-card-text v-for="n in 5" :key="n">
-            {{ content }}
-          </v-card-text>
-          <v-card-actions>
-            <div class="flex-grow-1"></div>
-            <v-btn
-              text
-              color="purple"
-              @click="terms = false"
-            >Ok</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <v-dialog v-model="conditions" width="70%">
-        <v-card>
-          <v-card-title class="title">Conditions</v-card-title>
-          <v-card-text v-for="n in 5" :key="n">
-            {{ content }}
-          </v-card-text>
-          <v-card-actions>
-            <div class="flex-grow-1"></div>
-            <v-btn
-              text
-              color="purple"
-              @click="conditions = false"
-            >Ok</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-card>
   </div>
 </template>
@@ -125,7 +70,6 @@
         body: '',
         state: '',
         url: '',
-        terms: false,
       })
       return {
         form: Object.assign({}, defaultForm),
@@ -138,7 +82,39 @@
         content: `誓約書`,
         snackbar: false,
         terms: false,
-        defaultForm,
+
+        markdownOption: {
+          bold: true,
+          italic: true,
+          header: true,
+          underline: true,
+          strikethrough: true,
+          mark: true,
+          quote: true,
+          ol: true,
+          ul: true,
+          code: true,
+          table: true,
+          help: true,
+          alignleft: true,
+          aligncenter: true,
+          alignright: true,
+          subfield: true,
+          preview: true,
+          // false
+          link: false,
+          imagelink: false,
+          superscript: false,
+          subscript: false,
+          undo: false,
+          redo: false,
+          fullscreen: false,
+          readmodel: false,
+          htmlcode: false,
+          trash: false,
+          save: false,
+          navigation: false,
+        },
       }
     },
     computed: {
@@ -159,8 +135,7 @@
       formIsValid () {
         return (
           this.form.title &&
-          this.form.body &&
-          this.form.terms
+          this.form.body
         )
       },
     },
