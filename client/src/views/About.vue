@@ -8,8 +8,6 @@
       defaultOpen="preview"
       :toolbarsFlag="fa"
       :editable="tr"
-      :subfield="fa"
-
     />
     {{ handbook }}
   </div>
@@ -59,4 +57,7 @@ export default {
 </script>
 
 <style scoped>
+.mavonEditor {
+  z-index: -2147483647;
+}
 </style>
