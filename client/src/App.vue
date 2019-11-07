@@ -79,7 +79,8 @@
       </v-list>
     <!-- -->
   </v-navigation-drawer>
-
+  
+  <div class="bar">
   <v-app-bar
     app
     :clipped-left="$vuetify.breakpoint.lgAndUp"
@@ -119,6 +120,7 @@
       <span class="mr-2">登録</span>
     </v-btn>
   </v-app-bar>
+  </div>
 
   <!-- Sizes your content based upon application components -->
   <v-content>
@@ -156,3 +158,9 @@ export default class App extends Vue {
 
 }
 </script>
+
+<style scoped>
+.bar {
+  z-index: 2147483647;
+}
+</style>

@@ -26,11 +26,13 @@
             </v-col>
 
             <v-col cols="12" sm="8">
-              <mavon-editor
-                :toolbars="markdownOption"
-                v-model="form.body"
-                language="en"
-              />
+              <div class="mavon-editor">
+                <mavon-editor
+                  :toolbars="markdownOption"
+                  v-model="form.body"
+                  language="en"
+                />
+              </div>
             </v-col>
 
             <v-col cols="12" sm="8">
@@ -180,4 +182,7 @@
 </script>
 
 <style scoped>
+.mavon-editor {
+  z-index: 0;
+}
 </style>

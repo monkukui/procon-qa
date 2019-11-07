@@ -15,14 +15,17 @@
     <v-row>
       <v-col md="8"> 
         <v-card-text>
-          <mavon-editor 
-            :toolbars="markdownOption" 
-            v-model="question.body"
-            defaultOpen="preview"
-            :toolbarsFlag="fa"
-            :editable="tr"
-            :subfield="fa"
-          />
+          <div class="mavon-editor">
+            <mavon-editor 
+              :toolbars="markdownOption" 
+              v-model="question.body"
+              defaultOpen="preview"
+              :toolbarsFlag="fa"
+              :editable="tr"
+              :subfield="fa"
+              :boxShadow="fa"
+              />
+            </div>
         </v-card-text>
         <v-btn
           class="tag"
@@ -176,5 +179,8 @@ export default class QuestionPanelDetail extends Vue {
 .tag {
   margin-bottom: 1%;
   margin-left: 2%;
+}
+.mavon-editor {
+  z-index: 0;
 }
 </style>
