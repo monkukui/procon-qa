@@ -3,7 +3,7 @@
     <v-item v-slot:default="{ active, toggle }">
       <v-list-item-avatar
         class="tile"
-        size="70"
+        size="60"
         :color="color"
         tile
       >
@@ -13,6 +13,7 @@
           >
             <div style="color: white;" class="font-weight-bold">
               {{ message }}
+              <br>
               {{ num }}
             </div>
           </div>

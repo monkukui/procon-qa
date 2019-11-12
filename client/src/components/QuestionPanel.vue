@@ -17,21 +17,21 @@
       <v-divider class="mx-4"></v-divider>
   
       <v-row style="margin-left: 1%;">
-        <v-col col="12" sm="2">
+        <v-col col="12" sm="1">
           <SquarePanel 
             message="回答数"
             :num="question.answerCount"
             color="blue-grey"
           />
         </v-col>
-        <v-col col="12" sm="2">
+        <v-col col="12" sm="1" style="margin-left: 2%">
           <SquarePanel
             message="閲覧数"
             num=10
             color="blue-grey"
           />
         </v-col>
-        <v-col col="12" sm="2">
+        <v-col col="12" sm="1" style="margin-left: 2%">
           <SquarePanel
             v-if="question.completed"
             message="解決済"
