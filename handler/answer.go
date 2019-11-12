@@ -16,10 +16,10 @@ import (
 
 // 質問に紐ずいた, 回答を全取得する
 func GetAnswersForQuestion(c echo.Context) error {
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
+	// uid := userIDFromToken(c)
+	// if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	//	return echo.ErrNotFound
+	// }
 
 	QuestionID, err := strconv.Atoi(c.Param("qid"))
 	if err != nil {
@@ -51,10 +51,10 @@ func GetUserAnswersWithPage(c echo.Context) error {
 // 回答を 1 つ 取得する
 func GetAnswer(c echo.Context) error {
 
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
+	// uid := userIDFromToken(c)
+	// if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	// 	return echo.ErrNotFound
+	// }
 
 	AnswerID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

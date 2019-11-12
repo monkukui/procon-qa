@@ -29,10 +29,11 @@ func GetQuestionSize(c echo.Context) error {
 
 // 質問をページ取得する
 func GetQuestionsWithPage(c echo.Context) error {
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
+	// 質問の取得にユーザの情報はいらない
+  // uid := userIDFromToken(c)
+	// if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	// 	return echo.ErrNotFound
+	// }
 
 	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
 	PageLength := 10                             // 1 ページあたりの長さ
@@ -47,9 +48,9 @@ func GetQuestionsWithPage(c echo.Context) error {
 
 // pageId で質問をページ取得する
 func GetUserQuestionsWithPage(c echo.Context) error {
-	uid := userIDFromToken(c)
+  uid := userIDFromToken(c)
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
+    return echo.ErrNotFound
 	}
 
 	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
@@ -65,11 +66,11 @@ func GetUserQuestionsWithPage(c echo.Context) error {
 
 // 質問を 1 つ 取得する
 func GetQuestion(c echo.Context) error {
-
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
+  // 認証必要なし
+	// uid := userIDFromToken(c)
+	// if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	// 	return echo.ErrNotFound
+	// }
 
 	QuestionID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

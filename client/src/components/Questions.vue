@@ -59,7 +59,7 @@ export default class Questions extends Vue {
 
   // 質問数を取得する
   private getTotalQuestion(): void {
-    const url = 'api/questions/count';
+    const url = '/api/no-auth/questions/count';
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
@@ -74,7 +74,7 @@ export default class Questions extends Vue {
 
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
-    const url = '/api/questions/' + String(this.curPageId);
+    const url = '/api/no-auth/questions/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
@@ -90,7 +90,7 @@ export default class Questions extends Vue {
 
   // 質問を全取得する
   private getQuestions(): void {
-    const url = '/api/questions/' + String(this.curPageId);
+    const url = '/api/no-auth/questions/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
