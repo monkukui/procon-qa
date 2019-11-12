@@ -50,9 +50,9 @@ export default {
         save: false,
         navigation: false,
       },
-      handbook: "#### how to use mavonEditor in nuxt.js"
+      handbook: '#### how to use mavonEditor in nuxt.js',
     };
-  }
+  },
 };
 </script>
 

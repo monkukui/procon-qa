@@ -6,7 +6,7 @@ import 'mavon-editor/dist/css/index.css';
 import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
-Vue.use(mavonEditor)
+Vue.use(mavonEditor);
 new Vue({
   router,
   vuetify,
