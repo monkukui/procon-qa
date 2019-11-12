@@ -38,7 +38,6 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import UserQuestions from '@/components/UserQuestions.vue';
 import UserAnswers from '@/components/UserAnswers.vue';
-
 import MyProfile from '@/components/MyProfile.vue';
 import MyQuestion from '@/components/MyQuestion.vue';
 import MyAnswer from '@/components/MyAnswer.vue';
@@ -63,10 +62,10 @@ export default class MyPage extends Vue {
     const claims = JSON.parse(atob(this.getToken().split('.')[1]));
     this.userName = claims.name;
     this.userId = claims.uid;
-  };
+  }
   private getToken(): any {
     return localStorage.getItem('token');
-  };
+  }
   private changeMode(mode: string): void {
     this.mode = mode;
   }
