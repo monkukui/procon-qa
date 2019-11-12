@@ -30,10 +30,7 @@
                 <mavon-editor
                   :toolbars="markdownOption"
                   v-model="form.body"
-                  language="ja"
-                  placeholder='質問を記載してね'
-                  :boxShadow="fa"
-                  :ishljs="fa"
+                  language="en"
                 />
               </div>
             </v-col>
@@ -77,8 +74,6 @@
         url: '',
       })
       return {
-        tr: true,
-        fa: false,
         form: Object.assign({}, defaultForm),
         rules: {
           title: [val => (val || '').length > 0 || 'この項目は必須です'],
@@ -89,7 +84,6 @@
         content: `誓約書`,
         snackbar: false,
         terms: false,
-
         markdownOption: {
           bold: true,
           italic: true,
@@ -133,7 +127,6 @@
         var Hour = String(now.getHours());
         var Min = String(now.getMinutes());
         var Sec = String(now.getSeconds());
-
         if(Hour.length == 1) Hour = '0' + Hour;
         if(Min.length == 1) Min = '0' + Hour;
         if(Sec.length == 1) Sec = '0' + Hour;
