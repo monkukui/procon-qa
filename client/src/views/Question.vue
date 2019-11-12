@@ -1,13 +1,23 @@
 <template>
   <div class="question">
-    <QuestionPanelDetail
-      :title="title"
-      :body="body"
-      :questionedTime="questionedTime"
-    />
 
-    <Answers />
-    <AnswerForm />
+    <v-container fluid>
+      <v-row>
+        <v-col cols="12" sm="8">
+          <QuestionPanelDetail
+            :title="title"
+            :body="body"
+            :questionedTime="questionedTime"
+            />
+        </v-col>
+        <v-col cols="12" sm="8">
+          <Answers />
+        </v-col>
+        <v-col cols="12" sm="8">
+          <AnswerForm />
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 

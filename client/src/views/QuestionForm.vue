@@ -30,7 +30,10 @@
                 <mavon-editor
                   :toolbars="markdownOption"
                   v-model="form.body"
-                  language="en"
+                  language="ja"
+                  placeholder='質問を記載してね'
+                  :boxShadow="fa"
+                  :ishljs="fa"
                 />
               </div>
             </v-col>
@@ -74,6 +77,8 @@
         url: '',
       })
       return {
+        tr: true,
+        fa: false,
         form: Object.assign({}, defaultForm),
         rules: {
           title: [val => (val || '').length > 0 || 'この項目は必須です'],

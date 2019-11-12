@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-item v-slot:default="{ active, toggle }">
-      <v-card
+      <v-list-item-avatar
         class="d-flex align-center"
+        size="60"
         :color="color"
-        height="60"
       >
         <v-scroll-y-transition>
           <div
@@ -16,7 +16,7 @@
             </div>
           </div>
         </v-scroll-y-transition>
-      </v-card>
+      </v-list-item-avatar>
     </v-item>
   </div>
 </template>

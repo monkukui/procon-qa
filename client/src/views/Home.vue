@@ -1,7 +1,13 @@
 <template>
   <div class="home">
     <div class="main-contents">
-      <Questions />
+      <v-container fluid>
+        <v-row>
+          <v-col col="12" sm="8">
+            <Questions />
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
   </div>
 </template>

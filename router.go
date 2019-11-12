@@ -14,6 +14,8 @@ func newRouter() *echo.Echo {
 
 	e.Static("/js", "client/dist/js")
 	e.Static("/css", "client/dist/css")
+  e.Static("/fonts", "client/dist/fonts")
+  e.Static("/img", "client/dist/img")
 	e.File("/", "client/dist/index.html")
 	e.File("/signup", "public/signup.html")
 	e.POST("/signup", handler.Signup)
@@ -26,6 +28,7 @@ func newRouter() *echo.Echo {
 
 	// questions
 	api.GET("/questions", handler.GetAllQuestions)            // 質問の全取得
+	api.GET("/questions/count", handler.GetQuestionSize)            // 質問の個数を取得
 	api.GET("/questions/:page", handler.GetQuestionsWithPage) // 質問をページ全取得
 	api.GET("/user-questions/:page", handler.GetUserQuestionsWithPage) // 質問を 1 つ取得
 	api.GET("/question/:id", handler.GetQuestion)             // 質問を 1 つ取得

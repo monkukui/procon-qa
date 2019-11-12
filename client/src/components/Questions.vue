@@ -18,10 +18,9 @@
         :questionId="value.id"
       />
     </div>
-
     <v-pagination
       v-model="curPageId"
-      :length="20"
+      :length="length"
       :total-visible="7"
       circle
     ></v-pagination>
@@ -49,10 +48,28 @@ export default class Questions extends Vue {
   private user: string = '';
   // FIXME any
   private questions = [];
+  private totalQuestions: number = 10;
+  private length: number = 1;
 
   private created(): void {
     // this.getQuestions();
     this.getQuestionsWithPage();
+    this.getTotalQuestion();
+  }
+
+  // 質問数を取得する
+  private getTotalQuestion(): void {
+    const url = 'api/questions/count';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((cnt) => {
+      this.totalQuestions = cnt
+      this.length = (this.totalQuestions + 9) / 10; // 切り上げ
+    });
   }
 
   // 質問をページ取得する

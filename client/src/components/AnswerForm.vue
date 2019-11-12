@@ -1,13 +1,15 @@
 <template>
   <div class="answer-form">
     
-    <v-textarea
-      v-model="text"
-      color="blue darken-2"
-      label="回答"
-      required
-      width="7px"
-    ></v-textarea>
+    <div class="mavon-editor">
+      <mavon-editor
+        :toolbars="markdownOption"
+        v-model="text"
+        placeholder='回答'
+        :boxShadow="fa"
+        :ishljs="fa"
+      />
+    </div>
     <v-btn
       color="primary"
       @click="answer"
@@ -25,6 +27,40 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 })
 export default class AnswerForm extends Vue {
+  
+
+  private markdownOption: any = {
+    bold: true,
+    italic: true,
+    header: true,
+    underline: true,
+    strikethrough: true,
+    mark: true,
+    quote: true,
+    ol: true,
+    ul: true,
+    code: true,
+    table: true,
+    help: true,
+    alignleft: true,
+    aligncenter: true,
+    alignright: true,
+    subfield: true,
+    preview: true,
+    // false
+    link: false,
+    imagelink: false,
+    superscript: false,
+    subscript: false,
+    undo: false,
+    redo: false,
+    fullscreen: false,
+    readmodel: false,
+    htmlcode: false,
+    trash: false,
+    save: false,
+    navigation: false,
+  };
 
   private questionId!: number;
   private text: string = '';
@@ -66,3 +102,9 @@ export default class AnswerForm extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.mavon-editor {
+  z-index: 0;
+}
+</style>
