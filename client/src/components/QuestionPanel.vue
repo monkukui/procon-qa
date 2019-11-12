@@ -92,7 +92,7 @@ export default class QuestionPanel extends Vue {
 
   private init(): void {
     // TODO api/question/:id (GET) を叩く
-    const url = 'api/question/' + String(this.questionId);
+    const url = '/api/no-auth/question/' + String(this.questionId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {

@@ -121,7 +121,7 @@ export default class QuestionPanelDetail extends Vue {
   }
 
   private createQuestion(): void {
-    const url = 'api/question/' + String(this.questionId);
+    const url = '/api/no-auth/question/' + String(this.questionId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
@@ -137,7 +137,7 @@ export default class QuestionPanelDetail extends Vue {
 
   private setUser(): void {
 
-    const url = 'api/user/' + String(this.question.uid);
+    const url = 'api/no-auth/user/' + String(this.question.uid);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {

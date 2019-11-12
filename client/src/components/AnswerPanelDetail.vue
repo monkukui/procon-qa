@@ -86,9 +86,8 @@ export default class AnswerPanelDetail extends Vue {
     this.createAnswer();
   }
 
-
   private createAnswer(): void {
-    const url = 'api/answer/' + String(this.answerId);
+    const url = 'api/no-auth/answer/' + String(this.answerId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
@@ -104,7 +103,7 @@ export default class AnswerPanelDetail extends Vue {
 
   private setUser(): void {
 
-    const url = 'api/user/' + String(this.answer.uid);
+    const url = 'api/no-auth/user/' + String(this.answer.uid);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {

@@ -24,9 +24,18 @@ func newRouter() *echo.Echo {
 
   api := e.Group("/api")
 	api.Use(middleware.JWTWithConfig(handler.Config))
-	// ここから変更した
 
-	// questions
+  // 認証なしで呼べる api たち
+  noAuth := e.Group("/api/no-auth")
+	noAuth.GET("/questions", handler.GetAllQuestions)            // 質問の全取得
+	noAuth.GET("/questions/count", handler.GetQuestionSize)      // 質問の個数を取得
+	noAuth.GET("/questions/:page", handler.GetQuestionsWithPage) // 質問をページ全取得
+	noAuth.GET("/question/:id", handler.GetQuestion)             // 質問を 1 つ取得
+	noAuth.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
+	noAuth.GET("/answer/:id", handler.GetAnswer)                 // 回答を 1 つ取得
+  noAuth.GET("/user/:uid", handler.GetUser)                    // user_id から ユーザー名を取得
+
+  // questions
 	api.GET("/questions", handler.GetAllQuestions)            // 質問の全取得
 	api.GET("/questions/count", handler.GetQuestionSize)            // 質問の個数を取得
 	api.GET("/questions/:page", handler.GetQuestionsWithPage) // 質問をページ全取得
