@@ -21,6 +21,10 @@ type Answers []Answer
 
 // 回答 を作成
 func CreateAnswer(a *Answer) {
+  questions := FindQuestions(&Question{ID: a.QID})
+  // questions[0] の 回答数をインクリメント
+  questions[0].AnswerCount++
+  UpdateQuestion(&questions[0])
 	db.Create(a)
 }
 
@@ -43,8 +47,12 @@ func FindAnswersWithPage(a *Answer, page int, length int) Answers {
 // answer を 1 つ削除
 func DeleteAnswer(a *Answer) error {
 	if rows := db.Where(a).Delete(&Answer{}).RowsAffected; rows == 0 {
-		return fmt.Errorf("Could not find Todo (%v) to delete", a)
+		return fmt.Errorf("Could not find answer (%v) to delete", a)
 	}
+  questions := FindQuestions(&Question{ID: a.QID})
+  // questions[0] の 回答数をインクリメント
+  questions[0].AnswerCount--
+  UpdateQuestion(&questions[0])
 	return nil
 }
 

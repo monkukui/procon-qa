@@ -1,6 +1,7 @@
 <template>
 <!-- App.vue -->
 <v-app>
+  <div class="bar">
   <v-navigation-drawer
     app
     dark
@@ -79,7 +80,8 @@
       </v-list>
     <!-- -->
   </v-navigation-drawer>
-  
+  </div>
+
   <div class="bar">
   <v-app-bar
     app
@@ -162,5 +164,8 @@ export default class App extends Vue {
 <style scoped>
 .bar {
   z-index: 2147483647;
+}
+.draw {
+  z-index: 2147483647 - 1;
 }
 </style>

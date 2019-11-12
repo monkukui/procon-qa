@@ -5,12 +5,6 @@ import (
 	"strconv"
   "fmt"
 	"github.com/labstack/echo"
-	// c-color さんに依存しちゃってる...
-	// なんとか再現性があるように作り変えることができないもんかね...?
-	// でも, wifi なくても起動できるんだよなぁ
-	// どこを参照しているんだろう.....
-	// "github.com/x-color/simple-webapp/model"
-	// ? できたのか ?
 	"github.com/monkukui/procon-qa/model"
 )
 
@@ -26,6 +20,13 @@ func GetAllQuestions(c echo.Context) error {
 	return c.JSON(http.StatusOK, questions)
 }
 
+// questions のサイズを取得する
+func GetQuestionSize(c echo.Context) error {
+  questions := model.FindQuestions(&model.Question{})
+  cnt := len(questions)
+  return c.JSON(http.StatusOK, cnt)
+}
+
 // 質問をページ取得する
 func GetQuestionsWithPage(c echo.Context) error {
 	uid := userIDFromToken(c)
@@ -34,7 +35,7 @@ func GetQuestionsWithPage(c echo.Context) error {
 	}
 
 	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
-	PageLength := 5                              // 1 ページあたりの長さ
+	PageLength := 10                             // 1 ページあたりの長さ
 
 	if err != nil {
 		return echo.ErrNotFound
@@ -52,7 +53,7 @@ func GetUserQuestionsWithPage(c echo.Context) error {
 	}
 
 	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
-	PageLength := 5                              // 1 ページあたりの長さ
+	PageLength := 10                             // 1 ページあたりの長さ
 
 	if err != nil {
 		return echo.ErrNotFound

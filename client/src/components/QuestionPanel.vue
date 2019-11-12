@@ -1,7 +1,6 @@
 <template>
   <div class="question-panel">
     <v-card
-      max-width="1000"
       class="mx-auto"
       color="white"
     >
@@ -18,21 +17,21 @@
       <v-divider class="mx-4"></v-divider>
   
       <v-row style="margin-left: 1%;">
-        <v-col md="1">
+        <v-col col="12" sm="2">
           <SquarePanel 
             message="回答数"
-            num=3
+            :num="question.answerCount"
             color="blue-grey"
           />
         </v-col>
-        <v-col md="1">
-          <SquarePanel 
+        <v-col col="12" sm="2">
+          <SquarePanel
             message="閲覧数"
             num=10
             color="blue-grey"
           />
         </v-col>
-        <v-col md="1">
+        <v-col col="12" sm="2">
           <SquarePanel
             v-if="question.completed"
             message="解決済"
@@ -132,12 +131,10 @@ export default class QuestionPanel extends Vue {
 .question-panel {
   margin: 3%;
 }
-
 .tag {
   margin-bottom: 1%;
   margin-left: 2%;
 }
-
 .title {
   color: #0288D1;
   text-decoration: none;
@@ -146,12 +143,7 @@ export default class QuestionPanel extends Vue {
   color: #29B6F6;
   text-decoration: none;
 }
-
 .small {
   font-size: 75%;
 }
-
-.question-panel {
-}
-  
 </style>

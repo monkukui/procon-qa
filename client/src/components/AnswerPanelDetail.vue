@@ -1,15 +1,19 @@
 <template>
   <div class="answer-panel-detail">
     <v-card
-      max-width="1000"
       class="mx-auto"
     >
-
     <v-row>
       <v-col md="8"> 
-        <v-card-text>
-          {{ answer.body }}
-        </v-card-text>
+        <div class="mavon-editor">
+          <mavon-editor
+            v-model="answer.body"
+            defaultOpen="preview"
+            :toolbarsFlag="fa"
+            :subfield="fa"
+            :boxShadow="fa"
+          />
+        </div>
       </v-col>
       <v-col md="4">
         <v-card
@@ -72,6 +76,10 @@ export default class AnswerPanelDetail extends Vue {
     "favo": number,
   */
 
+  // どうにかならんか?
+  private tr: boolean = true;
+  private fa: boolean = false;
+
   private userName: string = '';
 
   private created(): void {
@@ -116,13 +124,10 @@ export default class AnswerPanelDetail extends Vue {
 </script>
 
 <style scoped>
-
-.small {
-  font-size: 75%;
-}
-
 .answer-panel-detail {
-  margin: 2%;
+  margin-top: 5px;
 }
-  
+.mavon-editor {
+  z-index: 0;
+}
 </style>

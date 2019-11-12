@@ -1,88 +1,87 @@
 <template>
-  <v-card
-    max-width="1000"
-    class="mx-auto"
-  >
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title class="headline">
-          {{ question.title }}
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <v-divider class="mx-4"></v-divider>
+  <div class="question-panel-detail">
+    <v-card
+      class="mx-auto"
+    >
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="headline">
+            {{ question.title }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-divider class="mx-4"></v-divider>
 
-    <v-row>
-      <v-col md="8"> 
-        <v-card-text>
-          <div class="mavon-editor">
-            <mavon-editor 
-              :toolbars="markdownOption" 
-              v-model="question.body"
-              defaultOpen="preview"
-              :toolbarsFlag="fa"
-              :editable="tr"
-              :subfield="fa"
-              :boxShadow="fa"
-              />
-            </div>
-        </v-card-text>
-        <v-btn
-          class="tag"
-          color="blue-grey lighten-4"
-          x-small
-        >
-          tag (仮)
+      <v-row>
+        <v-col md="8"> 
+          <v-card-text>
+            <div class="mavon-editor">
+              <mavon-editor 
+                v-model="question.body"
+                defaultOpen="preview"
+                :toolbarsFlag="fa"
+                :subfield="fa"
+                :boxShadow="fa"
+                />
+              </div>
+          </v-card-text>
+          <v-btn
+            class="tag"
+            color="blue-grey lighten-4"
+            x-small
+          >
+            tag (仮)
+          </v-btn>
+          <v-btn
+            class="tag"
+            color="blue-grey lighten-4"
+            x-small
+          >
+            tag (仮)
+          </v-btn>
+          <v-btn
+            class="tag"
+            color="blue-grey lighten-4"
+            x-small
+          >
+            tag (仮)
+          </v-btn>
+        </v-col>
+        <v-col md="4">
+          <v-card-text>URL: <a :href="question.url">{{ question.url }}</a></v-card-text>
+          <v-card-text>ステータス: {{ question.state }}</v-card-text>
+          <v-card
+            class="mx-auto"
+            max-width="300"
+            outlined
+            color="teal lighten-5"
+          >
+            <v-list-item three-line>
+              <v-list-item-content>
+                <div>質問者</div>
+                <v-list-item-title class="headline mb-1">{{ userName }}</v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-avatar
+                circle
+                size="80"
+                color="grey"
+              ></v-list-item-avatar>
+            </v-list-item>
+          </v-card>
+        </v-col>
+      </v-row>
+      
+      <v-card-actions>
+        <v-card-text>投稿日時: {{ question.date }}</v-card-text>
+        <v-btn icon>
+          <v-icon>mdi-heart</v-icon>
         </v-btn>
-        <v-btn
-          class="tag"
-          color="blue-grey lighten-4"
-          x-small
-        >
-          tag (仮)
-        </v-btn>
-        <v-btn
-          class="tag"
-          color="blue-grey lighten-4"
-          x-small
-        >
-          tag (仮)
-        </v-btn>
-      </v-col>
-      <v-col md="4">
-        <v-card-text>URL: <a :href="question.url">{{ question.url }}</a></v-card-text>
-        <v-card-text>ステータス: {{ question.state }}</v-card-text>
-        <v-card
-          class="mx-auto"
-          max-width="300"
-          outlined
-          color="teal lighten-5"
-        >
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div>質問者</div>
-              <v-list-item-title class="headline mb-1">{{ userName }}</v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-avatar
-              circle
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-        </v-card>
-      </v-col>
-    </v-row>
-    
-    <v-card-actions>
-      <v-card-text>投稿日時: {{ question.date }}</v-card-text>
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
-      </v-btn> 
-    </v-card-actions>
-  </v-card>
+        <v-btn icon>
+          <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
+        </v-btn> 
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -173,7 +172,6 @@ export default class QuestionPanelDetail extends Vue {
   font-size: 75%;
 }
 .question-panel-detail {
-  margin: 3%;
 }
 
 .tag {

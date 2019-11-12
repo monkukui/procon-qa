@@ -11,12 +11,14 @@ type Question struct {
 	ID  int `json:"id" gorm:"praimaly_key"` // Id (インクリメント)
 
 	// 以下, 質問の構成要素たち
-	Title     string `json:"title"`
-	Body      string `json:"body"`
-	Url       string `json:"url"`
-	State     string `json:"state"`
-	Date      string `json:"date"`
-	Completed bool   `json:"completed"`
+	Title          string `json:"title"`
+	Body           string `json:"body"`
+	Url            string `json:"url"`
+	Date           string `json:"date"`
+	Completed      bool   `json:"completed"`
+
+  AnswerCount    int    `json:"answerCount"`
+  FavoriteCount  int    `json:"favoriteCount"`
 }
 
 // Question の配列として定義
@@ -57,9 +59,10 @@ func UpdateQuestion(q *Question) error {
 		"title":     q.Title,
 		"body":      q.Body,
 		"url":       q.Url,
-    "state":     q.State,
     "date":      q.Date,
 		"completed": q.Completed,
+    "answerCount": q.AnswerCount,
+    "favoriteCount": q.FavoriteCount,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", q)
