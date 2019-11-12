@@ -22,10 +22,15 @@
                 :toolbarsFlag="fa"
                 :subfield="fa"
                 :boxShadow="fa"
-                />
-              </div>
+              />
+            </div>
           </v-card-text>
-          <v-btn
+          <v-card-text
+            v-if="question.url"
+          >
+            URL: <a :href="question.url">{{ question.url }}</a>
+          </v-card-text>
+          <!--v-btn
             class="tag"
             color="blue-grey lighten-4"
             x-small
@@ -45,11 +50,9 @@
             x-small
           >
             tag (仮)
-          </v-btn>
+          </v-btn-->
         </v-col>
         <v-col md="4">
-          <v-card-text>URL: <a :href="question.url">{{ question.url }}</a></v-card-text>
-          <v-card-text>ステータス: {{ question.state }}</v-card-text>
           <v-card
             class="mx-auto"
             max-width="300"

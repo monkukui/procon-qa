@@ -157,6 +157,10 @@ export default {
     },
   },
   methods: {
+    resetForm() {
+      this.form = Object.assign({}, this.defaultForm);
+      this.$refs.form.reset();
+    },
     focusTitle() {
       this.focus = 'title';
     },

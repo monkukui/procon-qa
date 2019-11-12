@@ -7,13 +7,13 @@
       <v-card-title>
         <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link >
       </v-card-title>
-      <v-btn
+      <!--v-btn
         class="tag"
         color="blue-grey lighten-4"
         x-small
       >
         タグ {{ question.tid }}
-      </v-btn>
+      </v-btn-->
       <v-divider class="mx-4"></v-divider>
   
       <v-row style="margin-left: 1%;">

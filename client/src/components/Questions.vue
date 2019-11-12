@@ -22,7 +22,6 @@
       v-model="curPageId"
       :length="length"
       :total-visible="7"
-      circle
     ></v-pagination>
 
   </div>
