@@ -3,17 +3,17 @@
 
     <v-container fluid>
       <v-row>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="10">
           <QuestionPanelDetail
             :title="title"
             :body="body"
             :questionedTime="questionedTime"
             />
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="10">
           <Answers />
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="10">
           <AnswerForm />
         </v-col>
       </v-row>

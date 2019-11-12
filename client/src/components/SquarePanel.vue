@@ -2,9 +2,10 @@
   <div>
     <v-item v-slot:default="{ active, toggle }">
       <v-list-item-avatar
-        class="d-flex align-center"
+        class="tile"
         size="60"
         :color="color"
+        tile
       >
         <v-scroll-y-transition>
           <div
@@ -12,6 +13,7 @@
           >
             <div style="color: white;" class="font-weight-bold">
               {{ message }}
+              <br>
               {{ num }}
             </div>
           </div>
@@ -37,5 +39,7 @@ export default class SquarePanel extends Vue {
 </script>
 
 <style>
-
+.tile{
+  border-radius: 15%;
+}
 </style>
