@@ -29,7 +29,7 @@ import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
     AnswerPanelDetail,
   },
 })
-export default class Answers extends Vue {
+export default class UserAnswers extends Vue {
 
   private curPageId: number = 1;
 

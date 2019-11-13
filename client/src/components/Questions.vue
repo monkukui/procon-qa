@@ -1,29 +1,31 @@
 <template>
   <div class="questions">
-    
-    <!--div v-for="question in questions">
-      {{ question }}
-    </div-->
-    <!--v-pagination
-      v-model="curPageId"
-      :length="20"
-      :total-visible="7"
-      circle
-    ></v-pagination-->
-
-    <div v-for="(value, index) in questions" :key=index>
-      <!-- answerd とか, questionedTime とかの命名規則を揃える -->
-      <!-- 子コンポーネントには QuestionId だけを渡す-->
-      <QuestionPanel
-        :questionId="value.id"
-      />
-    </div>
     <v-pagination
       v-model="curPageId"
       :length="length"
       :total-visible="7"
     ></v-pagination>
-
+    <div v-if="isReady">
+      <div v-for="(value, index) in questions" :key=index>
+        <!-- answerd とか, questionedTime とかの命名規則を揃える -->
+        <!-- 子コンポーネントには QuestionId だけを渡す-->
+        <QuestionPanel
+          :questionId="value.id"
+        />
+      </div>
+      <v-pagination
+        v-model="curPageId"
+        :length="length"
+        :total-visible="7"
+      ></v-pagination>
+    </div>
+    <div v-else>
+      <v-progress-circular
+        :size="100"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </div>
   </div>
 </template>
 
@@ -43,6 +45,8 @@ export default class Questions extends Vue {
   private fal: boolean = false;
 
   private curPageId: number = 1;
+
+  private isReady: boolean = false;
 
   private user: string = '';
   // FIXME any
@@ -73,6 +77,7 @@ export default class Questions extends Vue {
 
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
+    this.isReady = false;
     const url = '/api/no-auth/questions/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
@@ -84,6 +89,7 @@ export default class Questions extends Vue {
     }).then((json) => {
       this.questions = [];
       this.questions = json;
+      this.isReady = true;
     });
   }
 

@@ -12,6 +12,10 @@ module.exports = {
       "/api": {
         target: "http://localhost:8080",
         changeOrigin: true
+      },
+      "/api/no-auth": {
+        target: "http://localhost:8080",
+        changeOrigin: true
       }
     }
   }
