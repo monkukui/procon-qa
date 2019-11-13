@@ -6,9 +6,23 @@
     <div v-for="(value, index) in questions" :key=index>
       <!-- answerd とか, questionedTime とかの命名規則を揃える -->
       <!-- 子コンポーネントには QuestionId だけを渡す-->
-      <QuestionPanel
+      <v-expansion-panels>
+        <v-expansion-panel style="margin-top: 1%;">
+          <v-expansion-panel-header>
+
+            <router-link class="title" :to="{ name: 'question', query: { questionId: value.id }}" >{{ value.title }}</router-link >
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            回答数: {{ value.answerCount }}
+            いいね: {{ value.favoriteCount }}
+            {{ value.completed }}
+            {{ value.date }}
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+      <!--QuestionPanel
         :questionId="value.id"
-      />
+      /-->
     </div>
 
     <v-pagination
@@ -30,7 +44,7 @@ import QuestionPanel from '@/components/QuestionPanel.vue';
     QuestionPanel,
   },
 })
-export default class Questions extends Vue {
+export default class UserQuestions extends Vue {
 
   // FIXME boolean の変数を作る
   private tr: boolean = true;
@@ -90,6 +104,12 @@ export default class Questions extends Vue {
 </script>
 
 <style scoped>
-.questions {
+.title {
+  color: #0288D1;
+  text-decoration: none;
+}
+.title:hover {
+  color: #29B6F6;
+  text-decoration: none;
 }
 </style>

@@ -1,9 +1,9 @@
-export type Answer = {
+export interface Answer {
 
-  id: number
-  uid?: number
-  qid: number
+  id: number;
+  uid?: number;
+  qid: number;
 
-  body: string
-  date: string
+  body: string;
+  date: string;
 }
