@@ -4,6 +4,7 @@
       <v-container fluid>
         <v-row>
           <v-col col="12" sm="8">
+            <QuestionSetting />
             <Questions />
           </v-col>
           <v-col col="12" sm="4">
@@ -89,10 +90,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Questions from '@/components/Questions.vue';
+import QuestionSetting from '@/components/QuestionSetting.vue';
 
 @Component({
   components: {
     Questions,
+    QuestionSetting,
   },
 })
 export default class Home extends Vue {
