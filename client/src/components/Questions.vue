@@ -122,7 +122,7 @@ export default class Questions extends Vue {
 
   // mode が変われば，質問
   @Watch('mode')
-  private pageChanged(): void {
+  private modeChanged(): void {
     this.getQuestionsWithPage();
   }
 }
