@@ -15,10 +15,11 @@ type Question struct {
 	Body           string `json:"body"`
 	Url            string `json:"url"`
 	Date           string `json:"date"`
-	Completed      bool   `json:"completed"`
 
-  AnswerCount    int    `json:"answerCount"`
-  FavoriteCount  int    `json:"favoriteCount"`
+    Completed      bool   `json:"completed"`
+    AnswerCount    int    `json:"answerCount"`
+    FavoriteCount  int    `json:"favoriteCount"`
+    BrowseCount    int    `json:"browseCount"`
 }
 
 // Question の配列として定義
@@ -39,9 +40,9 @@ func FindQuestions(q *Question) Questions {
 
 // 条件を満たす「質問」を, 固定長取得する
 // page := ページ番号( 1-indexed ),  length := 1 ページあたりのアイテム数
-func FindQuestionsWithPage(q *Question, page int, length int) Questions {
+func FindQuestionsWithPage(q *Question, page int, length int, orderMode string) Questions {
 	var questions Questions
-	db.Where(q).Limit(length).Offset(length * (page - 1)).Find(&questions)
+	db.Where(q).Limit(length).Offset(length * (page - 1)).Order(orderMode).Order("id").Find(&questions)
 	return questions
 }
 
@@ -59,10 +60,11 @@ func UpdateQuestion(q *Question) error {
 		"title":     q.Title,
 		"body":      q.Body,
 		"url":       q.Url,
-    "date":      q.Date,
+        "date":      q.Date,
 		"completed": q.Completed,
-    "answerCount": q.AnswerCount,
-    "favoriteCount": q.FavoriteCount,
+        "answerCount": q.AnswerCount,
+        "favoriteCount": q.FavoriteCount,
+        "browseCount" : q.BrowseCount,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", q)

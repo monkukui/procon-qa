@@ -40,6 +40,9 @@ import QuestionPanel from '@/components/QuestionPanel.vue';
 })
 export default class Questions extends Vue {
 
+  @Prop()
+  private mode!: number;
+
   // FIXME boolean の変数を作る
   private tr: boolean = true;
   private fal: boolean = false;
@@ -78,7 +81,7 @@ export default class Questions extends Vue {
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
     this.isReady = false;
-    const url = '/api/no-auth/questions/' + String(this.curPageId);
+    const url = '/api/no-auth/questions/' + String(this.curPageId) + '/' + String(this.mode);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
@@ -113,6 +116,12 @@ export default class Questions extends Vue {
 
   // ページが変われば, 質問を取得し直す
   @Watch('curPageId')
+  private pageChanged(): void {
+    this.getQuestionsWithPage();
+  }
+
+  // mode が変われば，質問
+  @Watch('mode')
   private pageChanged(): void {
     this.getQuestionsWithPage();
   }

@@ -4,8 +4,13 @@
       <v-container fluid>
         <v-row>
           <v-col col="12" sm="8">
-            <QuestionSetting />
-            <Questions />
+            <QuestionSetting 
+              @click="changeMode"
+              :curMode="mode"
+            />
+            <Questions 
+              :mode="mode"
+            />
           </v-col>
           <v-col col="12" sm="4">
             <v-card
@@ -99,6 +104,10 @@ import QuestionSetting from '@/components/QuestionSetting.vue';
   },
 })
 export default class Home extends Vue {
+  private mode: number = 1;  // 新着, 回答数, 閲覧数, いいね, 解決済みかどうか
+  private changeMode(mode: number): void {
+    this.mode = mode;
+  }
 }
 </script>
 
