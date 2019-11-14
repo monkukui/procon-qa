@@ -1,5 +1,6 @@
 <template>
   <div class="myprofile">
+    <hr>
     <p>{{ userName }} さん，こんにちは．</p>
   </div>
 </template>

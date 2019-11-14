@@ -36,13 +36,25 @@ func GetQuestionsWithPage(c echo.Context) error {
 	// }
 
 	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
+	modeId, err := strconv.Atoi(c.Param("mode"))        // ソートの設定
 	PageLength := 10                             // 1 ページあたりの長さ
 
 	if err != nil {
 		return echo.ErrNotFound
 	}
+	mode := "id"
 
-	questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength)
+    if modeId == 2 {
+      mode = "answerCount"
+    } else if modeId == 3 {
+      mode = "browseCount"
+    } else if modeId == 4 {
+      mode = "favoriteCount"
+    } else if modeId == 5 {
+      mode = "completed"
+    }
+
+	questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength, mode)
 	return c.JSON(http.StatusOK, questions)
 }
 
@@ -60,7 +72,7 @@ func GetUserQuestionsWithPage(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength)
+  questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id")
 	return c.JSON(http.StatusOK, questions)
 }
 

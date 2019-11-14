@@ -2,7 +2,6 @@
   <div class="user-answers">
     <hr>
     <h1>回答一覧</h1>
-    
     <div v-for="(value, index) in answers" :key=index>
       <!-- answerd とか, answeredTime とかの命名規則を揃える -->
       <!-- 子コンポーネントには QuestionId だけを渡す-->
