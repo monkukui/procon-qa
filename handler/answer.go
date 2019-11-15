@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
-  //"fmt"
+    // "fmt"
 	"github.com/labstack/echo"
 	// c-color さんに依存しちゃってる...
 	// なんとか再現性があるように作り変えることができないもんかね...?
@@ -13,6 +13,11 @@ import (
 	// ? できたのか ?
 	"github.com/monkukui/procon-qa/model"
 )
+
+// answers のサイズを取得する
+func GetAnswerSize(c echo.Context) error {
+  return c.JSON(http.StatusOK, len(model.FindAnswers(&model.Answer{})))
+}
 
 // 質問に紐ずいた, 回答を全取得する
 func GetAnswersForQuestion(c echo.Context) error {

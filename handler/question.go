@@ -22,9 +22,12 @@ func GetAllQuestions(c echo.Context) error {
 
 // questions のサイズを取得する
 func GetQuestionSize(c echo.Context) error {
-  questions := model.FindQuestions(&model.Question{})
-  cnt := len(questions)
-  return c.JSON(http.StatusOK, cnt)
+  return c.JSON(http.StatusOK, len(model.FindQuestions(&model.Question{})))
+}
+
+// 解決済みの質問のサイズを取得
+func GetCompletedQuestionSize(c echo.Context) error {
+  return c.JSON(http.StatusOK, len(model.FindQuestions(&model.Question{Completed: true})))
 }
 
 // 質問をページ取得する
@@ -137,9 +140,7 @@ func BrowseQuestion(c echo.Context) error {
   }
 
   question := questions[0]
-  fmt.Println(question.BrowseCount)
   question.BrowseCount++
-  fmt.Println(question.BrowseCount)
   if err := model.UpdateQuestion(&question); err != nil {
     return echo.ErrNotFound
   }
