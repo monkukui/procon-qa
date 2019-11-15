@@ -29,7 +29,7 @@ export default class SiteInformation extends Vue {
   private totalQuestions: number = 0;
   private totalAnswers: number = 0;
   private totalUsers: number = 0;
-  private completedRate: number = 0.0;
+  private completedRate: string = '0.0';
 
   private created(): void {
     this.getTotalQuestion();
