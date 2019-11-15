@@ -73,7 +73,20 @@
           </v-card>
         </v-col>
       </v-row>
-      
+      <v-chip
+        class="ma-2"
+        color="pink"
+        text-color="white"
+        @click="favoriteQuestion"
+      >
+        <v-avatar
+          left
+          class="pink darken-4"
+        >
+        {{ question.favoriteCount }}
+        </v-avatar>
+        いいね
+      </v-chip>
       <v-card-actions>
         <v-card-text>投稿日時: {{ question.date }}</v-card-text>
         <v-btn icon>
@@ -127,7 +140,9 @@ export default class QuestionPanelDetail extends Vue {
     const url = 'api/question/' + String(this.questionId) + '/favorite';
     const method = 'put';
     const headers = {authorization: `Bearer ${this.getToken()}`};
-    fetch(url, {method, headers});
+    fetch(url, {method, headers}).then(() => {
+      this.createQuestion();
+    });
   }
 
   private browseQuestion(): void {
