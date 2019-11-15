@@ -10,4 +10,8 @@ export interface Question {
   state?: string;
   url?: string;
   completed: boolean;
+
+  favoriteCount: number;
+  answerCount: number;
+  browseCount: number;
 }

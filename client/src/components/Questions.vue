@@ -54,7 +54,7 @@ export default class Questions extends Vue {
   private user: string = '';
   // FIXME any
   private questions = [];
-  private totalQuestions: number = 10;
+  private totalQuestions: number = 0;
   private length: number = 1;
 
   private created(): void {
