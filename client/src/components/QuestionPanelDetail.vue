@@ -77,7 +77,7 @@
       <v-card-actions>
         <v-card-text>投稿日時: {{ question.date }}</v-card-text>
         <v-btn icon>
-          <v-icon>mdi-heart</v-icon>
+          <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
         </v-btn>
         <v-btn icon>
           <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
@@ -123,6 +123,20 @@ export default class QuestionPanelDetail extends Vue {
     fetch(url, {method, headers});
   }
 
+  private favoriteQuestion(): void {
+    const url = 'api/question/' + String(this.questionId) + '/favorite';
+    const method = 'put';
+    const headers = {authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {method, headers});
+  }
+
+  private browseQuestion(): void {
+    const url = 'api/no-auth/question/' + String(this.questionId) + '/browse';
+    const method = 'put';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {method, headers});
+  }
+
   private createQuestion(): void {
     const url = '/api/no-auth/question/' + String(this.questionId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
@@ -135,6 +149,7 @@ export default class QuestionPanelDetail extends Vue {
     }).then((json) => {
       this.question = json;
       this.setUser();
+      this.browseQuestion();
     });
   }
 

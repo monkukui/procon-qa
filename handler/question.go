@@ -93,6 +93,59 @@ func GetQuestion(c echo.Context) error {
 	return c.JSON(http.StatusOK, question)
 }
 
+// いいねをする
+func FavoriteQuestion(c echo.Context) error {
+  uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+  questionID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  questions := model.FindQuestions(&model.Question{ID: questionID})
+  fmt.Println(len(questions))
+  if len(questions) == 0 {
+    return echo.ErrNotFound
+  }
+
+  question := questions[0]
+  if question.UID == uid {
+    // 自分の質問にいいねはできません
+    return echo.ErrNotFound
+  }
+  question.FavoriteCount++
+  if err := model.UpdateQuestion(&question); err != nil {
+    return echo.ErrNotFound
+  }
+  return c.NoContent(http.StatusNoContent)
+}
+
+// 閲覧数をインクリメント
+func BrowseQuestion(c echo.Context) error {
+    fmt.Println("in go")
+  questionID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  questions := model.FindQuestions(&model.Question{ID: questionID})
+  if len(questions) == 0 {
+    return echo.ErrNotFound
+  }
+
+  question := questions[0]
+  fmt.Println(question.BrowseCount)
+  question.BrowseCount++
+  fmt.Println(question.BrowseCount)
+  if err := model.UpdateQuestion(&question); err != nil {
+    return echo.ErrNotFound
+  }
+  return c.NoContent(http.StatusNoContent)
+}
+
 // 質問を投稿する
 func PostQuestion(c echo.Context) error {
 	question := new(model.Question)
@@ -156,7 +209,6 @@ func UpdateQuestionCompleted(c echo.Context) error {
 	}
 
   questions := model.FindQuestions(&model.Question{ID: questionID, UID: uid})
-  fmt.Println(len(questions))
   if len(questions) == 0 {
     return echo.ErrNotFound
   }

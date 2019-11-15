@@ -27,7 +27,7 @@
           <v-col col="12" sm="1" style="margin-left: 2%">
             <SquarePanel
               message="閲覧数"
-              num=10
+              :num="question.browseCount"
               color="blue-grey"
             />
           </v-col>
@@ -89,6 +89,10 @@ export default class QuestionPanel extends Vue {
     body: 'body body body body body',
     completed: false,
     date: '',
+
+    favoriteCount: 0,
+    answerCount: 0,
+    browseCount: 0,
   };
 
   private isReady: boolean = false;
@@ -126,7 +130,7 @@ export default class QuestionPanel extends Vue {
 
   private setUser(): void {
 
-    const url = 'api/user/' + String(this.question.uid);
+    const url = 'api/no-auth/user/' + String(this.question.uid);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {

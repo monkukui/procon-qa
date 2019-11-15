@@ -34,6 +34,8 @@ func newRouter() *echo.Echo {
 	noAuth.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
 	noAuth.GET("/answer/:id", handler.GetAnswer)                 // 回答を 1 つ取得
   noAuth.GET("/user/:uid", handler.GetUser)                    // user_id から ユーザー名を取得
+  noAuth.PUT("/question/:id/browse", handler.BrowseQuestion) // 閲覧
+
 
   // questions
 	api.GET("/questions", handler.GetAllQuestions)            // 質問の全取得
@@ -44,6 +46,7 @@ func newRouter() *echo.Echo {
 	api.POST("/questions", handler.PostQuestion)              // 質問の投稿
 	api.DELETE("/question/:id", handler.DeleteQuestion)       // 質問の削除
 	api.PUT("/question/:id/completed", handler.UpdateQuestionCompleted)  // 質問の更新
+	api.PUT("/question/:id/favorite", handler.FavoriteQuestion) // いいね
 
   // answers
 	api.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
