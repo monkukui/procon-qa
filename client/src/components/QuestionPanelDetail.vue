@@ -95,6 +95,9 @@
         <v-btn icon>
           <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
         </v-btn> 
+        <v-btn icon>
+          <v-icon @click="deleteQuestion">mdi-home</v-icon>
+        </v-btn> 
       </v-card-actions>
     </v-card>
   </div>
@@ -189,6 +192,7 @@ export default class QuestionPanelDetail extends Vue {
 
     fetch(url, {method, headers}).then((response) => {
       if (response.ok) {
+        // 質問を削除しました
         this.$router.push('./');
       }
     });

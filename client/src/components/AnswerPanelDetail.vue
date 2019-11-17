@@ -45,6 +45,9 @@
       <v-btn icon>
         <v-icon>mdi-share-variant</v-icon>
       </v-btn> 
+      <v-btn icon>
+        <v-icon @click="deleteAnswer">mdi-home</v-icon>
+      </v-btn> 
     </v-card-actions>
     </v-card>
   </div>
@@ -67,14 +70,6 @@ export default class AnswerPanelDetail extends Vue {
     body: '',
     date: '',
   };
-  /*
-    "uid": number,
-    "qid": number,
-    "id": number,
-    "body": string,
-    "date": string,
-    "favo": number,
-  */
 
   // どうにかならんか?
   private tr: boolean = true;
@@ -112,6 +107,20 @@ export default class AnswerPanelDetail extends Vue {
       return [];
     }).then((json) => {
       this.userName = json.name;
+    });
+  }
+
+  private deleteAnswer(): void {
+    const url = 'api/answer/' + String(this.answerId);
+    const method = 'DELETE';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+
+    fetch(url, {method, headers}).then((response) => {
+      if (response.ok) {
+        alert('回答を削除しました');
+        location.reload();
+        // リフレッシュ
+      }
     });
   }
 

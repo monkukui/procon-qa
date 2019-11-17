@@ -56,6 +56,7 @@ func newRouter() *echo.Echo {
 	api.GET("/answer/:id", handler.GetAnswer)                 // 回答を 1 つ取得
 	api.GET("/user-answers/:page", handler.GetUserAnswersWithPage) // 質問を 1 つ取得
 	api.POST("/answers", handler.PostAnswer)    // 回答の投稿
+	api.DELETE("/answer/:id", handler.DeleteAnswer)       // 質問の削除
   // users
 	api.GET("/user/:uid", handler.GetUser) // user_id から ユーザー名を取得
 	return e
