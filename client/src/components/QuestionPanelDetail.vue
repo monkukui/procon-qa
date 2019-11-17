@@ -133,14 +133,14 @@
         </v-btn> 
       </v-card-actions>
       <v-row>
-        <v-col md="4">
+        <v-col md="12">
           <v-alert
             outlined
             :value="alert"
             transition="scale-transition"
           >
-            <v-col col="12" sm="4">
-              <p>本当に削除しますか?</p>
+            <v-col col="12" sm="8">
+              <h1>本当に削除しますか?</h1>
             </v-col>
             <v-col col="12" sm="4">
               <v-btn color="error" @click="deleteQuestion">削除する</v-btn>
