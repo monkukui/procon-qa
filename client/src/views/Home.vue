@@ -4,7 +4,10 @@
       <v-dialog v-model="dialog" scrollable max-width="600px">
         <v-card>
           <v-card-title>質問や回答を行う場合は，ログインが必要です.</v-card-title>
-          <v-card-text>質問の閲覧などはログイン不要です.</v-card-text>
+          <v-card-text>
+            質問や回答へのいいねを行うにも，ログインが必要になります.<br>
+            質問の閲覧やタグ検索などを行うのに，ログインは不要です.
+          </v-card-text>
           <v-card-actions>
             <!-- FIXME -->
             <!-- 右にずらしたりをうまくやりたい -->
