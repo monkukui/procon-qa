@@ -17,41 +17,74 @@
         </v-btn-->
         <v-divider class="mx-4"></v-divider>
         <v-row style="margin-left: 1%;">
-          <v-col col="12" sm="1">
-            <SquarePanel 
-              message="回答数"
-              :num="question.answerCount"
-              color="blue-grey"
-            />
-          </v-col>
-          <v-col col="12" sm="1" style="margin-left: 2%">
-            <SquarePanel
-              message="閲覧数"
-              :num="question.browseCount"
-              color="blue-grey"
-            />
-          </v-col>
-          <v-col col="12" sm="1" style="margin-left: 2%">
-            <SquarePanel
-              message="いいね"
-              :num="question.favoriteCount"
-              color="blue-grey"
-            />
-          </v-col>
-          <v-col col="12" sm="1" style="margin-left: 2%">
-            <SquarePanel
-              v-if="question.completed"
-              message="解決済"
-              color="#5cb85c"
-            />
-            <SquarePanel
-              v-if="!question.completed"
-              message="未解決"
-              color="#f0ad4e"
-            />
-          </v-col>
+          <v-chip
+            outlined
+            class="ma-2"
+            text-color="rgb(66, 66, 66)"
+          >
+            回答数
+            {{ question.answerCount }}
+          </v-chip>
+          <v-chip
+            outlined
+            class="ma-2"
+            text-color="rgb(66, 66, 66)"
+          >
+            閲覧数
+            {{ question.browseCount }}
+          </v-chip>
+          <v-chip
+            outlined
+            class="ma-2"
+            text-color="rgb(66, 66, 66)"
+          >
+            いいね
+            {{ question.favoriteCount }}
+          </v-chip>
+          <v-chip
+            v-if="question.completed"
+            outlined
+            class="ma-2"
+            color="rgb(116, 181, 103)"
+          >
+            解決済み
+          </v-chip>
+          <v-chip
+            v-else
+            outlined
+            class="ma-2"
+            color="rgb(231,175,95)"
+          >
+            未解決
+          </v-chip>
+
+          <!--SquarePanel 
+            message="回答数"
+            :num="question.answerCount"
+            color="blue-grey"
+          />
+          <SquarePanel
+            message="閲覧数"
+            :num="question.browseCount"
+            color="blue-grey"
+          />
+          <SquarePanel
+            message="いいね"
+            :num="question.favoriteCount"
+            color="blue-grey"
+          />
+          <SquarePanel
+            v-if="question.completed"
+            message="解決済"
+            color="#5cb85c"
+          />
+          <SquarePanel
+            v-if="!question.completed"
+            message="未解決"
+            color="#f0ad4e"
+          /-->
           <div class="flex-grow-1"></div>
-          <div style="margin-left:auto; margin-right: 5%; margin-top: 10%;">
+          <div style="margin-left:auto; margin-right: 5%; margin-top: 5%;">
             <span class="date">{{ question.date }} {{ userName }}</span>
           </div>
         </v-row>

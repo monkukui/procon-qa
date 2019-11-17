@@ -5,15 +5,33 @@
     >
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="headline">
+          <v-list-item-title class="display-2">
             {{ question.title }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider class="mx-4"></v-divider>
+      <v-chip
+        v-if="question.completed"
+        label
+        class="ma-2"
+        color="rgb(116, 181, 103)"
+        text-color="white"
+      >
+        解決済みの質問
+      </v-chip>
+      <v-chip
+        v-else
+        label
+        class="ma-2"
+        color="rgb(231, 175, 95)"
+        text-color="white"
+      >
+        未解決の質問
+      </v-chip>
 
       <v-row>
-        <v-col md="8"> 
+        <v-col md="12"> 
           <v-card-text>
             <div class="mavon-editor">
               <mavon-editor 
@@ -52,44 +70,52 @@
             tag (仮)
           </v-btn-->
         </v-col>
-        <v-col md="4">
-          <v-card
-            class="mx-auto"
-            max-width="300"
-            outlined
-            color="teal lighten-5"
-          >
-            <v-list-item three-line>
-              <v-list-item-content>
-                <div>質問者</div>
-                <v-list-item-title class="headline mb-1">{{ userName }}</v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-avatar
-                circle
-                size="80"
-                color="grey"
-              ></v-list-item-avatar>
-            </v-list-item>
-          </v-card>
-        </v-col>
       </v-row>
+      <v-chip
+        class="ma-2"
+        color="blue"
+        text-color="white"
+      >
+        <v-avatar
+          left
+          class="blue darken-4"
+        >
+          {{ question.answerCount }}
+        </v-avatar>
+        回答数
+      </v-chip>
+      <v-chip
+        class="ma-2"
+        color="teal"
+        text-color="white"
+      >
+        <v-avatar
+          left
+          class="teal darken-4"
+        >
+          {{ question.browseCount }}
+        </v-avatar>
+        閲覧数
+      </v-chip>
       <v-chip
         class="ma-2"
         color="pink"
         text-color="white"
-        :disabled="userName == name"
-        @click="favoriteQuestion"
       >
         <v-avatar
           left
           class="pink darken-4"
         >
-        {{ question.favoriteCount }}
+          {{ question.favoriteCount }}
         </v-avatar>
         いいね
       </v-chip>
       <v-card-actions>
-        <v-card-text>投稿日時: {{ question.date }}</v-card-text>
+        <v-card-text>
+          投稿日時: {{ question.date }}
+          <br>
+          投稿者: {{ userName }}  
+        </v-card-text>
         <v-btn icon
           color="pink"
           :disabled="name == userName"
