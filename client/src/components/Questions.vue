@@ -1,6 +1,5 @@
 <template>
   <div class="questions">
-    {{ length }}
     <v-pagination
       v-model="curPageId"
       :length="length"
