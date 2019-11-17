@@ -1,5 +1,6 @@
 <template>
   <div class="questions">
+    {{ length }}
     <v-pagination
       v-model="curPageId"
       :length="length"
@@ -74,7 +75,7 @@ export default class Questions extends Vue {
       return [];
     }).then((cnt) => {
       this.totalQuestions = cnt;
-      this.length = (this.totalQuestions + 9) / 10; // 切り上げ
+      this.length = Math.ceil(this.totalQuestions / 10); // 切り上げ
     });
   }
 
