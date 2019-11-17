@@ -56,4 +56,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
   ],
+  scrollBehavior() {
+    return {x: 0, y: 0}
+  }
 });
