@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-item v-slot:default="{ active, toggle }">
+    <!-- before -->
+    <!--v-item v-slot:default="{ active, toggle }">
       <v-list-item-avatar
         class="tile"
         size="60"
@@ -19,7 +20,17 @@
           </div>
         </v-scroll-y-transition>
       </v-list-item-avatar>
-    </v-item>
+    </v-item-->
+    
+    <!-- FIXME  最悪の分岐-->
+    <v-chip
+      :color="color"
+      text-color="white"
+      
+    >
+      {{ message }}
+    </v-chip>
+
   </div>
 </template>
 

@@ -5,6 +5,7 @@
       colored-border
       type="info"
       elevation="2"
+      transition="scale-transition"
     >
       <h3>URL に関する tips</h3>
       <v-divider/>

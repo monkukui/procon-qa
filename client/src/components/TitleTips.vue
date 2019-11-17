@@ -5,6 +5,7 @@
       colored-border
       type="info"
       elevation="2"
+      transition="scale-transition"
     >
       <h3>タイトルに関する tips</h3>
       <v-divider/>
