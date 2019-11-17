@@ -48,7 +48,7 @@ func newRouter() *echo.Echo {
 	api.GET("/question/:id", handler.GetQuestion)             // 質問を 1 つ取得
 	api.POST("/questions", handler.PostQuestion)              // 質問の投稿
 	api.DELETE("/question/:id", handler.DeleteQuestion)       // 質問の削除
-	api.PUT("/question/:id/completed", handler.UpdateQuestionCompleted)  // 質問の更新
+	api.PUT("/question/:id/completed", handler.UpdateQuestionCompleted)  // 質問の完了フラグの更新
 	api.PUT("/question/:id/favorite", handler.FavoriteQuestion) // いいね
 
   // answers
@@ -57,6 +57,7 @@ func newRouter() *echo.Echo {
 	api.GET("/user-answers/:page", handler.GetUserAnswersWithPage) // 質問を 1 つ取得
 	api.POST("/answers", handler.PostAnswer)    // 回答の投稿
 	api.DELETE("/answer/:id", handler.DeleteAnswer)       // 質問の削除
+	api.PUT("/answer/:id/favorite", handler.FavoriteAnswer) // いいね
   // users
 	api.GET("/user/:uid", handler.GetUser) // user_id から ユーザー名を取得
 	return e

@@ -104,12 +104,10 @@ func PostAnswer(c echo.Context) error {
 
 // 回答を削除する
 func DeleteAnswer(c echo.Context) error {
-	fmt.Println("113")
 	uid := userIDFromToken(c)
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
-	fmt.Println("117")
 
 	answerID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -121,4 +119,35 @@ func DeleteAnswer(c echo.Context) error {
     }
 
 	return c.NoContent(http.StatusNoContent)
+}
+
+// いいねをする
+func FavoriteAnswer(c echo.Context) error {
+  uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+
+  answerID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  answers := model.FindAnswers(&model.Answer{ID: answerID})
+  if len(answers) == 0 {
+    return echo.ErrNotFound
+  }
+  answer := answers[0]
+
+  if answer.UID == uid {
+    // 自分の回答にいいねはできません
+    return echo.ErrNotFound
+  }
+
+  answer.FavoriteCount++
+  if err := model.UpdateAnswer(&answer); err != nil {
+    return echo.ErrNotFound
+  }
+  return c.NoContent(http.StatusNoContent)
 }

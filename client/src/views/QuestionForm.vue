@@ -191,6 +191,10 @@ export default {
         date: this.getDate,
         state: this.form.state,
         url: this.form.url,
+
+        favoriteCount: 0,
+        browseCount: 0,
+        answerCount: 0,
       });
       fetch(url, {method, headers, body}).then((response) => {
         if (response.ok) {

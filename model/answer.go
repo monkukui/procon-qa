@@ -13,7 +13,7 @@ type Answer struct {
 	// 以下, 回答の構成要素たち
 	Body      string `json:"body"`
 	Date      string `json:"date"`
-	Favo      int    `json:"favo"`
+	FavoriteCount  int    `json:"favoriteCount"`
 }
 
 // Question の配列として定義
@@ -68,6 +68,7 @@ func DeleteAnswer(a *Answer) error {
 func UpdateAnswer(a *Answer) error {
 	rows := db.Model(a).Update(map[string]interface{}{
 		"body":      a.Body,
+		"favoriteCount": a.FavoriteCount,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", a)

@@ -10,10 +10,11 @@
         :ishljs="fa"
       />
     </div>
+    <br>
     <v-btn
       color="primary"
       @click="answer"
-      x-large
+      large
 
     >回答する</v-btn>
   </div>
@@ -21,13 +22,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
 @Component({
   components: {
   },
 })
 export default class AnswerForm extends Vue {
-
   private markdownOption: any = {
     bold: true,
     italic: true,
@@ -60,14 +59,11 @@ export default class AnswerForm extends Vue {
     save: false,
     navigation: false,
   };
-
   private questionId!: number;
   private text: string = '';
-
   private created(): void {
     this.questionId = Number(this.$route.query.questionId);
   }
-
   private getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -78,14 +74,12 @@ export default class AnswerForm extends Vue {
       'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json; charset=UTF-8',
     };
-
     const body = JSON.stringify({
       body: this.text,
       favo: 0,
       date: 'yyyy/mm/dd-hh/mm/ss',
       qid: this.questionId,
     });
-
     fetch(url, {method, headers, body}).then((response) => {
       if (response.ok) {
         return response.json();
@@ -95,9 +89,7 @@ export default class AnswerForm extends Vue {
         return;
       }
     });
-
     location.reload();
-
   }
 }
 </script>

@@ -109,7 +109,6 @@ func FavoriteQuestion(c echo.Context) error {
 	}
 
   questions := model.FindQuestions(&model.Question{ID: questionID})
-  fmt.Println(len(questions))
   if len(questions) == 0 {
     return echo.ErrNotFound
   }
