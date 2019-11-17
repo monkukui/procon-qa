@@ -183,10 +183,13 @@ export default class QuestionPanelDetail extends Vue {
   private alert: boolean = false;
 
   private created(): void {
-    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
-    this.name = claims.name;
+    if (this.getToken() != null) {
+      const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+      this.name = claims.name;
+    }
     this.questionId = Number(this.$route.query.questionId);
     this.createQuestion();
+    this.browseQuestion();
   }
 
   private updateQuestionCompleted(): void {
@@ -208,8 +211,8 @@ export default class QuestionPanelDetail extends Vue {
   private browseQuestion(): void {
     const url = 'api/no-auth/question/' + String(this.questionId) + '/browse';
     const method = 'put';
-    const headers = {Authorization: `Bearer ${this.getToken()}`};
-    fetch(url, {method, headers});
+    fetch(url, {method});
+
   }
 
   private createQuestion(): void {
@@ -224,7 +227,6 @@ export default class QuestionPanelDetail extends Vue {
     }).then((json) => {
       this.question = json;
       this.setUser();
-      this.browseQuestion();
     });
   }
 

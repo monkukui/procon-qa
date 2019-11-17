@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
-  "fmt"
+    "fmt"
 	"github.com/labstack/echo"
 	"github.com/monkukui/procon-qa/model"
 )
@@ -45,18 +45,19 @@ func GetQuestionsWithPage(c echo.Context) error {
 	if err != nil {
 		return echo.ErrNotFound
 	}
-	mode := "id"
+	mode := "id desc"
 
     if modeId == 2 {
-      mode = "answerCount"
+      mode = "answer_count desc"
     } else if modeId == 3 {
-      mode = "browseCount"
+      mode = "browse_count desc"
     } else if modeId == 4 {
-      mode = "favoriteCount"
+      mode = "favorite_count desc"
     } else if modeId == 5 {
       mode = "completed"
     }
 
+    fmt.Println(mode)
 	questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength, mode)
 	return c.JSON(http.StatusOK, questions)
 }

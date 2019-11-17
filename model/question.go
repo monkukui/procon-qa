@@ -42,7 +42,7 @@ func FindQuestions(q *Question) Questions {
 // page := ページ番号( 1-indexed ),  length := 1 ページあたりのアイテム数
 func FindQuestionsWithPage(q *Question, page int, length int, orderMode string) Questions {
 	var questions Questions
-	db.Where(q).Limit(length).Offset(length * (page - 1)).Order(orderMode).Order("id").Find(&questions)
+	db.Where(q).Limit(length).Offset(length * (page - 1)).Order(orderMode).Order("id desc").Find(&questions)
 	return questions
 }
 
