@@ -118,7 +118,7 @@
         </v-card-text>
         <v-btn icon
           color="pink"
-          :disabled="name == userName"
+          :disabled="name === userName || name === ''"
         >
           <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
         </v-btn>
