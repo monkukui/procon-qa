@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-row align="center">
-      <v-col cols="12" sm="6"></v-col>
+      <v-col cols="12" sm="6">
+        <p class="font-weight-bold display-1">並び替え</p>
+      </v-col>
       <v-col class="text-center" cols="12" sm="1">
         <div class="my-2">
           <v-btn text outlined color="primary" @click="click(1)" v-if="curMode===1"><div class="font-weight-bold">新着</div></v-btn>

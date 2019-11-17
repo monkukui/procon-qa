@@ -1,22 +1,42 @@
 <template>
   <div class="answer-form">
-    
-    <div class="mavon-editor">
-      <mavon-editor
-        :toolbars="markdownOption"
-        v-model="text"
-        placeholder='回答'
-        :boxShadow="fa"
-        :ishljs="fa"
-      />
+    <div v-if="!isLoggedIn">
+      <v-alert
+      outlined
+      type="warning"
+      prominent
+      border="left"
+    >
+      
+    <v-row>
+      <v-col cols="12" sm="10">
+        あなたの知見を共有してください.<br>
+        質問に回答するには，ログインする必要があります.
+      </v-col>
+      <v-col cols="12" sm="2">
+        <v-btn large color="primary" to="/login">ログイン</v-btn>
+      </v-col>
+    </v-row>
+    </v-alert>
     </div>
-    <br>
-    <v-btn
-      color="primary"
-      @click="answer"
-      large
+    <div v-else>
+      <div class="mavon-editor">
+        <mavon-editor
+          :toolbars="markdownOption"
+          v-model="text"
+          placeholder='回答'
+          :boxShadow="fa"
+          :ishljs="fa"
+        />
+      </div>
+      <br>
+      <v-btn
+        color="primary"
+        @click="answer"
+        large
 
-    >回答する</v-btn>
+      >回答する</v-btn>
+    </div>
   </div>
 </template>
 
@@ -61,8 +81,10 @@ export default class AnswerForm extends Vue {
   };
   private questionId!: number;
   private text: string = '';
+  private isLoggedIn: boolean = false;
   private created(): void {
     this.questionId = Number(this.$route.query.questionId);
+    this.isLoggedIn = (this.getToken() != null);
   }
   private getToken(): string | null {
     return localStorage.getItem('token');

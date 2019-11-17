@@ -1,5 +1,28 @@
 <template>
   <div class="home">
+    <v-row justify="center">
+      <v-dialog v-model="dialog" scrollable max-width="600px">
+        <v-card>
+          <v-card-title>質問や回答を行う場合は，ログインが必要です.</v-card-title>
+          <v-card-text>質問の閲覧などはログイン不要です.</v-card-text>
+          <v-card-actions>
+            <!-- FIXME -->
+            <!-- 右にずらしたりをうまくやりたい -->
+            <v-row>
+              <v-col cols="12" sm="2">
+                <v-btn large color="primary" to="/login">ログイン</v-btn>
+              </v-col>
+              <v-col cols="12" sm="8">
+                <v-btn outlined depressed large to="/signup">新規登録</v-btn>
+              </v-col>
+              <v-col cols="12" sm="2">
+                <v-btn color="blue darken-1" text @click="dialog = false">閉じる</v-btn>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
     <div class="main-contents">
       <v-container fluid>
         <v-row>
@@ -36,8 +59,17 @@ import SiteInfomation from '@/components/SiteInfomation.vue';
 })
 export default class Home extends Vue {
   private mode: number = 1;  // 新着, 回答数, 閲覧数, いいね, 解決済みかどうか
+  private dialog: boolean = false;
   private changeMode(mode: number): void {
     this.mode = mode;
+  }
+  private created(): void {
+    if (this.getToken() === null) {
+      this.dialog = true;
+    }
+  }
+  private getToken(): any {
+    return localStorage.getItem('token');
   }
 }
 </script>
