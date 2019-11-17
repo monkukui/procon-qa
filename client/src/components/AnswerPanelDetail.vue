@@ -95,8 +95,10 @@ export default class AnswerPanelDetail extends Vue {
   private name: string = '';
 
   private created(): void {
-    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
-    this.name = claims.name;
+    if (this.getToken() != null) {
+      const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+      this.name = claims.name;
+    }
     this.createAnswer();
   }
 
