@@ -73,16 +73,57 @@
           </v-card>
         </v-col>
       </v-row>
-      
+      <v-chip
+        class="ma-2"
+        color="pink"
+        text-color="white"
+        :disabled="userName == name"
+        @click="favoriteQuestion"
+      >
+        <v-avatar
+          left
+          class="pink darken-4"
+        >
+        {{ question.favoriteCount }}
+        </v-avatar>
+        いいね
+      </v-chip>
       <v-card-actions>
         <v-card-text>投稿日時: {{ question.date }}</v-card-text>
-        <v-btn icon>
+        <v-btn icon
+          color="pink"
+          :disabled="name == userName"
+        >
           <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
         </v-btn>
         <v-btn icon>
           <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
         </v-btn> 
+        <v-btn icon 
+          color="error"
+          :disabled="name != userName"
+        >
+          <v-icon @click="alert = !alert">mdi-delete</v-icon>
+        </v-btn> 
       </v-card-actions>
+      <v-row>
+        <v-col md="4">
+          <v-alert
+            outlined
+            :value="alert"
+            transition="scale-transition"
+          >
+            <v-col col="12" sm="4">
+              <p>本当に削除しますか?</p>
+            </v-col>
+            <v-col col="12" sm="4">
+              <v-btn color="error" @click="deleteQuestion">削除する</v-btn>
+              &nbsp;
+              <v-btn @click="alert = !alert">戻る</v-btn>
+            </v-col>
+          </v-alert>
+        </v-col>
+      </v-row>
     </v-card>
   </div>
 </template>
@@ -110,8 +151,14 @@ export default class QuestionPanelDetail extends Vue {
 
   // 質問者の名前
   private userName: string = '';
+  // ユーザの名前
+  private name: string = '';
+
+  private alert: boolean = false;
 
   private created(): void {
+    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+    this.name = claims.name;
     this.questionId = Number(this.$route.query.questionId);
     this.createQuestion();
   }
@@ -127,7 +174,9 @@ export default class QuestionPanelDetail extends Vue {
     const url = 'api/question/' + String(this.questionId) + '/favorite';
     const method = 'put';
     const headers = {authorization: `Bearer ${this.getToken()}`};
-    fetch(url, {method, headers});
+    fetch(url, {method, headers}).then(() => {
+      this.createQuestion();
+    });
   }
 
   private browseQuestion(): void {
@@ -174,6 +223,7 @@ export default class QuestionPanelDetail extends Vue {
 
     fetch(url, {method, headers}).then((response) => {
       if (response.ok) {
+        // 質問を削除しました
         this.$router.push('./');
       }
     });

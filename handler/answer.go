@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
-    // "fmt"
+    "fmt"
 	"github.com/labstack/echo"
 	// c-color さんに依存しちゃってる...
 	// なんとか再現性があるように作り変えることができないもんかね...?
@@ -32,6 +32,7 @@ func GetAnswersForQuestion(c echo.Context) error {
 	}
 
 	answers := model.FindAnswers(&model.Answer{QID: QuestionID})
+	fmt.Println(answers)
 	return c.JSON(http.StatusOK, answers)
 }
 
@@ -73,7 +74,6 @@ func GetAnswer(c echo.Context) error {
 // 回答を投稿する
 func PostAnswer(c echo.Context) error {
 	answer := new(model.Answer)
-
 	// answer に 送信されてきたデータを bind している
 	if err := c.Bind(answer); err != nil {
 		return err
@@ -89,13 +89,65 @@ func PostAnswer(c echo.Context) error {
 	}
 
 	uid := userIDFromToken(c)
+
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
   // 回答者をユーザーに設定
 	answer.UID = uid
+
 	model.CreateAnswer(answer)
 
 	return c.JSON(http.StatusCreated, answer)
+}
+
+// 回答を削除する
+func DeleteAnswer(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	answerID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+    if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID})[0]); err != nil {
+        fmt.Println("他人の回答です")
+    }
+
+	return c.NoContent(http.StatusNoContent)
+}
+
+// いいねをする
+func FavoriteAnswer(c echo.Context) error {
+  uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+
+  answerID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  answers := model.FindAnswers(&model.Answer{ID: answerID})
+  if len(answers) == 0 {
+    return echo.ErrNotFound
+  }
+  answer := answers[0]
+
+  if answer.UID == uid {
+    // 自分の回答にいいねはできません
+    return echo.ErrNotFound
+  }
+
+  answer.FavoriteCount++
+  if err := model.UpdateAnswer(&answer); err != nil {
+    return echo.ErrNotFound
+  }
+  return c.NoContent(http.StatusNoContent)
 }

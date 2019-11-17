@@ -36,7 +36,22 @@
         </v-card>
       </v-col>
     </v-row>
-    
+  
+    <v-chip
+      class="ma-2"
+      color="pink"
+      text-color="white"
+      :disabled="userName == name"
+      @click="favoriteAnswer"
+    >
+      <v-avatar
+        left
+        class="pink darken-4"
+      >
+      {{ answer.favoriteCount }}
+      </v-avatar>
+      いいね
+    </v-chip>
     <v-card-actions>
       <v-card-text>投稿日時: {{ userName }}</v-card-text>
       <v-btn icon>
@@ -44,6 +59,9 @@
       </v-btn>
       <v-btn icon>
         <v-icon>mdi-share-variant</v-icon>
+      </v-btn> 
+      <v-btn icon>
+        <v-icon @click="deleteAnswer">mdi-home</v-icon>
       </v-btn> 
     </v-card-actions>
     </v-card>
@@ -67,22 +85,18 @@ export default class AnswerPanelDetail extends Vue {
     body: '',
     date: '',
   };
-  /*
-    "uid": number,
-    "qid": number,
-    "id": number,
-    "body": string,
-    "date": string,
-    "favo": number,
-  */
 
   // どうにかならんか?
   private tr: boolean = true;
   private fa: boolean = false;
 
+  // 順に，回答者の名前，ユーザの名前
   private userName: string = '';
+  private name: string = '';
 
   private created(): void {
+    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+    this.name = claims.name;
     this.createAnswer();
   }
 
@@ -115,10 +129,32 @@ export default class AnswerPanelDetail extends Vue {
     });
   }
 
+  private deleteAnswer(): void {
+    const url = 'api/answer/' + String(this.answerId);
+    const method = 'DELETE';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+
+    fetch(url, {method, headers}).then((response) => {
+      if (response.ok) {
+        alert('回答を削除しました');
+        location.reload();
+        // リフレッシュ
+      }
+    });
+  }
+
+  private favoriteAnswer(): void {
+    const url = 'api/answer/' + String(this.answerId) + '/favorite';
+    const method = 'put';
+    const headers = {authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {method, headers}).then(() => {
+      this.createAnswer();
+    });
+  }
+
   private getToken(): any {
     return localStorage.getItem('token');
   }
-
 }
 </script>
 

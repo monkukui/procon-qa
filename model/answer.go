@@ -13,7 +13,7 @@ type Answer struct {
 	// 以下, 回答の構成要素たち
 	Body      string `json:"body"`
 	Date      string `json:"date"`
-	Favo      int    `json:"favo"`
+	FavoriteCount  int    `json:"favoriteCount"`
 }
 
 // Question の配列として定義
@@ -22,6 +22,10 @@ type Answers []Answer
 // 回答 を作成
 func CreateAnswer(a *Answer) {
   questions := FindQuestions(&Question{ID: a.QID})
+  fmt.Println("ub CreateAnswer")
+  fmt.Println(a.ID)
+  fmt.Println(a.UID)
+  fmt.Println(a.QID)
   // questions[0] の 回答数をインクリメント
   questions[0].AnswerCount++
   UpdateQuestion(&questions[0])
@@ -49,8 +53,12 @@ func DeleteAnswer(a *Answer) error {
 	if rows := db.Where(a).Delete(&Answer{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find answer (%v) to delete", a)
 	}
+
+	fmt.Println(a)
   questions := FindQuestions(&Question{ID: a.QID})
-  // questions[0] の 回答数をインクリメント
+  // questions[0] の 回答数をデクリメント
+  fmt.Println("in DeletAnswer")
+  fmt.Println(a.QID)
   questions[0].AnswerCount--
   UpdateQuestion(&questions[0])
 	return nil
@@ -60,6 +68,7 @@ func DeleteAnswer(a *Answer) error {
 func UpdateAnswer(a *Answer) error {
 	rows := db.Model(a).Update(map[string]interface{}{
 		"body":      a.Body,
+		"favoriteCount": a.FavoriteCount,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", a)

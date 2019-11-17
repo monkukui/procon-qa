@@ -109,7 +109,6 @@ func FavoriteQuestion(c echo.Context) error {
 	}
 
   questions := model.FindQuestions(&model.Question{ID: questionID})
-  fmt.Println(len(questions))
   if len(questions) == 0 {
     return echo.ErrNotFound
   }
@@ -150,7 +149,6 @@ func BrowseQuestion(c echo.Context) error {
 // 質問を投稿する
 func PostQuestion(c echo.Context) error {
 	question := new(model.Question)
-
 	// question に 送信されてきたデータを bind している
 	if err := c.Bind(question); err != nil {
 		return err
@@ -188,6 +186,15 @@ func DeleteQuestion(c echo.Context) error {
 	if err != nil {
 		return echo.ErrNotFound
 	}
+
+    // uid が question の uid と一致していなければダメ
+    if uid != model.FindQuestions(&model.Question{ID: questionID})[0].UID {
+        fmt.Println("他人の質問です")
+        return echo.ErrNotFound
+    }
+
+	// 先に関連する answer を全て削除
+    model.DeleteAnswer(&model.Answer{QID: questionID});
 
 	// ID: questionID, UID: uid とすることで, 別のユーザが他人の投稿を削除できないようになってる
 	if err := model.DeleteQuestion(&model.Question{ID: questionID, UID: uid}); err != nil {
