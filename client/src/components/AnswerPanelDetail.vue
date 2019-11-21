@@ -54,7 +54,11 @@
           いいね
         </v-chip>
         <v-card-actions>
-          <v-card-text>投稿日時: {{ userName }}</v-card-text>
+          <v-card-text>
+            投稿日時: {{ answer.date }}
+            <br>
+            投稿者: {{ userName }}
+          </v-card-text>
           <v-btn icon
             color="pink"
             :disabled="name == userName || name == ''"

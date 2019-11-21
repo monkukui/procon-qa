@@ -1,10 +1,10 @@
 <template>
   <div class="questions">
-    <v-pagination
+    <!--v-pagination
       v-model="curPageId"
       :length="length"
       :total-visible="7"
-    ></v-pagination>
+    ></v-pagination-->
     <div v-if="isReady">
       <div v-for="(value, index) in questions" :key=index>
         <!-- answerd とか, questionedTime とかの命名規則を揃える -->
