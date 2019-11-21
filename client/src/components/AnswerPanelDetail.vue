@@ -3,67 +3,76 @@
     <v-card
       class="mx-auto"
     >
-    <v-row>
-      <v-col md="8"> 
-        <div class="mavon-editor">
-          <mavon-editor
-            v-model="answer.body"
-            defaultOpen="preview"
-            :toolbarsFlag="fa"
-            :subfield="fa"
-            :boxShadow="fa"
-          />
-        </div>
-      </v-col>
-      <v-col md="4">
-        <v-card
-          class="mx-auto"
-          max-width="300"
-          outlined
-          color="deep-orange lighten-5"
+      <div v-if="isReady">
+        <v-row>
+          <v-col md="8"> 
+            <div class="mavon-editor">
+              <mavon-editor
+                v-model="answer.body"
+                defaultOpen="preview"
+                :toolbarsFlag="fa"
+                :subfield="fa"
+                :boxShadow="fa"
+              />
+            </div>
+          </v-col>
+          <v-col md="4">
+            <v-card
+              class="mx-auto"
+              max-width="300"
+              outlined
+              color="deep-orange lighten-5"
+            >
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div>回答者</div>
+                  <v-list-item-title class="headline mb-1">{{ userName }}</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-avatar
+                  circle
+                  size="80"
+                  color="grey"
+                ></v-list-item-avatar>
+              </v-list-item>
+            </v-card>
+          </v-col>
+        </v-row>
+      
+        <v-chip
+          class="ma-2"
+          color="pink"
+          text-color="white"
+          :disabled="userName == name"
+          @click="favoriteAnswer"
         >
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div>回答者</div>
-              <v-list-item-title class="headline mb-1">{{ userName }}</v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-avatar
-              circle
-              size="80"
-              color="grey"
-            ></v-list-item-avatar>
-          </v-list-item>
-        </v-card>
-      </v-col>
-    </v-row>
-  
-    <v-chip
-      class="ma-2"
-      color="pink"
-      text-color="white"
-      :disabled="userName == name"
-      @click="favoriteAnswer"
-    >
-      <v-avatar
-        left
-        class="pink darken-4"
-      >
-      {{ answer.favoriteCount }}
-      </v-avatar>
-      いいね
-    </v-chip>
-    <v-card-actions>
-      <v-card-text>投稿日時: {{ userName }}</v-card-text>
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-share-variant</v-icon>
-      </v-btn> 
-      <v-btn icon>
-        <v-icon @click="deleteAnswer">mdi-home</v-icon>
-      </v-btn> 
-    </v-card-actions>
+          <v-avatar
+            left
+            class="pink darken-4"
+          >
+          {{ answer.favoriteCount }}
+          </v-avatar>
+          いいね
+        </v-chip>
+        <v-card-actions>
+          <v-card-text>投稿日時: {{ userName }}</v-card-text>
+          <v-btn icon>
+            <v-icon>mdi-heart</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon>mdi-share-variant</v-icon>
+          </v-btn> 
+          <v-btn icon>
+            <v-icon @click="deleteAnswer">mdi-home</v-icon>
+          </v-btn> 
+        </v-card-actions>
+      </div>
+      <div v-else class="text-center">
+        <v-progress-circular
+          :size="100"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
     </v-card>
   </div>
 </template>
@@ -94,6 +103,9 @@ export default class AnswerPanelDetail extends Vue {
   private userName: string = '';
   private name: string = '';
 
+  // ロード中の制御
+  private isReady: boolean = false;
+
   private created(): void {
     if (this.getToken() != null) {
       const claims = JSON.parse(atob(this.getToken().split('.')[1]));
@@ -114,6 +126,7 @@ export default class AnswerPanelDetail extends Vue {
     }).then((json) => {
       this.answer = json;
       this.setUser();
+      this.isReady = true;
     });
   }
 

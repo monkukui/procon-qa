@@ -28,7 +28,8 @@
               <div class="mavon-editor" @mouseover="focusBody">
                 <mavon-editor
                   v-model="form.body"
-                  language="en"
+                  language="ja"
+                  placeholder='回答本文'
                   :toolbars="markdownOption"
                 />
               </div>

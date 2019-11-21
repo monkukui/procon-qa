@@ -89,7 +89,7 @@
           </div>
         </v-row>
       </div>
-      <div v-else>
+      <div v-else class="text-center">
         <v-progress-circular
           :size="100"
           color="primary"

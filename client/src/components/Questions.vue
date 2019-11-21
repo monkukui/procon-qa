@@ -19,7 +19,7 @@
         :total-visible="7"
       ></v-pagination>
     </div>
-    <div v-else>
+    <div v-else class="text-center">
       <v-progress-circular
         :size="100"
         color="primary"

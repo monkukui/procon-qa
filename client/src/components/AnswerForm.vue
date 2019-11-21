@@ -24,17 +24,25 @@
         <mavon-editor
           :toolbars="markdownOption"
           v-model="text"
-          placeholder='回答'
+          language="ja"
+          placeholder='回答本文'
           :boxShadow="fa"
           :ishljs="fa"
         />
       </div>
       <br>
       <v-btn
+        v-if="text"
         color="primary"
         @click="answer"
         large
-
+      >回答する</v-btn>
+      <v-btn
+        v-else
+        color="primary"
+        @click="answer"
+        large
+        disabled
       >回答する</v-btn>
     </div>
   </div>
