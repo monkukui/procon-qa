@@ -16,7 +16,7 @@ import (
 
 // answers のサイズを取得する
 func GetAnswerSize(c echo.Context) error {
-  return c.JSON(http.StatusOK, len(model.FindAnswers(&model.Answer{})))
+  return c.JSON(http.StatusOK, len(model.FindAnswers(&model.Answer{}, "id desc")))
 }
 
 // 質問に紐ずいた, 回答を全取得する
@@ -30,9 +30,18 @@ func GetAnswersForQuestion(c echo.Context) error {
 	if err != nil {
 		return echo.ErrNotFound
 	}
+	modeId, err := strconv.Atoi(c.Param("mode"))        // ソートの設定
+    if err != nil {
+		return echo.ErrNotFound
+	}
 
-	answers := model.FindAnswers(&model.Answer{QID: QuestionID})
-	fmt.Println(answers)
+	mode := "id desc"
+
+    if modeId == 2 {
+      mode = "favorite_count desc"
+    }
+
+	answers := model.FindAnswers(&model.Answer{QID: QuestionID}, mode)
 	return c.JSON(http.StatusOK, answers)
 }
 
@@ -67,7 +76,7 @@ func GetAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	answer := model.FindAnswers(&model.Answer{ID: AnswerID})[0]
+	answer := model.FindAnswers(&model.Answer{ID: AnswerID}, "id desc")[0]
 	return c.JSON(http.StatusOK, answer)
 }
 
@@ -114,7 +123,7 @@ func DeleteAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-    if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID})[0]); err != nil {
+    if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
         fmt.Println("他人の回答です")
     }
 
@@ -134,7 +143,7 @@ func FavoriteAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  answers := model.FindAnswers(&model.Answer{ID: answerID})
+  answers := model.FindAnswers(&model.Answer{ID: answerID}, "id desc")
   if len(answers) == 0 {
     return echo.ErrNotFound
   }

@@ -32,10 +32,10 @@ func newRouter() *echo.Echo {
 	noAuth.GET("/completed-questions/count", handler.GetCompletedQuestionSize)      // 解決済みの質問の個数を取得
 	noAuth.GET("/answers/count", handler.GetAnswerSize)          // 回答の個数を取得
 	noAuth.GET("/users/count", handler.GetUserSize)              // ユーザの個数を取得
-	noAuth.GET("/questions/:page/:mode", handler.GetQuestionsWithPage) // 質問をページ全取得
-	noAuth.GET("/users/:page/:mode", handler.GetUsersWithPage)   // ユーザをページ全取得
+	noAuth.GET("/questions/:page/:mode", handler.GetQuestionsWithPage) // 質問をページ取得(mode あり)
+	noAuth.GET("/users/:page/:mode", handler.GetUsersWithPage)   // ユーザをページ取得(mode あり)
 	noAuth.GET("/question/:id", handler.GetQuestion)             // 質問を 1 つ取得
-	noAuth.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
+	noAuth.GET("/answers/:qid/:mode", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
 	noAuth.GET("/answer/:id", handler.GetAnswer)                 // 回答を 1 つ取得
   noAuth.GET("/user/:uid", handler.GetUser)                    // user_id から ユーザー名を取得
   noAuth.PUT("/question/:id/browse", handler.BrowseQuestion) // 閲覧

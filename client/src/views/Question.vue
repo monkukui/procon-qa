@@ -8,10 +8,16 @@
             :title="title"
             :body="body"
             :questionedTime="questionedTime"
-            />
+          />
         </v-col>
         <v-col cols="12" sm="10">
-          <Answers />
+          <AnswerSetting
+            @click="changeMode"
+            :curMode="mode"
+          />
+          <Answers 
+            :mode="mode" 
+          />
         </v-col>
         <v-col cols="12" sm="10">
           <AnswerForm />
@@ -26,6 +32,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import QuestionPanelDetail from '@/components/QuestionPanelDetail.vue';
 import Answers from '@/components/Answers.vue';
 import AnswerForm from '@/components/AnswerForm.vue';
+import AnswerSetting from '@/components/AnswerSetting.vue';
 
 
 @Component({
@@ -33,9 +40,16 @@ import AnswerForm from '@/components/AnswerForm.vue';
     QuestionPanelDetail,
     Answers,
     AnswerForm,
+    AnswerSetting,
   },
 })
 export default class Question extends Vue {
+  
+  private mode: number = 1;  // 新着(1)，いいね(2)
+  private changeMode(mode: number): void {
+    this.mode = mode;
+  }
+  
   // TODO getParam とかでとってくる
   // TODO any は最悪なのでなんとかする (string | undefined とかにしてもエラーがでる)
   private title: any = '';
