@@ -98,7 +98,7 @@ export default class SiteInformation extends Vue {
       }
       return [];
     }).then((cnt) => {
-      this.completedRate = (cnt / this.totalQuestions).toFixed(3);
+      this.completedRate = (cnt * 100 / this.totalQuestions).toFixed(3);
     });
   }
   // 回答数を取得する
