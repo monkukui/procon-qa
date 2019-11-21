@@ -80,6 +80,8 @@ export default class AnswerForm extends Vue {
     save: false,
     navigation: false,
   };
+  private fa: boolean = false;
+  private tr: boolean = true;
   private questionId!: number;
   private text: string = '';
   private isLoggedIn: boolean = false;
@@ -99,8 +101,8 @@ export default class AnswerForm extends Vue {
     };
     const body = JSON.stringify({
       body: this.text,
-      favo: 0,
-      date: 'yyyy/mm/dd-hh/mm/ss',
+      favoriteCount: 0,
+      date: this.getDate(),
       qid: this.questionId,
     });
     fetch(url, {method, headers, body}).then((response) => {
@@ -113,6 +115,25 @@ export default class AnswerForm extends Vue {
       }
     });
     location.reload();
+  }
+  private getDate(): string {
+    const now = new Date();
+    const Year = String(now.getFullYear());
+    const Month = String(now.getMonth() + 1);
+    const Day = String(now.getDate());
+    let Hour = String(now.getHours());
+    let Min = String(now.getMinutes());
+    let Sec = String(now.getSeconds());
+    if (Hour.length === 1) {
+      Hour = '0' + Hour;
+    }
+    if (Min.length === 1) {
+      Min = '0' + Hour;
+    }
+    if (Sec.length === 1) {
+      Sec = '0' + Hour;
+    }
+    return Year + '年' + Month + '月' + Day + '日' + Hour + ':' + Min + ':' + Sec;
   }
 }
 </script>

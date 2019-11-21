@@ -6,7 +6,7 @@
       outlined
     >
       <v-app-bar
-        color="primary"
+        color="rgb(66, 66, 66)"
         flat
         dense
       >
