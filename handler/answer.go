@@ -149,5 +149,12 @@ func FavoriteAnswer(c echo.Context) error {
   if err := model.UpdateAnswer(&answer); err != nil {
     return echo.ErrNotFound
   }
+
+  // user.FavoriteAnswer をインクリメント
+  user := model.FindUser(&model.User{ID: answer.UID})
+  user.FavoriteAnswer++
+  if err := model.UpdateUser(&user); err != nil {
+    return echo.ErrNotFound
+  }
   return c.NoContent(http.StatusNoContent)
 }

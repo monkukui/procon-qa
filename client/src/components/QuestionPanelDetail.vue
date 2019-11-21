@@ -3,153 +3,163 @@
     <v-card
       class="mx-auto"
     >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="display-2">
-            {{ question.title }}
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider class="mx-4"></v-divider>
-      <v-chip
-        v-if="question.completed"
-        label
-        class="ma-2"
-        color="rgb(116, 181, 103)"
-        text-color="white"
-      >
-        解決済みの質問
-      </v-chip>
-      <v-chip
-        v-else
-        label
-        class="ma-2"
-        color="rgb(231, 175, 95)"
-        text-color="white"
-      >
-        未解決の質問
-      </v-chip>
+      <div v-if="isReady">
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="display-2">
+              {{ question.title }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider class="mx-4"></v-divider>
+        <v-chip
+          v-if="question.completed"
+          label
+          class="ma-2"
+          color="rgb(116, 181, 103)"
+          text-color="white"
+        >
+          解決済みの質問
+        </v-chip>
+        <v-chip
+          v-else
+          label
+          class="ma-2"
+          color="rgb(231, 175, 95)"
+          text-color="white"
+        >
+          未解決の質問
+        </v-chip>
 
-      <v-row>
-        <v-col md="12"> 
-          <v-card-text>
-            <div class="mavon-editor">
-              <mavon-editor 
-                v-model="question.body"
-                defaultOpen="preview"
-                :toolbarsFlag="fa"
-                :subfield="fa"
-                :boxShadow="fa"
-              />
-            </div>
-          </v-card-text>
-          <v-card-text
-            v-if="question.url"
-          >
-            URL: <a :href="question.url">{{ question.url }}</a>
-          </v-card-text>
-          <!--v-btn
-            class="tag"
-            color="blue-grey lighten-4"
-            x-small
-          >
-            tag (仮)
-          </v-btn>
-          <v-btn
-            class="tag"
-            color="blue-grey lighten-4"
-            x-small
-          >
-            tag (仮)
-          </v-btn>
-          <v-btn
-            class="tag"
-            color="blue-grey lighten-4"
-            x-small
-          >
-            tag (仮)
-          </v-btn-->
-        </v-col>
-      </v-row>
-      <v-chip
-        class="ma-2"
-        color="blue"
-        text-color="white"
-      >
-        <v-avatar
-          left
-          class="blue darken-4"
+        <v-row>
+          <v-col md="12"> 
+            <v-card-text>
+              <div class="mavon-editor">
+                <mavon-editor 
+                  v-model="question.body"
+                  defaultOpen="preview"
+                  :toolbarsFlag="fa"
+                  :subfield="fa"
+                  :boxShadow="fa"
+                />
+              </div>
+            </v-card-text>
+            <v-card-text
+              v-if="question.url"
+            >
+              URL: <a :href="question.url">{{ question.url }}</a>
+            </v-card-text>
+            <!--v-btn
+              class="tag"
+              color="blue-grey lighten-4"
+              x-small
+            >
+              tag (仮)
+            </v-btn>
+            <v-btn
+              class="tag"
+              color="blue-grey lighten-4"
+              x-small
+            >
+              tag (仮)
+            </v-btn>
+            <v-btn
+              class="tag"
+              color="blue-grey lighten-4"
+              x-small
+            >
+              tag (仮)
+            </v-btn-->
+          </v-col>
+        </v-row>
+        <v-chip
+          class="ma-2"
+          color="blue"
+          text-color="white"
         >
-          {{ question.answerCount }}
-        </v-avatar>
-        回答数
-      </v-chip>
-      <v-chip
-        class="ma-2"
-        color="teal"
-        text-color="white"
-      >
-        <v-avatar
-          left
-          class="teal darken-4"
+          <v-avatar
+            left
+            class="blue darken-4"
+          >
+            {{ question.answerCount }}
+          </v-avatar>
+          回答数
+        </v-chip>
+        <v-chip
+          class="ma-2"
+          color="teal"
+          text-color="white"
         >
-          {{ question.browseCount }}
-        </v-avatar>
-        閲覧数
-      </v-chip>
-      <v-chip
-        class="ma-2"
-        color="pink"
-        text-color="white"
-      >
-        <v-avatar
-          left
-          class="pink darken-4"
-        >
-          {{ question.favoriteCount }}
-        </v-avatar>
-        いいね
-      </v-chip>
-      <v-card-actions>
-        <v-card-text>
-          投稿日時: {{ question.date }}
-          <br>
-          投稿者: {{ userName }}  
-        </v-card-text>
-        <v-btn icon
+          <v-avatar
+            left
+            class="teal darken-4"
+          >
+            {{ question.browseCount }}
+          </v-avatar>
+          閲覧数
+        </v-chip>
+        <v-chip
+          class="ma-2"
           color="pink"
-          :disabled="name === userName || name === ''"
+          text-color="white"
         >
-          <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
-        </v-btn> 
-        <v-btn icon 
-          color="error"
-          :disabled="name != userName"
-        >
-          <v-icon @click="alert = !alert">mdi-delete</v-icon>
-        </v-btn> 
-      </v-card-actions>
-      <v-row>
-        <v-col md="12">
-          <v-alert
-            outlined
-            :value="alert"
-            transition="scale-transition"
+          <v-avatar
+            left
+            class="pink darken-4"
           >
-            <v-col col="12" sm="8">
-              <h1>本当に削除しますか?</h1>
-            </v-col>
-            <v-col col="12" sm="4">
-              <v-btn color="error" @click="deleteQuestion">削除する</v-btn>
-              &nbsp;
-              <v-btn @click="alert = !alert">戻る</v-btn>
-            </v-col>
-          </v-alert>
-        </v-col>
-      </v-row>
+            {{ question.favoriteCount }}
+          </v-avatar>
+          いいね
+        </v-chip>
+        <v-card-actions>
+          <v-card-text>
+            投稿日時: {{ question.date }}
+            <br>
+            投稿者: {{ userName }}  
+          </v-card-text>
+          <v-btn icon
+            color="pink"
+            :disabled="name === userName || name === ''"
+          >
+            <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
+          </v-btn> 
+          <v-btn icon 
+            color="error"
+            :disabled="name != userName"
+          >
+            <v-icon @click="alert = !alert">mdi-delete</v-icon>
+          </v-btn> 
+        </v-card-actions>
+        <v-row>
+          <v-col md="12">
+            <v-alert
+              outlined
+              :value="alert"
+              transition="scale-transition"
+            >
+              <v-col col="12" sm="8">
+                <h1>本当に削除しますか?</h1>
+                <p>この操作は取り消せません.質問に付与された「いいね」も取り消されます.</p>
+              </v-col>
+              <v-col col="12" sm="4">
+                <v-btn color="error" @click="deleteQuestion">削除する</v-btn>
+                &nbsp;
+                <v-btn @click="alert = !alert">戻る</v-btn>
+              </v-col>
+            </v-alert>
+          </v-col>
+        </v-row>
+      </div>
+      <div v-else class="text-center">
+        <v-progress-circular
+          :size="100"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
     </v-card>
   </div>
 </template>
@@ -179,6 +189,8 @@ export default class QuestionPanelDetail extends Vue {
   private userName: string = '';
   // ユーザの名前
   private name: string = '';
+
+  private isReady: boolean = false;
 
   private alert: boolean = false;
 
@@ -226,6 +238,7 @@ export default class QuestionPanelDetail extends Vue {
       return [];
     }).then((json) => {
       this.question = json;
+      this.isReady = true;
       this.setUser();
     });
   }
@@ -252,6 +265,7 @@ export default class QuestionPanelDetail extends Vue {
     fetch(url, {method, headers}).then((response) => {
       if (response.ok) {
         // 質問を削除しました
+        alert('質問を削除しました');
         this.$router.push('./');
       }
     });
