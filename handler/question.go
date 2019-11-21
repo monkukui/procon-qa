@@ -57,7 +57,6 @@ func GetQuestionsWithPage(c echo.Context) error {
       mode = "completed"
     }
 
-    fmt.Println(mode)
 	questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength, mode)
 	return c.JSON(http.StatusOK, questions)
 }
@@ -127,6 +126,7 @@ func FavoriteQuestion(c echo.Context) error {
   // user.FavoriteQuestion をインクリメント
   user := model.FindUser(&model.User{ID: question.UID})
   user.FavoriteQuestion++
+  user.FavoriteSum++
   if err := model.UpdateUser(&user); err != nil {
     return echo.ErrNotFound
   }

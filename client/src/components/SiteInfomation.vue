@@ -1,21 +1,27 @@
 <template>
   <div class="site-information">
     <v-card
-    class="mx-auto"
-    max-width="344"
-    shaped
-  >
-    <v-list-item three-line>
-      <v-list-item-content>
-        <v-list-item-title class="headline">サイト情報</v-list-item-title>
-        <br>
-        <v-list-item>質問数:  {{ totalQuestions }}</v-list-item>
-        <v-list-item>回答数:  {{ totalAnswers }}</v-list-item>
-        <v-list-item>ユーザ数:  {{ totalUsers }}</v-list-item>
-        <v-list-item>解決済み:  {{ completedRate }} %</v-list-item>
-      </v-list-item-content>
-    </v-list-item>
-  </v-card>
+      class="mx-auto"
+      max-width="344"
+      outlined
+    >
+      <v-app-bar
+        color="primary"
+        flat
+        dense
+      >
+        <v-toolbar-title class="title">サイト情報</v-toolbar-title>
+      </v-app-bar>
+      <v-list-item three-line>
+        <v-list-item-content>
+          <br>
+          <v-list-item>質問数:  {{ totalQuestions }}</v-list-item>
+          <v-list-item>回答数:  {{ totalAnswers }}</v-list-item>
+          <v-list-item>ユーザ数:  {{ totalUsers }}</v-list-item>
+          <v-list-item>解決済み:  {{ completedRate }} %</v-list-item>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>
   </div>
 </template>
 
@@ -98,4 +104,7 @@ export default class SiteInformation extends Vue {
 </script>
 
 <style>
+.title {
+  color: rgb(256, 256, 256);
+}
 </style>

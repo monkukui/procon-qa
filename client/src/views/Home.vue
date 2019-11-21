@@ -40,6 +40,8 @@
           </v-col>
           <v-col col="12" sm="4">
             <SiteInfomation />
+            <br>
+            <RankingPanel />
           </v-col>
         </v-row>
       </v-container>
@@ -52,12 +54,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import Questions from '@/components/Questions.vue';
 import QuestionSetting from '@/components/QuestionSetting.vue';
 import SiteInfomation from '@/components/SiteInfomation.vue';
+import RankingPanel from '@/components/RankingPanel.vue';
 
 @Component({
   components: {
     Questions,
     QuestionSetting,
     SiteInfomation,
+    RankingPanel,
   },
 })
 export default class Home extends Vue {

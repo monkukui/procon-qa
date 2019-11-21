@@ -153,6 +153,7 @@ func FavoriteAnswer(c echo.Context) error {
   // user.FavoriteAnswer をインクリメント
   user := model.FindUser(&model.User{ID: answer.UID})
   user.FavoriteAnswer++
+  user.FavoriteSum++
   if err := model.UpdateUser(&user); err != nil {
     return echo.ErrNotFound
   }
