@@ -34,9 +34,9 @@ func CreateAnswer(a *Answer) {
 
 // おそらくだけども, 引数はわりと自由
 // 例えば, {QID: 3} を渡すと, Question に紐ずいた検索ができそう
-func FindAnswers(a *Answer) Answers {
+func FindAnswers(a *Answer, orderMode string) Answers {
 	var answers Answers
-	db.Where(a).Find(&answers)
+	db.Where(a).Order(orderMode).Order("id desc").Find(&answers)
 	return answers
 }
 

@@ -39,12 +39,15 @@ func GetQuestionsWithPage(c echo.Context) error {
 	// }
 
 	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
-	modeId, err := strconv.Atoi(c.Param("mode"))        // ソートの設定
-	PageLength := 10                             // 1 ページあたりの長さ
-
 	if err != nil {
-		return echo.ErrNotFound
+      return echo.ErrNotFound
+    }
+	modeId, err := strconv.Atoi(c.Param("mode"))        // ソートの設定
+	if err != nil {
+      return echo.ErrNotFound
 	}
+
+	PageLength := 10                             // 1 ページあたりの長さ
 	mode := "id desc"
 
     if modeId == 2 {
