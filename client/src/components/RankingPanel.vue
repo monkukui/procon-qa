@@ -16,8 +16,6 @@
         <v-list-item-content>
           <br>
           <v-list dense>
-            <v-subheader>TOP 10</v-subheader>
-            
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title>ユーザ</v-list-item-title>

@@ -15,10 +15,41 @@
       <v-list-item three-line>
         <v-list-item-content>
           <br>
-          <v-list-item>質問数:  {{ totalQuestions }}</v-list-item>
-          <v-list-item>回答数:  {{ totalAnswers }}</v-list-item>
-          <v-list-item>ユーザ数:  {{ totalUsers }}</v-list-item>
-          <v-list-item>解決済み:  {{ completedRate }} %</v-list-item>
+          <v-list dense>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>質問数</v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-content>
+                <v-list-item-title>{{ totalQuestions }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>回答数</v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-content>
+                <v-list-item-title>{{ totalAnswers }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>ユーザ数</v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-content>
+                <v-list-item-title>{{ totalUsers }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>解決済み</v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-content>
+                <v-list-item-title>{{ completedRate }} %</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-list-item-content>
       </v-list-item>
     </v-card>
