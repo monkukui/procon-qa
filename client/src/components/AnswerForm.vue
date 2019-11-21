@@ -32,17 +32,10 @@
       </div>
       <br>
       <v-btn
-        v-if="text"
         color="primary"
         @click="answer"
         large
-      >回答する</v-btn>
-      <v-btn
-        v-else
-        color="primary"
-        @click="answer"
-        large
-        disabled
+        :disabled="text == ''"
       >回答する</v-btn>
     </div>
   </div>

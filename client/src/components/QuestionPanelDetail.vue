@@ -142,6 +142,7 @@
             >
               <v-col col="12" sm="8">
                 <h1>本当に削除しますか?</h1>
+                <p>この操作は取り消せません.質問に付与された「いいね」も取り消されます.</p>
               </v-col>
               <v-col col="12" sm="4">
                 <v-btn color="error" @click="deleteQuestion">削除する</v-btn>
@@ -264,6 +265,7 @@ export default class QuestionPanelDetail extends Vue {
     fetch(url, {method, headers}).then((response) => {
       if (response.ok) {
         // 質問を削除しました
+        alert('質問を削除しました');
         this.$router.push('./');
       }
     });

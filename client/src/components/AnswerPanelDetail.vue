@@ -55,16 +55,41 @@
         </v-chip>
         <v-card-actions>
           <v-card-text>投稿日時: {{ userName }}</v-card-text>
-          <v-btn icon>
-            <v-icon>mdi-heart</v-icon>
+          <v-btn icon
+            color="pink"
+            :disabled="name == userName || name == ''"
+          >
+            <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
           </v-btn>
           <v-btn icon>
             <v-icon>mdi-share-variant</v-icon>
           </v-btn> 
-          <v-btn icon>
-            <v-icon @click="deleteAnswer">mdi-home</v-icon>
+          <v-btn icon
+            color="error"
+            :disabled="name != userName"
+          >
+            <v-icon @click="alert = !alert">mdi-delete</v-icon>
           </v-btn> 
         </v-card-actions>
+        <v-row>
+          <v-col md="12">
+            <v-alert
+              outlined
+              :value="alert"
+              transition="scale-transition"
+            >
+              <v-col col="12" sm="8">
+                <h1>本当に削除しますか?</h1>
+                <p>この操作は取り消せません.回答に付与された「いいね」も取り消されます.</p>
+              </v-col>
+              <v-col col="12" sm="4">
+                <v-btn color="error" @click="deleteAnswer">削除する</v-btn>
+                &nbsp;
+                <v-btn @click="alert = !alert">戻る</v-btn>
+              </v-col>
+            </v-alert>
+          </v-col>
+        </v-row>
       </div>
       <div v-else class="text-center">
         <v-progress-circular
@@ -105,6 +130,9 @@ export default class AnswerPanelDetail extends Vue {
 
   // ロード中の制御
   private isReady: boolean = false;
+
+  // 削除の確認画面の制御
+  private alert: boolean = false;
 
   private created(): void {
     if (this.getToken() != null) {

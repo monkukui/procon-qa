@@ -123,6 +123,13 @@ func FavoriteQuestion(c echo.Context) error {
   if err := model.UpdateQuestion(&question); err != nil {
     return echo.ErrNotFound
   }
+
+  // user.FavoriteQuestion をインクリメント
+  user := model.FindUser(&model.User{ID: question.UID})
+  user.FavoriteQuestion++
+  if err := model.UpdateUser(&user); err != nil {
+    return echo.ErrNotFound
+  }
   return c.NoContent(http.StatusNoContent)
 }
 
