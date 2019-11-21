@@ -7,6 +7,7 @@ type User struct {
 	Password string `json:"password"`
 	FavoriteAnswer int    `json:"favoriteAnswer"`
 	FavoriteQuestion int  `json:"favoriteQuestion"`
+	FavoriteSum int `json:"favoriteSum"`
 }
 
 // User の配列として定義
@@ -28,6 +29,7 @@ func FindUsers(u *User) Users {
 	return users
 }
 
+
 // user を UPDATE
 func UpdateUser(u *User) error {
 	rows := db.Model(u).Update(map[string]interface{}{
@@ -36,6 +38,7 @@ func UpdateUser(u *User) error {
 		"password":  u.Password,
 		"favoriteQuestion":  u.FavoriteQuestion,
 		"favoriteAnswer":    u.FavoriteAnswer,
+		"favoriteSum": u.FavoriteSum,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", u)
