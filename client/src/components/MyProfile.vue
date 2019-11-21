@@ -38,11 +38,10 @@ export default class MyProfile extends Vue {
       }
       return [];
     }).then((json) => {
-      console.log(json);
       this.userName = json.name;
-      this.userFavoriteQuestion = json.favoriteQuestion;
-      this.userFavoriteAnswer = json.favoriteAnswer;
-      this.userFavoriteSum = json.favoriteSum;
+      this.userFavoriteQuestion = json.favorite_question;
+      this.userFavoriteAnswer = json.favorite_answer;
+      this.userFavoriteSum = json.favorite_sum;
     });
   }
   private getToken(): any {

@@ -57,7 +57,6 @@ func GetQuestionsWithPage(c echo.Context) error {
       mode = "completed"
     }
 
-    fmt.Println(mode)
 	questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength, mode)
 	return c.JSON(http.StatusOK, questions)
 }

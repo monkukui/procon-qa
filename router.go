@@ -33,6 +33,7 @@ func newRouter() *echo.Echo {
 	noAuth.GET("/answers/count", handler.GetAnswerSize)          // 回答の個数を取得
 	noAuth.GET("/users/count", handler.GetUserSize)              // ユーザの個数を取得
 	noAuth.GET("/questions/:page/:mode", handler.GetQuestionsWithPage) // 質問をページ全取得
+	noAuth.GET("/users/:page/:mode", handler.GetUsersWithPage)   // ユーザをページ全取得
 	noAuth.GET("/question/:id", handler.GetQuestion)             // 質問を 1 つ取得
 	noAuth.GET("/answers/:qid", handler.GetAnswersForQuestion)   // 質問に紐づいた 回答を全取得
 	noAuth.GET("/answer/:id", handler.GetAnswer)                 // 回答を 1 つ取得
