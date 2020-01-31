@@ -44,18 +44,16 @@ import AnswerSetting from '@/components/AnswerSetting.vue';
   },
 })
 export default class Question extends Vue {
-  
   private mode: number = 1;  // 新着(1)，いいね(2)
-  private changeMode(mode: number): void {
-    this.mode = mode;
-  }
-  
   // TODO getParam とかでとってくる
   // TODO any は最悪なのでなんとかする (string | undefined とかにしてもエラーがでる)
   private title: any = '';
   private body: any = '';
   private questionedTime: any = '';
 
+  private changeMode(mode: number): void {
+    this.mode = mode;
+  }
   private mounted() {
     this.title = this.$route.query.title;
     this.body = this.$route.query.body;
