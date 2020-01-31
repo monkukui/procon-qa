@@ -2,7 +2,6 @@
   <div class="myprofile">
     <hr>
     <p>{{ userName }} さん，こんにちは．</p>
-    <p>ID は {{ userId }} です</p>
     <p>質問に対するいいねの数は {{ userFavoriteQuestion }} です</p>
     <p>回答に対するいいねの数は {{ userFavoriteAnswer }} です</p>
     <p>獲得したいいねの数の合計は {{ userFavoriteAnswer + userFavoriteQuestion }} です</p>

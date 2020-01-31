@@ -16,7 +16,7 @@
         <v-list-item-content>
           <br>
           <v-list dense>
-            <v-list-item>
+            <v-list-item v-if="isReadyTotalQuestion">
               <v-list-item-content>
                 <v-list-item-title>質問数</v-list-item-title>
               </v-list-item-content>
@@ -25,7 +25,7 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item>
+            <v-list-item v-if="isReadyTotalAnswer">
               <v-list-item-content>
                 <v-list-item-title>回答数</v-list-item-title>
               </v-list-item-content>
@@ -33,7 +33,7 @@
                 <v-list-item-title>{{ totalAnswers }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item>
+            <v-list-item v-if="isReadyTotalUser">
               <v-list-item-content>
                 <v-list-item-title>ユーザ数</v-list-item-title>
               </v-list-item-content>
@@ -41,7 +41,7 @@
                 <v-list-item-title>{{ totalUsers }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item>
+            <v-list-item v-if="isReadyCompletedRate">
               <v-list-item-content>
                 <v-list-item-title>解決済み</v-list-item-title>
               </v-list-item-content>
@@ -68,6 +68,11 @@ export default class SiteInformation extends Vue {
   private totalUsers: number = 0;
   private completedRate: string = '0.0';
 
+  private isReadyTotalQuestion: boolean = false;
+  private isReadyCompletedRate: boolean = false;
+  private isReadyTotalAnswer: boolean = false;
+  private isReadyTotalUser: boolean = false;
+
   private created(): void {
     this.getTotalQuestion();
     this.getTotalAnswer();
@@ -86,6 +91,7 @@ export default class SiteInformation extends Vue {
     }).then((cnt) => {
       this.totalQuestions = cnt;
       this.getCompletedRate();
+      this.isReadyTotalQuestion = true;
     });
   }
   // 解決済み率数を取得する
@@ -99,6 +105,7 @@ export default class SiteInformation extends Vue {
       return [];
     }).then((cnt) => {
       this.completedRate = (cnt * 100 / this.totalQuestions).toFixed(3);
+      this.isReadyCompletedRate = true;
     });
   }
   // 回答数を取得する
@@ -112,6 +119,7 @@ export default class SiteInformation extends Vue {
       return [];
     }).then((cnt) => {
       this.totalAnswers = cnt;
+      this.isReadyTotalAnswer = true;
     });
   }
 
@@ -126,6 +134,7 @@ export default class SiteInformation extends Vue {
       return [];
     }).then((cnt) => {
       this.totalUsers = cnt;
+      this.isReadyTotalUser = true;
     });
   }
   private getToken(): any {

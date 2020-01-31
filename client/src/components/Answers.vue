@@ -27,10 +27,8 @@ import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
   },
 })
 export default class Answers extends Vue {
-  
   @Prop()
   private mode!: number;
-  
   private questionId!: number;
   private answers = [];
   private isReady: boolean = false;
@@ -44,7 +42,6 @@ export default class Answers extends Vue {
   private getAnswers(): void {
     this.isReady = false;
     const url = 'api/no-auth/answers/' + String(this.questionId) + '/' + String(this.mode);
-    console.log(url);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
