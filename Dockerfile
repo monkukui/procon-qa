@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY client/package*.json ./
 
-RUN npm install --verbose
+RUN npm install
 
 COPY ./client ./
 
@@ -28,10 +28,10 @@ FROM busybox
 
 WORKDIR /app
 
-COPY --from=build-js /app/dist ./dist
+COPY --from=build-js /app/dist ./client/dist
 
 COPY --from=build-go /app/main ./main
 
 EXPOSE 8080
 
-ENTRYPOINT ["./main"]
+CMD ./main
