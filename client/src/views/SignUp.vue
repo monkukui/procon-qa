@@ -29,14 +29,6 @@
       </v-row>
     </v-container>
     <v-btn large color="primary" @click="signup">登録</v-btn>
-    <br>
-    <br>
-    <br>
-    <v-alert type="error">
-      <h1>注意</h1>
-      <p>現在パスワードは平文で保存されます</p>
-      <p>誰にみられてもいい適当なパスワードを使用してください</p>
-    </v-alert>
   </div>
 </template>
 

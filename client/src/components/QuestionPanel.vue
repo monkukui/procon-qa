@@ -157,7 +157,6 @@ export default class QuestionPanel extends Vue {
     }).then((json) => {
       this.question = json;
       this.setUser();
-      this.isReady = true;
     });
   }
 
@@ -171,6 +170,7 @@ export default class QuestionPanel extends Vue {
       return [];
     }).then((json) => {
       this.userName = json.name;
+      this.isReady = true;
     });
   }
 
