@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+  "golang.org/x/crypto/bcrypt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -44,9 +45,13 @@ func Signup(c echo.Context) error {
 		}
 	}
 
+  hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+  if err != nil {
+    return err
+  }
+  user.Password = string(hash)
 	model.CreateUser(user)
 	user.Password = ""
-
 	return c.JSON(http.StatusCreated, user)
 }
 
@@ -57,12 +62,19 @@ func Login(c echo.Context) error {
 	}
 
 	user := model.FindUser(&model.User{Name: u.Name})
-	if user.ID == 0 || user.Password != u.Password {
+	if user.ID == 0 {
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
-			Message: "invalid name or password",
+			Message: "invalid name",
 		}
 	}
+  if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password)); err != nil {
+    // 失敗
+		return &echo.HTTPError{
+			Code:    http.StatusUnauthorized,
+			Message: "invalid password",
+		}
+  }
 
 	claims := &jwtCustomClaims{
 		user.ID,
