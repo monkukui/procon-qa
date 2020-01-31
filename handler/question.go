@@ -3,7 +3,6 @@ package handler
 import (
 	"net/http"
 	"strconv"
-    "fmt"
 	"github.com/labstack/echo"
 	"github.com/monkukui/procon-qa/model"
 )
@@ -121,15 +120,15 @@ func FavoriteQuestion(c echo.Context) error {
     // 自分の質問にいいねはできません
     return echo.ErrNotFound
   }
-  question.FavoriteCount++
+  question.FavoriteCount += 1
   if err := model.UpdateQuestion(&question); err != nil {
     return echo.ErrNotFound
   }
 
   // user.FavoriteQuestion をインクリメント
   user := model.FindUser(&model.User{ID: question.UID})
-  user.FavoriteQuestion++
-  user.FavoriteSum++
+  user.FavoriteQuestion += 1
+  user.FavoriteSum += 1
   if err := model.UpdateUser(&user); err != nil {
     return echo.ErrNotFound
   }
@@ -138,7 +137,6 @@ func FavoriteQuestion(c echo.Context) error {
 
 // 閲覧数をインクリメント
 func BrowseQuestion(c echo.Context) error {
-    fmt.Println("in go")
   questionID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
@@ -200,7 +198,6 @@ func DeleteQuestion(c echo.Context) error {
 
     // uid が question の uid と一致していなければダメ
     if uid != model.FindQuestions(&model.Question{ID: questionID})[0].UID {
-        fmt.Println("他人の質問です")
         return echo.ErrNotFound
     }
 

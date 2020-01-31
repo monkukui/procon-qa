@@ -3,7 +3,6 @@ package handler
 import (
 	"net/http"
 	"strconv"
-    "fmt"
 	"github.com/labstack/echo"
 	// c-color さんに依存しちゃってる...
 	// なんとか再現性があるように作り変えることができないもんかね...?
@@ -123,9 +122,9 @@ func DeleteAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-    if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
-        fmt.Println("他人の回答です")
-    }
+  if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
+    return err
+  }
 
 	return c.NoContent(http.StatusNoContent)
 }
