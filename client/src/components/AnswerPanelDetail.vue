@@ -5,66 +5,26 @@
     >
       <div v-if="isReady">
         <v-row>
-          <v-col md="8"> 
-            <div class="mavon-editor">
-              <mavon-editor
-                v-model="answer.body"
-                defaultOpen="preview"
-                :toolbarsFlag="fa"
-                :subfield="fa"
-                :boxShadow="fa"
-              />
-            </div>
-          </v-col>
-          <v-col md="4">
-            <v-card
-              class="mx-auto"
-              max-width="300"
-              outlined
-              color="deep-orange lighten-5"
-            >
-              <v-list-item three-line>
-                <v-list-item-content>
-                  <div>回答者</div>
-                  <v-list-item-title class="headline mb-1">{{ userName }}</v-list-item-title>
-                </v-list-item-content>
-                <v-list-item-avatar
-                  circle
-                  size="80"
-                  color="grey"
-                ></v-list-item-avatar>
-              </v-list-item>
-            </v-card>
+          <v-col md="12"> 
+            <v-card-text>
+              <div class="mavon-editor">
+                <mavon-editor
+                  v-model="answer.body"
+                  defaultOpen="preview"
+                  :toolbarsFlag="fa"
+                  :subfield="fa"
+                  :boxShadow="fa"
+                />
+              </div>
+            </v-card-text>
           </v-col>
         </v-row>
-      
-        <v-chip
-          class="ma-2"
-          color="pink"
-          text-color="white"
-          :disabled="userName == name"
-          @click="favoriteAnswer"
-        >
-          <v-avatar
-            left
-            class="pink darken-4"
-          >
-          {{ answer.favoriteCount }}
-          </v-avatar>
-          いいね
-        </v-chip>
         <v-card-actions>
           <v-card-text>
-            投稿日時: {{ answer.date }}
-            <br>
             投稿者: {{ userName }}
+            <br>
+            投稿日時: {{ answer.date }}
           </v-card-text>
-          <v-btn icon
-            color="pink"
-            :disabled="name == userName || name == ''"
-          >
-            <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
-          </v-btn>
           <v-btn icon>
             <v-icon>mdi-share-variant</v-icon>
           </v-btn> 
@@ -74,6 +34,13 @@
           >
             <v-icon @click="alert = !alert">mdi-delete</v-icon>
           </v-btn> 
+          <v-btn icon
+            color="pink"
+            :disabled="name == userName || name == ''"
+          >
+            <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
+          </v-btn>
+          {{ answer.favoriteCount }}
         </v-card-actions>
         <v-row>
           <v-col md="12">

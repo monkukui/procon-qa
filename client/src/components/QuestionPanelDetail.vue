@@ -12,25 +12,6 @@
           </v-list-item-content>
         </v-list-item>
         <v-divider class="mx-4"></v-divider>
-        <v-chip
-          v-if="question.completed"
-          label
-          class="ma-2"
-          color="rgb(116, 181, 103)"
-          text-color="white"
-        >
-          解決済みの質問
-        </v-chip>
-        <v-chip
-          v-else
-          label
-          class="ma-2"
-          color="rgb(231, 175, 95)"
-          text-color="white"
-        >
-          未解決の質問
-        </v-chip>
-
         <v-row>
           <v-col md="12"> 
             <v-card-text>
@@ -43,11 +24,6 @@
                   :boxShadow="fa"
                 />
               </div>
-            </v-card-text>
-            <v-card-text
-              v-if="question.url"
-            >
-              URL: <a :href="question.url">{{ question.url }}</a>
             </v-card-text>
             <!--v-btn
               class="tag"
@@ -72,7 +48,7 @@
             </v-btn-->
           </v-col>
         </v-row>
-        <v-chip
+        <!--v-chip
           class="ma-2"
           color="blue"
           text-color="white"
@@ -110,19 +86,38 @@
             {{ question.favoriteCount }}
           </v-avatar>
           いいね
+        </v-chip-->
+        <v-card-actions>
+                  <v-chip
+          v-if="question.completed"
+          label
+          class="ma-2"
+          color="rgb(116, 181, 103)"
+          text-color="white"
+        >
+          解決済みの質問
         </v-chip>
+        <v-chip
+          v-else
+          label
+          class="ma-2"
+          color="rgb(231, 175, 95)"
+          text-color="white"
+        >
+          未解決の質問
+        </v-chip>
+        </v-card-actions>
+
         <v-card-actions>
           <v-card-text>
+            投稿者: {{ userName }}  
+            <br>
             投稿日時: {{ question.date }}
             <br>
-            投稿者: {{ userName }}  
+            <span v-if="question.url">
+              URL: <a :href="question.url">{{ question.url }}</a>
+            </span>
           </v-card-text>
-          <v-btn icon
-            color="pink"
-            :disabled="name === userName || name === ''"
-          >
-            <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
-          </v-btn>
           <v-btn icon>
             <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
           </v-btn> 
@@ -132,6 +127,13 @@
           >
             <v-icon @click="alert = !alert">mdi-delete</v-icon>
           </v-btn> 
+          <v-btn icon
+            color="pink"
+            :disabled="name === userName || name === ''"
+          >
+            <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
+          </v-btn>
+          {{ question.favoriteCount }}
         </v-card-actions>
         <v-row>
           <v-col md="12">
@@ -282,11 +284,6 @@ export default class QuestionPanelDetail extends Vue {
   font-size: 75%;
 }
 .question-panel-detail {
-}
-
-.tag {
-  margin-bottom: 1%;
-  margin-left: 2%;
 }
 .mavon-editor {
   z-index: 0;
