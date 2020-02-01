@@ -1,66 +1,65 @@
 <template>
   <div class="mypage">
-    <container fluid>
-      <v-row>
-        <v-col col="12" sm="8">
-          <v-tabs
-            fixed-tabs
-            background-color="transparent"
+    <v-row>
+      <v-col col="12" sm="8">
+        <v-tabs
+          fixed-tabs
+          background-color="transparent"
+        >
+          <v-tab @click="changeMode('profile')"
+            class="tab"
           >
-            <v-tab @click="changeMode('profile')"
-              class="tab"
+            <div
+              class="display-100 flex-grow-1 text-center"
             >
-              <div
-                class="display-100 flex-grow-1 text-center"
-              >
-                <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                  プロフィール
-                </div>
+              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                プロフィール
               </div>
-            </v-tab>
-            <v-tab @click="changeMode('question')">
-              <div
-                class="display-100 flex-grow-1 text-center"
-              >
-                <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                  質問
-                </div>
+            </div>
+          </v-tab>
+          <v-tab @click="changeMode('question')">
+            <div
+              class="display-100 flex-grow-1 text-center"
+            >
+              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                質問
               </div>
-            </v-tab>
-            <v-tab @click="changeMode('answer')">
-              <div
-                class="display-100 flex-grow-1 text-center"
-              >
-                <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                  回答
-                </div>
+            </div>
+          </v-tab>
+          <v-tab @click="changeMode('answer')">
+            <div
+              class="display-100 flex-grow-1 text-center"
+            >
+              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                回答
               </div>
-            </v-tab>
-            <v-tab @click="changeMode('setting')">
-              <div
-                class="display-100 flex-grow-1 text-center"
-              >
-                <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                  設定
-                </div>
+            </div>
+          </v-tab>
+          <v-tab @click="changeMode('setting')">
+            <div
+              class="display-100 flex-grow-1 text-center"
+            >
+              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                設定
               </div>
-            </v-tab>
-          </v-tabs>
-          <div v-if="mode=='profile'">
-            <MyProfile />
-          </div>
-          <div v-if="mode=='question'">
-            <UserQuestions />
-          </div>
-          <div v-if="mode=='answer'">
-            <UserAnswers />
-          </div>
-          <div v-if="mode=='setting'">
-            <MySetting />
-          </div>
-        </v-col>
-      </v-row>
-    </container>
+            </div>
+          </v-tab>
+        </v-tabs>
+        <div v-if="mode=='profile'">
+          <MyProfile />
+        </div>
+        <div v-if="mode=='question'">
+          <UserQuestions />
+        </div>
+        <div v-if="mode=='answer'">
+          <UserAnswers />
+        </div>
+        <div v-if="mode=='setting'">
+          <MySetting />
+        </div>
+      </v-col>
+    </v-row>
+    <v-btn @click="getUserInfoByAtCoderUserAPI">get</v-btn>
   </div>
 </template>
 
@@ -95,7 +94,17 @@ export default class MyPage extends Vue {
   private changeMode(mode: string): void {
     this.mode = mode;
   }
-
+  private getUserInfoByAtCoderUserAPI(): void {
+    const url = 'https://us-central1-atcoderusersapi.cloudfunctions.net/api/info/username/' + `${this.userName}`;
+    fetch(url).then((response) => {
+      if (response.ok) {
+        return response.json;
+      }
+      return [];
+    }).then((json) => {
+      console.log(json);
+    });
+  }
 }
 </script>
 
