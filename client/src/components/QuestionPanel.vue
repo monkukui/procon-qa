@@ -6,7 +6,14 @@
     >
       <div v-if="isReady">
         <v-card-title>
-          <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link >
+          <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link>
+        <v-spacer />
+        <span style="font-size: 14px;">
+          <UserName
+            :name="userName"
+            color='user-blue'
+          />
+        </span>
         </v-card-title>
         <!--v-btn
           class="tag"
@@ -84,8 +91,8 @@
             color="#f0ad4e"
           /-->
           <div class="flex-grow-1"></div>
-          <div style="margin-left:auto; margin-right: 5%; margin-top: 5%;">
-            <span class="date">{{ question.date }} {{ userName }}</span>
+          <div style="margin-left:auto; margin-top: 20px; margin-right: 20px;">
+            <span class="date">{{ question.date }}</span>
           </div>
         </v-row>
       </div>
@@ -104,10 +111,12 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator';
 import SquarePanel from '@/components/SquarePanel.vue';
-import {Question} from '@/models/Question.ts';
+import UserName from '@/components/UserName.vue';
+import { Question } from '@/models/Question.ts';
 
 @Component({
   components: {
+    UserName,
     SquarePanel,
   },
 })
@@ -199,9 +208,6 @@ export default class QuestionPanel extends Vue {
 }
 .small {
   font-size: 75%;
-}
-* {
-  color: rgb(66,66,66);
 }
 .date {
   color: rgb(151, 151, 151);
