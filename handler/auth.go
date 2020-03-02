@@ -65,14 +65,14 @@ func Login(c echo.Context) error {
 	if user.ID == 0 {
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
-			Message: "invalid name",
+			Message: "invalid name or password",
 		}
 	}
   if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password)); err != nil {
     // 失敗
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
-			Message: "invalid password",
+			Message: "invalid name or password",
 		}
   }
 
