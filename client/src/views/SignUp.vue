@@ -10,7 +10,7 @@
         >
           <v-text-field
             v-model="name"
-            :counter="10"
+            :counter="14"
             label="ユーザ名"
             required
           ></v-text-field>
@@ -21,7 +21,6 @@
         >
           <v-text-field
             v-model="password"
-            :counter="10"
             label="パスワード"
             required
           ></v-text-field>
@@ -36,7 +35,7 @@
     >
       パスワードは<strong>ハッシュ化</strong>して保存されます．<br>
       ユーザ登録をすれば，質問を投稿したり，質問に回答することができます．<br>
-      ユーザ名，パスワード共に，<strong>10 文字以内</strong>にしてください<br>
+      ユーザ名は，<strong>14 文字以内</strong>にしてください<br>
       新規登録直後に，ログインが要求されます．ご了承ください<br>
     
 
@@ -67,13 +66,8 @@ export default class SignUp extends Vue {
       password: this.password,
     });
 
-    if (this.name.length > 10) {
+    if (this.name.length > 14) {
       alert('名前が長すぎます');
-      return;
-    }
-
-    if (this.password.length > 10) {
-      alert('パスワードが長すぎます');
       return;
     }
 
