@@ -18,6 +18,9 @@
           <v-list dense>
             <v-list-item>
               <v-list-item-content>
+                <v-list-item-title>順位</v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-content>
                 <v-list-item-title>ユーザ</v-list-item-title>
               </v-list-item-content>
               <v-list-item-content>
@@ -29,7 +32,16 @@
               :key="i"
             >
               <v-list-item-content>
-                <v-list-item-title>{{i + 1}}&nbsp; {{ user.name }}</v-list-item-title>
+                {{ i + 1 }}
+              </v-list-item-content>
+              <v-list-item-content>
+                <!--UserName
+                  :name="user.name"
+                  :color="user.color"
+                /-->
+                <UserName
+                  :name="user.name"
+                />
               </v-list-item-content>
               <v-list-item-content>
                 <v-list-item-title>{{ user.favorite_sum }}</v-list-item-title>
@@ -46,9 +58,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import UserName from '@/components/UserName.vue';
 
 @Component({
   components: {
+    UserName,
   },
 })
 export default class RankingPanel extends Vue {

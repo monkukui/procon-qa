@@ -1,63 +1,20 @@
 <template>
   <div class="mavonEditor">
-    <mavon-editor
-      :toolbars="markdownOption" 
-      v-model="handbook" 
-      language="en"
-      previewBackground="aaaaaa"
-      defaultOpen="preview"
-      :toolbarsFlag="fa"
-      :editable="tr"
-    />
-    {{ handbook }}
+    <h2>本サイトは作成途中です．</h2>
+    <p>ご意見ご要望は，<a href="https://twitter.com/monkukui2">@monkukui2</a>まで</p>
+
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      tr: true,
-      fa: false,
-      markdownOption: {
-        bold: true,
-        italic: true,
-        header: true,
-        underline: true,
-        strikethrough: true,
-        mark: true,
-        superscript: true,
-        subscript: true,
-        quote: true,
-        ol: true,
-        ul: true,
-        link: true,
-        imagelink: true,
-        code: true,
-        table: true,
-        help: true,
-        alignleft: true,
-        aligncenter: true,
-        alignright: true,
-        subfield: true,
-        preview: true,
-        // false
-        undo: false,
-        redo: false,
-        fullscreen: false,
-        readmodel: false,
-        htmlcode: false,
-        trash: false,
-        save: false,
-        navigation: false,
-      },
-      handbook: '#### how to use mavonEditor in nuxt.js',
-    };
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component({
+  components: {
   },
-};
+})
+export default class About extends Vue {
+}
 </script>
 
 <style scoped>
-.mavonEditor {
-  z-index: -2147483647;
-}
 </style>

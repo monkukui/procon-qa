@@ -1,15 +1,25 @@
 <template>
   <div class="question-form">
     <v-card flat>
-      <v-snackbar v-model="snackbar"
+      <v-snackbar
         absolute
+        outlined
         top
         right
         color="success"
+        v-model="snackbar"
+        :vertical="vertical"
       >
         <span>質問を投稿しました!!</span>
-        <v-icon dark>mdi-checkbox-marked-circle</v-icon>
+        <v-btn
+          text
+          to="/"
+          @click="snackbar = false"
+        >
+          <strong>質問ページを見に行く</strong>
+        </v-btn>
       </v-snackbar>
+
       <v-form ref="form" @submit.prevent="submit">
         <v-container fluid>
           <v-row>

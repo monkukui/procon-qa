@@ -88,24 +88,26 @@
           いいね
         </v-chip-->
         <v-card-actions>
-                  <v-chip
-          v-if="question.completed"
-          label
-          class="ma-2"
-          color="rgb(116, 181, 103)"
-          text-color="white"
-        >
-          解決済みの質問
-        </v-chip>
-        <v-chip
-          v-else
-          label
-          class="ma-2"
-          color="rgb(231, 175, 95)"
-          text-color="white"
-        >
-          未解決の質問
-        </v-chip>
+        <span v-if="question.completed">
+          <v-chip
+            label
+            class="ma-2"
+            color="rgb(116, 181, 103)"
+            text-color="white"
+          >
+            解決済みの質問
+          </v-chip>
+        </span>
+        <span v-else>
+          <v-chip
+            label
+            class="ma-2"
+            color="rgb(231, 175, 95)"
+            text-color="white"
+          >
+            未解決の質問
+          </v-chip>
+        </span>
         </v-card-actions>
 
         <v-card-actions>
@@ -118,9 +120,31 @@
               URL: <a :href="question.url">{{ question.url }}</a>
             </span>
           </v-card-text>
-          <v-btn icon>
-            <v-icon @click="updateQuestionCompleted">mdi-share-variant</v-icon>
-          </v-btn> 
+        </v-btn>
+          <v-btn 
+            v-if="question.completed"
+            :disabled="name != userName"
+            @click="updateQuestionCompleted" 
+            class="ma-2"
+            tile
+            outlined 
+            color="rgb(223, 177, 109)"
+            rounded
+          >
+            <v-icon>mdi-undo-variant</v-icon>未解決に戻す
+          </v-btn>
+          <v-btn 
+            v-else
+            :disabled="name != userName"
+            @click="updateQuestionCompleted" 
+            class="ma-2"
+            tile
+            outlined 
+            color="rgb(131, 179, 112)"
+            rounded
+          >
+            <v-icon>mdi-check</v-icon>解決済みにする
+          </v-btn>
           <v-btn icon 
             color="error"
             :disabled="name != userName"
@@ -210,7 +234,9 @@ export default class QuestionPanelDetail extends Vue {
     const url = 'api/question/' + String(this.questionId) + '/completed';
     const method = 'PUT';
     const headers = {Authorization: `Bearer ${this.getToken()}`};
-    fetch(url, {method, headers});
+    fetch(url, {method, headers}).then(() => {
+      location.reload();
+    });
   }
 
   private favoriteQuestion(): void {
@@ -286,6 +312,7 @@ export default class QuestionPanelDetail extends Vue {
 .question-panel-detail {
 }
 .mavon-editor {
+  height: 100;
   z-index: 0;
 }
 </style>

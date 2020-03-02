@@ -6,7 +6,7 @@
       <v-row>
         <v-col
           cols="12"
-          md="4"
+          md="6"
         >
           <v-text-field
             v-model="name"
@@ -17,7 +17,7 @@
         </v-col>
         <v-col
           cols="12"
-          md="4"
+          md="6"
         >
           <v-text-field
             v-model="password"
@@ -28,6 +28,19 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <v-alert
+      dense
+      text
+      type="success"
+    >
+      パスワードは<strong>ハッシュ化</strong>して保存されます．<br>
+      ユーザ登録をすれば，質問を投稿したり，質問に回答することができます．<br>
+      ユーザ名，パスワード共に，<strong>10 文字以内</strong>にしてください<br>
+      新規登録直後に，ログインが要求されます．ご了承ください<br>
+    
+
+    </v-alert>
     <v-btn large color="primary" @click="signup">登録</v-btn>
   </div>
 </template>
@@ -53,6 +66,16 @@ export default class SignUp extends Vue {
       name: this.name,
       password: this.password,
     });
+
+    if (this.name.length > 10) {
+      alert('名前が長すぎます');
+      return;
+    }
+
+    if (this.password.length > 10) {
+      alert('パスワードが長すぎます');
+      return;
+    }
 
     fetch(url, {method, headers, body}).then((response) => {
       if (response.status === 400) {

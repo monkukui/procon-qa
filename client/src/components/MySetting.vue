@@ -1,7 +1,7 @@
 <template>
   <div class="myprofile">
     <hr>
-    <p>{{ userName }} さん，こんにちは．</p>
+    <h1>準備中</h1>
   </div>
 </template>
 

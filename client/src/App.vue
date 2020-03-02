@@ -13,9 +13,6 @@
               <v-list-item-title class="title">
                 メニュー
               </v-list-item-title>
-              <v-list-item-subtitle>
-                サブタイトル
-              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -94,6 +91,13 @@
           <span class="font-weight-light">QA</span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn
+          v-if="user"
+          text
+          to="mypage"
+        >
+          {{ user }}
+        </v-btn>
         <v-btn
           v-if="user"
           color="primary"

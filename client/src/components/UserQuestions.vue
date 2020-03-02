@@ -25,13 +25,6 @@
       /-->
     </div>
 
-    <v-pagination
-      v-model="curPageId"
-      :length="20"
-      :total-visible="7"
-      circle
-    ></v-pagination>
-
   </div>
 </template>
 

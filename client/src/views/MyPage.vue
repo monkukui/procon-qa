@@ -1,5 +1,6 @@
 <template>
   <div class="mypage">
+    <!--{{ userInfo }}-->
     <v-row>
       <v-col col="12" sm="8">
         <v-tabs
@@ -59,7 +60,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-btn @click="getUserInfoByAtCoderUserAPI">get</v-btn>
+    <!-- <v-btn @click="getUserInfoByAtCoderUserAPI">get</v-btn> -->
   </div>
 </template>
 
@@ -83,6 +84,7 @@ export default class MyPage extends Vue {
   private activeBtn: number = 1;
   private userName: string = '';
   private userId: number = 0;
+  private userInfo: any = {};
   private created(): void {
     const claims = JSON.parse(atob(this.getToken().split('.')[1]));
     this.userName = claims.name;
@@ -95,14 +97,16 @@ export default class MyPage extends Vue {
     this.mode = mode;
   }
   private getUserInfoByAtCoderUserAPI(): void {
-    const url = 'https://us-central1-atcoderusersapi.cloudfunctions.net/api/info/username/' + `${this.userName}`;
+
+    const url = 'https://us-central1-atcoderusersapi.cloudfunctions.net/api/info/username/tourist';
+    // const url = 'https://us-central1-atcoderusersapi.cloudfunctions.net/api/info/username/' + `${this.userName}`;
     fetch(url).then((response) => {
       if (response.ok) {
-        return response.json;
+        return response.json();
       }
       return [];
     }).then((json) => {
-      console.log(json);
+      this.userInfo = json;
     });
   }
 }

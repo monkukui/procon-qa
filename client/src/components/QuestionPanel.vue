@@ -6,7 +6,13 @@
     >
       <div v-if="isReady">
         <v-card-title>
-          <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link >
+          <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link>
+        <v-spacer />
+        <span style="font-size: 14px;">
+          <UserName
+            :name="userName"
+          />
+        </span>
         </v-card-title>
         <!--v-btn
           class="tag"
@@ -20,42 +26,54 @@
           <v-chip
             outlined
             class="ma-2"
-            text-color="rgb(66, 66, 66)"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
           >
-            回答数
-            {{ question.answerCount }}
+            <span class="chip-text">
+              回答数{{ question.answerCount }}
+            </span>
           </v-chip>
           <v-chip
             outlined
             class="ma-2"
-            text-color="rgb(66, 66, 66)"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
           >
-            閲覧数
-            {{ question.browseCount }}
+            <span class="chip-text">
+              閲覧数{{ question.browseCount }}
+            </span>
           </v-chip>
           <v-chip
             outlined
             class="ma-2"
-            text-color="rgb(66, 66, 66)"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
           >
-            いいね
-            {{ question.favoriteCount }}
+            <span class="chip-text">
+              いいね{{ question.favoriteCount }}
+            </span>
           </v-chip>
           <v-chip
             v-if="question.completed"
             outlined
             class="ma-2"
             color="rgb(116, 181, 103)"
+            text-color="rgb(116, 181, 103)"
           >
-            解決済み
+            <span class="chip-text">
+              解決済み
+            </span>
           </v-chip>
           <v-chip
             v-else
             outlined
             class="ma-2"
             color="rgb(231,175,95)"
+            text-color="rgb(231,175,95)"
           >
-            未解決
+            <span class="chip-text">
+              未解決
+            </span>
           </v-chip>
 
           <!--SquarePanel 
@@ -84,8 +102,8 @@
             color="#f0ad4e"
           /-->
           <div class="flex-grow-1"></div>
-          <div style="margin-left:auto; margin-right: 5%; margin-top: 5%;">
-            <span class="date">{{ question.date }} {{ userName }}</span>
+          <div style="margin-left:auto; margin-top: 20px; margin-right: 20px;">
+            <span class="date">{{ question.date }}</span>
           </div>
         </v-row>
       </div>
@@ -104,10 +122,12 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator';
 import SquarePanel from '@/components/SquarePanel.vue';
-import {Question} from '@/models/Question.ts';
+import UserName from '@/components/UserName.vue';
+import { Question } from '@/models/Question.ts';
 
 @Component({
   components: {
+    UserName,
     SquarePanel,
   },
 })
@@ -200,10 +220,10 @@ export default class QuestionPanel extends Vue {
 .small {
   font-size: 75%;
 }
-* {
-  color: rgb(66,66,66);
-}
 .date {
   color: rgb(151, 151, 151);
+}
+.chip-text {
+  font-weight: bold;
 }
 </style>
