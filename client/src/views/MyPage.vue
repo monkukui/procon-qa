@@ -1,65 +1,70 @@
 <template>
   <div class="mypage">
     <!--{{ userInfo }}-->
-    <v-row>
-      <v-col col="12" sm="8">
-        <v-tabs
-          fixed-tabs
-          background-color="transparent"
-        >
-          <v-tab @click="changeMode('profile')"
-            class="tab"
+    <div v-if="userName">
+      <v-row>
+        <v-col col="12" sm="8">
+          <v-tabs
+            fixed-tabs
+            background-color="transparent"
           >
-            <div
-              class="display-100 flex-grow-1 text-center"
+            <v-tab @click="changeMode('profile')"
+              class="tab"
             >
-              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                プロフィール
+              <div
+                class="display-100 flex-grow-1 text-center"
+              >
+                <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                  プロフィール
+                </div>
               </div>
-            </div>
-          </v-tab>
-          <v-tab @click="changeMode('question')">
-            <div
-              class="display-100 flex-grow-1 text-center"
-            >
-              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                質問
+            </v-tab>
+            <v-tab @click="changeMode('question')">
+              <div
+                class="display-100 flex-grow-1 text-center"
+              >
+                <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                  質問
+                </div>
               </div>
-            </div>
-          </v-tab>
-          <v-tab @click="changeMode('answer')">
-            <div
-              class="display-100 flex-grow-1 text-center"
-            >
-              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                回答
+            </v-tab>
+            <v-tab @click="changeMode('answer')">
+              <div
+                class="display-100 flex-grow-1 text-center"
+              >
+                <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                  回答
+                </div>
               </div>
-            </div>
-          </v-tab>
-          <v-tab @click="changeMode('setting')">
-            <div
-              class="display-100 flex-grow-1 text-center"
-            >
-              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                設定
+            </v-tab>
+            <v-tab @click="changeMode('setting')">
+              <div
+                class="display-100 flex-grow-1 text-center"
+              >
+                <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                  設定
+                </div>
               </div>
-            </div>
-          </v-tab>
-        </v-tabs>
-        <div v-if="mode=='profile'">
-          <MyProfile />
-        </div>
-        <div v-if="mode=='question'">
-          <UserQuestions />
-        </div>
-        <div v-if="mode=='answer'">
-          <UserAnswers />
-        </div>
-        <div v-if="mode=='setting'">
-          <MySetting />
-        </div>
-      </v-col>
-    </v-row>
+            </v-tab>
+          </v-tabs>
+          <div v-if="mode=='profile'">
+            <MyProfile />
+          </div>
+          <div v-if="mode=='question'">
+            <UserQuestions />
+          </div>
+          <div v-if="mode=='answer'">
+            <UserAnswers />
+          </div>
+          <div v-if="mode=='setting'">
+            <MySetting />
+          </div>
+        </v-col>
+      </v-row>
+    </div>
+    <div v-else>
+      ログインしてください
+    </div>
     <!-- <v-btn @click="getUserInfoByAtCoderUserAPI">get</v-btn> -->
   </div>
 </template>
