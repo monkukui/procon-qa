@@ -54,6 +54,16 @@ export default class SignUp extends Vue {
       password: this.password,
     });
 
+    if (this.name.length > 10) {
+      alert('名前が長すぎます');
+      return;
+    }
+
+    if (this.password.length > 10) {
+      alert('パスワードが長すぎます');
+      return;
+    }
+
     fetch(url, {method, headers, body}).then((response) => {
       if (response.status === 400) {
         alert('Name or Password are empty. Please retry');
