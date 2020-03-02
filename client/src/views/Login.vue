@@ -10,7 +10,7 @@
         >
           <v-text-field
             v-model="name"
-            :counter="10"
+            :counter="14"
             label="ユーザ名"
             required
           ></v-text-field>
