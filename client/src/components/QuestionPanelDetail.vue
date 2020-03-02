@@ -6,7 +6,7 @@
       <div v-if="isReady">
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="display-2">
+            <v-list-item-title class="display-1">
               {{ question.title }}
             </v-list-item-title>
           </v-list-item-content>

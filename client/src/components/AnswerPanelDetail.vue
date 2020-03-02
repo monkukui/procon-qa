@@ -25,9 +25,6 @@
             <br>
             投稿日時: {{ answer.date }}
           </v-card-text>
-          <v-btn icon>
-            <v-icon>mdi-share-variant</v-icon>
-          </v-btn> 
           <v-btn icon
             color="error"
             :disabled="name != userName"
