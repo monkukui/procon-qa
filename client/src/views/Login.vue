@@ -21,6 +21,9 @@
         >
           <v-text-field
             v-model="password"
+            :type="show ? 'text' : 'password'"
+            @click:append="show = !show"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             label="パスワード"
             required
           ></v-text-field>
@@ -41,6 +44,7 @@ export default class Login extends Vue {
 
   private name: string = '';
   private password: string = '';
+  private show: boolean = false;
 
   private login(): void {
     const url = '/login';
