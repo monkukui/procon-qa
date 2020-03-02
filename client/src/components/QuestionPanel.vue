@@ -11,7 +11,6 @@
         <span style="font-size: 14px;">
           <UserName
             :name="userName"
-            color='user-blue'
           />
         </span>
         </v-card-title>

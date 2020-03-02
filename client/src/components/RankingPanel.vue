@@ -41,7 +41,6 @@
                 /-->
                 <UserName
                   :name="user.name"
-                  color="user-blue"
                 />
               </v-list-item-content>
               <v-list-item-content>
