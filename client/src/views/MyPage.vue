@@ -1,6 +1,6 @@
 <template>
   <div class="mypage">
-    {{ userInfo }}
+    <!--{{ userInfo }}-->
     <v-row>
       <v-col col="12" sm="8">
         <v-tabs
