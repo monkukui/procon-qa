@@ -87,8 +87,13 @@
         <!-- -->
         <v-toolbar-title class="headline text-uppercase">
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-          <span>PROCON</span>
-          <span class="font-weight-light">QA</span>
+          <v-btn
+            text
+            to="/"
+          >
+            <span>PROCON</span>
+            <span class="font-weight-light">QA</span>
+          </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn
