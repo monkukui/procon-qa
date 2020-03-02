@@ -13,7 +13,7 @@
       <p>(例)</p>
       <p>```C</p>
       <p>int main() {</p>
-      <p>&nbsp;&nbsp;printf("hello world\n")</p>
+      <p>&nbsp;&nbsp;printf("hello world\n");</p>
       <p>&nbsp;&nbsp;return 0;</p>
       <p>}</p>
       <p>```</p>
