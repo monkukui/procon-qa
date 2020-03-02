@@ -21,7 +21,6 @@
         >
           <v-text-field
             v-model="password"
-            :counter="10"
             label="パスワード"
             required
           ></v-text-field>
