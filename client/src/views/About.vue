@@ -1,7 +1,13 @@
 <template>
   <div class="mavonEditor">
-    <h2>本サイトは作成途中です．</h2>
+    <h1>本サイトは作成途中です．</h1>
     <p>ご意見ご要望は，<a href="https://twitter.com/monkukui2">@monkukui2</a>まで</p>
+    <p>
+      <v-btn icon href="https://github.com/monkukui/procon-qa">
+        <v-icon href="https://github.com/monkukui/procon-qa" >mdi-github-circle</v-icon>
+      </v-btn>
+      の issue，PR も募集中
+    </p>
 
   </div>
 </template>
