@@ -1,8 +1,7 @@
 <template>
   <div class="myprofile">
     <hr>
-    <p>{{ userName }} さんの獲得いいね情報．</p>
-    <v-divider />
+    <h1>{{ userName }} さんのプロフィール</h1>
     <p>質問への獲得いいね数： {{ userFavoriteQuestion }}</p>
     <p>回答への獲得いいね数： {{ userFavoriteAnswer }}</p>
     <p>合計獲得いいね数：{{ userFavoriteAnswer + userFavoriteQuestion }}</p>
