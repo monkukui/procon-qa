@@ -39,7 +39,7 @@
                 <mavon-editor
                   v-model="form.body"
                   language="ja"
-                  placeholder='回答本文'
+                  placeholder='質問本文'
                   :toolbars="markdownOption"
                 />
               </div>
