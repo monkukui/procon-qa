@@ -60,7 +60,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-btn @click="getUserInfoByAtCoderUserAPI">get</v-btn>
+    <!-- <v-btn @click="getUserInfoByAtCoderUserAPI">get</v-btn> -->
   </div>
 </template>
 
