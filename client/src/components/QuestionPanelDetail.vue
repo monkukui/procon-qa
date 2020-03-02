@@ -286,6 +286,7 @@ export default class QuestionPanelDetail extends Vue {
 .question-panel-detail {
 }
 .mavon-editor {
+  height: 100;
   z-index: 0;
 }
 </style>

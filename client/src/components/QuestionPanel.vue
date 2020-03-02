@@ -27,42 +27,54 @@
           <v-chip
             outlined
             class="ma-2"
-            text-color="rgb(66, 66, 66)"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
           >
-            回答数
-            {{ question.answerCount }}
+            <span class="chip-text">
+              回答数{{ question.answerCount }}
+            </span>
           </v-chip>
           <v-chip
             outlined
             class="ma-2"
-            text-color="rgb(66, 66, 66)"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
           >
-            閲覧数
-            {{ question.browseCount }}
+            <span class="chip-text">
+              閲覧数{{ question.browseCount }}
+            </span>
           </v-chip>
           <v-chip
             outlined
             class="ma-2"
-            text-color="rgb(66, 66, 66)"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
           >
-            いいね
-            {{ question.favoriteCount }}
+            <span class="chip-text">
+              いいね{{ question.favoriteCount }}
+            </span>
           </v-chip>
           <v-chip
             v-if="question.completed"
             outlined
             class="ma-2"
             color="rgb(116, 181, 103)"
+            text-color="rgb(116, 181, 103)"
           >
-            解決済み
+            <span class="chip-text">
+              解決済み
+            </span>
           </v-chip>
           <v-chip
             v-else
             outlined
             class="ma-2"
             color="rgb(231,175,95)"
+            text-color="rgb(231,175,95)"
           >
-            未解決
+            <span class="chip-text">
+              未解決
+            </span>
           </v-chip>
 
           <!--SquarePanel 
@@ -211,5 +223,8 @@ export default class QuestionPanel extends Vue {
 }
 .date {
   color: rgb(151, 151, 151);
+}
+.chip-text {
+  font-weight: bold;
 }
 </style>
