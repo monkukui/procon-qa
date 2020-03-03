@@ -16,3 +16,11 @@ services:
         environment:
             - STAGE=TEST
             - PORT=8080
+        entrypoint: 
+            - sh
+            - ./wait-for-postgres.sh
+            - postgres:5432
+            - -t
+            - "1"
+            - --
+            - ./main
