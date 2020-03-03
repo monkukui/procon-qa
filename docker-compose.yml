@@ -1,0 +1,20 @@
+version: "3"
+services:
+    postgres:
+        container_name: postgres
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+    app:
+        container_name: app
+        depends_on:
+            - postgres
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        ports:
+            - "0.0.0.0:8080:8080"
+        environment:
+            - STAGE=TEST
+            - PORT=8080
