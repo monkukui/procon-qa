@@ -16,17 +16,19 @@ func init() {
 
   url := os.Getenv("DATABASE_URL")
   env := ""
-
+  stage := ""
+  stage = os.Getenv("STAGE")
   if "" == url {
     env = "development"
   } else {
     env = "production"
   }
-
-
+  if stage == "TEST" {
+    env = "test"
+  }
   if env == "development" {
     db, err = gorm.Open("postgres", "user=postgres password=postgres dbname=huga sslmode=disable")
-  } else {
+  } else if env == "production" {
 
     connection, err := pq.ParseURL(url)
     if err != nil {
@@ -34,6 +36,8 @@ func init() {
     }
     connection += " sslmode=require"
     db, err = gorm.Open("postgres", connection);
+  } else {
+    db, err = gorm.Open("postgres", "host=postgres user=postgres password=postgres dbname=postgres sslmode=disable")
   }
 	if err != nil {
 		panic(err)
