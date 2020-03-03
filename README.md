@@ -47,6 +47,17 @@ Docker の起動の仕方は以下に記す
 `docker image build -t procon-qa ./ `
 `docker container run -it -p 8080:8080 --rm --name procon-qa procon-qa`
 
+### 検証環境 (docker-compose)
+docker-composeを使います。
+```
+git clone https://github.com/monkukui/procon-qa.git
+cd procon-qa
+docker-compose build
+docker-compose up
+```
+としてから `localhost:8080` にアクセスしてください。
+検証が終わったら `docker-compose down` してください。
+
 ### DB 設計
 ```
 Questions {
