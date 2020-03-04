@@ -34,4 +34,7 @@ COPY --from=build-go /app/main ./main
 
 EXPOSE 8080
 
+COPY ./wait-for-postgres.sh ./wait-for-postgres.sh
+RUN chmod +x ./wait-for-postgres.sh
+
 CMD ./main
