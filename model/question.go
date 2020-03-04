@@ -50,8 +50,8 @@ func FindQuestionsWithPage(q *Question, page int, length int, orderMode string) 
 func DeleteQuestion(q *Question) error {
 	if rows := db.Where(q).Delete(&Question{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to delete", q)
-	}
-	return nil
+  }
+  return nil
 }
 
 // question を UPDATE

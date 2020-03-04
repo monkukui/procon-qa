@@ -8,7 +8,7 @@ import (
 	"github.com/monkukui/procon-qa/model"
 )
 
-// answers のサイズを取得する
+// users のサイズを取得する
 func GetUserSize(c echo.Context) error {
   return c.JSON(http.StatusOK, len(model.FindUsers(&model.User{})))
 }

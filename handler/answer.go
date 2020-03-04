@@ -154,17 +154,39 @@ func FavoriteAnswer(c echo.Context) error {
     return echo.ErrNotFound
   }
 
-  answer.FavoriteCount++
-  if err := model.UpdateAnswer(&answer); err != nil {
-    return echo.ErrNotFound
+  // question と同じロジック
+  goods := model.FindAnswerGoods(&model.AnswerGood{UID: uid, AID: answerID});
+
+  if len(goods) == 0 { // いいねをする
+    model.CreateAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
+    answer.FavoriteCount++
+    if err := model.UpdateAnswer(&answer); err != nil {
+      return echo.ErrNotFound
+    }
+
+    // user.FavoriteAnswer をインクリメント
+    user := model.FindUser(&model.User{ID: answer.UID})
+    user.FavoriteAnswer++
+    user.FavoriteSum++
+    if err := model.UpdateUser(&user); err != nil {
+      return echo.ErrNotFound
+    }
+
+  } else { // いいねを取り消す
+    model.DeleteAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
+    answer.FavoriteCount--
+    if err := model.UpdateAnswer(&answer); err != nil {
+      return echo.ErrNotFound
+    }
+
+    // user.FavoriteAnswer をデクリメント
+    user := model.FindUser(&model.User{ID: answer.UID})
+    user.FavoriteAnswer--
+    user.FavoriteSum--
+    if err := model.UpdateUser(&user); err != nil {
+      return echo.ErrNotFound
+    }
   }
 
-  // user.FavoriteAnswer をインクリメント
-  user := model.FindUser(&model.User{ID: answer.UID})
-  user.FavoriteAnswer++
-  user.FavoriteSum++
-  if err := model.UpdateUser(&user); err != nil {
-    return echo.ErrNotFound
-  }
   return c.NoContent(http.StatusNoContent)
 }
