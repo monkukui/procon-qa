@@ -52,3 +52,11 @@ func UpdateUser(u *User) error {
 	}
 	return nil
 }
+
+// user を 1 つ削除
+func DeleteUser(u *User) error {
+	if rows := db.Where(u).Delete(&User{}).RowsAffected; rows == 0 {
+		return fmt.Errorf("Could not find Todo (%v) to delete", u)
+	}
+	return nil
+}

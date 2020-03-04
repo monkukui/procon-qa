@@ -61,5 +61,6 @@ func newRouter() *echo.Echo {
 	api.PUT("/answer/:id/favorite", handler.FavoriteAnswer) // いいね
   // users
 	api.GET("/user/:uid", handler.GetUser) // user_id から ユーザー名を取得
+	api.DELETE("/user/:uid", handler.DeleteUser) // user_id から ユーザー名を取得
 	return e
 }

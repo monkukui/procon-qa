@@ -53,9 +53,32 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 
 @Component
 export default class WithdrawButton extends Vue {
+
+  private userId: number = 0;
   private dialog: boolean = false;
   private withdraw(): void {
-    alert('TODO 退会処理を実装');
+    const url = 'api/user/' + String(this.userId);
+    const method = 'DELETE';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {method, headers}).then((response) => {
+      if (response.ok) {
+        // 質問を削除しました
+        alert('アカウントを削除しました');
+        localStorage.removeItem('token');
+        this.$router.push('./');
+        location.reload();
+      } else {
+        alert('不正です');
+      }
+    });
+
+  }
+  private getToken(): any {
+    return localStorage.getItem('token');
+  }
+  private created(): void {
+    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+    this.userId = claims.uid;
   }
 }
 </script>
