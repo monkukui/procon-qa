@@ -62,10 +62,10 @@ func newRouter() *echo.Echo {
 	api.GET("/user/:uid", handler.GetUser) // user_id から ユーザー名を取得
 
   // question_good
-  api.GET("/question-good/:uid/:qid", handler.isQuestionFavorited) // いいね状態かどうか
+  api.GET("/question-good/:uid/:qid", handler.QuestionFavorited) // いいね状態かどうか
 
   // answer_good
-  api.GET("/answer-good/:uid/:aid", handler.isAnswerFavorited)  // いいね状態かどうか
+  api.GET("/answer-good/:uid/:aid", handler.AnswerFavorited)  // いいね状態かどうか
 
 	return e
 }
