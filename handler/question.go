@@ -131,11 +131,11 @@ func FavoriteQuestion(c echo.Context) error {
   // いいねがされていなかったら，
   // CreateQuestionGood
   // question と user の favoritecount をインクリメント
-
   goods := model.FindQuestionGoods(&model.QuestionGood{UID: uid, QID: questionID});
 
   if len(goods) == 0 { // いいねをする
     model.CreateQuestionGood(&model.QuestionGood{UID: uid, QID: questionID})
+
     question.FavoriteCount++
     if err := model.UpdateQuestion(&question); err != nil {
       return echo.ErrNotFound
