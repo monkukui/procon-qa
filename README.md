@@ -1,3 +1,16 @@
+# procon-qa
+https://procon-qa.herokuapp.com/
+
+## フロントエンド
+- Vue
+- TypeScript
+- Vuetify
+## バックエンド
+- Go
+- echo
+- GORM
+
+
 ### 検証環境 (docker-compose)
 docker-composeを使います。
 ```
