@@ -40,7 +40,6 @@ func newRouter() *echo.Echo {
   noAuth.GET("/user/:uid", handler.GetUser)                    // user_id から ユーザー名を取得
   noAuth.PUT("/question/:id/browse", handler.BrowseQuestion) // 閲覧
 
-
   // questions
 	api.GET("/questions", handler.GetAllQuestions)            // 質問の全取得
 	api.GET("/questions/count", handler.GetQuestionSize)            // 質問の個数を取得
@@ -62,5 +61,11 @@ func newRouter() *echo.Echo {
   // users
 	api.GET("/user/:uid", handler.GetUser) // user_id から ユーザー名を取得
 	api.DELETE("/user/:uid", handler.DeleteUser) // user_id から ユーザー名を取得
+  
+  // question_good
+  api.GET("/question-good/:uid/:qid", handler.QuestionFavorited) // いいね状態かどうか
+  // answer_good
+  api.GET("/answer-good/:uid/:aid", handler.AnswerFavorited)  // いいね状態かどうか
+
 	return e
 }
