@@ -127,7 +127,7 @@ AnswerGood {
 ]
 ```
 
-ユーザーに紐ずいた質問をページ取得する (GET)
+ユーザーに紐づいた質問をページ取得する (GET)
 ```
 /api/user-questions/<page(1-indexed)>
 
