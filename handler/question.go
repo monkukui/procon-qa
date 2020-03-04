@@ -99,7 +99,7 @@ func GetQuestion(c echo.Context) error {
 	return c.JSON(http.StatusOK, question)
 }
 
-// いいねをする
+// いいねをする（or 取り消す）
 func FavoriteQuestion(c echo.Context) error {
   uid := userIDFromToken(c)
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
@@ -121,18 +121,48 @@ func FavoriteQuestion(c echo.Context) error {
     // 自分の質問にいいねはできません
     return echo.ErrNotFound
   }
-  question.FavoriteCount++
-  if err := model.UpdateQuestion(&question); err != nil {
-    return echo.ErrNotFound
+
+  // question_good の FindQuestionGoods を呼び出して，いいねがされているかを取得する
+
+  // いいねがされていたら
+  // DeleteQuestionGood
+  // question と user の favoritecount をデクリメント
+
+  // いいねがされていなかったら，
+  // CreateQuestionGood
+  // question と user の favoritecount をインクリメント
+
+  goods := model.FindQuestionGoods(&model.QuestionGood{UID: uid, QID: questionID});
+
+  if len(goods) == 0 { // いいねをする
+    model.CreateQuestionGood(&model.QuestionGood{UID: uid, QID: questionID})
+    question.FavoriteCount++
+    if err := model.UpdateQuestion(&question); err != nil {
+      return echo.ErrNotFound
+    }
+    // user.FavoriteQuestion をインクリメント
+    user := model.FindUser(&model.User{ID: question.UID})
+    user.FavoriteQuestion++
+    user.FavoriteSum++
+    if err := model.UpdateUser(&user); err != nil {
+      return echo.ErrNotFound
+    }
+
+  } else { // いいねを取り消す
+    model.DeleteQuestionGood(&model.QuestionGood{UID: uid, QID: questionID})
+    question.FavoriteCount--
+    if err := model.UpdateQuestion(&question); err != nil {
+      return echo.ErrNotFound
+    }
+    // user.FavoriteQuestion をインクリメント
+    user := model.FindUser(&model.User{ID: question.UID})
+    user.FavoriteQuestion--
+    user.FavoriteSum--
+    if err := model.UpdateUser(&user); err != nil {
+      return echo.ErrNotFound
+    }
   }
 
-  // user.FavoriteQuestion をインクリメント
-  user := model.FindUser(&model.User{ID: question.UID})
-  user.FavoriteQuestion++
-  user.FavoriteSum++
-  if err := model.UpdateUser(&user); err != nil {
-    return echo.ErrNotFound
-  }
   return c.NoContent(http.StatusNoContent)
 }
 
