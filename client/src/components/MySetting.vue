@@ -1,14 +1,18 @@
 <template>
   <div class="myprofile">
     <hr>
-    <h1>準備中</h1>
+    <WithdrawButton />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
+import WithdrawButton from '@/components/WithdrawButton.vue';
 
 @Component({
+  components: {
+    WithdrawButton,
+  },
 })
 export default class MySetting extends Vue {
 

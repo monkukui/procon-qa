@@ -124,7 +124,7 @@ func DeleteAnswer(c echo.Context) error {
 	}
 
     if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
-        fmt.Println("他人の回答です")
+      fmt.Println("他人の回答です")
     }
 
 	return c.NoContent(http.StatusNoContent)

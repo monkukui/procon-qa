@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
-	// "fmt"
+	"fmt"
 	"github.com/labstack/echo"
 	"github.com/monkukui/procon-qa/model"
 )
@@ -41,4 +41,29 @@ func GetUsersWithPage(c echo.Context) error {
     }
 	users := model.FindUsersWithPage(&model.User{}, PageID, PageLength, mode)
 	return c.JSON(http.StatusOK, users)
+}
+
+// user を削除する
+func DeleteUser(c echo.Context) error {
+	uid := userIDFromToken(c)
+  fmt.Println(49);
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+  fmt.Println(53);
+
+	userId, err := strconv.Atoi(c.Param("uid"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  if uid != userId {
+    fmt.Println("他人のアカウントです")
+  }
+
+  if err := model.DeleteUser(&model.User{ID: uid}); err != nil {
+    fmt.Println("削除できませんでした")
+  }
+
+	return c.NoContent(http.StatusNoContent)
 }
