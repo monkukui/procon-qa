@@ -33,16 +33,21 @@ Answers {
   date: string
 }
 
-tags {
-  id: int (primary_key)
-  string: body ( "tag1,tag2,...,tagn" )
-}
-
 Users {
   uid: int (primary_key)
   name: string
   pass: string (仮)
   rate: int (仮)
+}
+
+QuestionGood {
+  uid: number
+  qid: number
+}
+
+AnswerGood {
+  uid: number
+  aid: number
 }
 ```
 
