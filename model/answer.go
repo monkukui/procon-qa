@@ -11,9 +11,9 @@ type Answer struct {
 	ID  int `json:"id" gorm:"praimaly_key"` // Id (インクリメント)
 
 	// 以下, 回答の構成要素たち
-	Body      string `json:"body"`
-	Date      string `json:"date"`
-	FavoriteCount  int    `json:"favoriteCount"`
+	Body          string `json:"body"`
+	Date          string `json:"date"`
+	FavoriteCount int    `json:"favoriteCount"`
 }
 
 // Question の配列として定義
@@ -21,14 +21,14 @@ type Answers []Answer
 
 // 回答 を作成
 func CreateAnswer(a *Answer) {
-  questions := FindQuestions(&Question{ID: a.QID})
-  fmt.Println("ub CreateAnswer")
-  fmt.Println(a.ID)
-  fmt.Println(a.UID)
-  fmt.Println(a.QID)
-  // questions[0] の 回答数をインクリメント
-  questions[0].AnswerCount++
-  UpdateQuestion(&questions[0])
+	questions := FindQuestions(&Question{ID: a.QID})
+	fmt.Println("ub CreateAnswer")
+	fmt.Println(a.ID)
+	fmt.Println(a.UID)
+	fmt.Println(a.QID)
+	// questions[0] の 回答数をインクリメント
+	questions[0].AnswerCount++
+	UpdateQuestion(&questions[0])
 	db.Create(a)
 }
 
@@ -55,19 +55,19 @@ func DeleteAnswer(a *Answer) error {
 	}
 
 	fmt.Println(a)
-  questions := FindQuestions(&Question{ID: a.QID})
-  // questions[0] の 回答数をデクリメント
-  fmt.Println("in DeletAnswer")
-  fmt.Println(a.QID)
-  questions[0].AnswerCount--
-  UpdateQuestion(&questions[0])
+	questions := FindQuestions(&Question{ID: a.QID})
+	// questions[0] の 回答数をデクリメント
+	fmt.Println("in DeletAnswer")
+	fmt.Println(a.QID)
+	questions[0].AnswerCount--
+	UpdateQuestion(&questions[0])
 	return nil
 }
 
 // answer を UPDATE
 func UpdateAnswer(a *Answer) error {
 	rows := db.Model(a).Update(map[string]interface{}{
-		"body":      a.Body,
+		"body":          a.Body,
 		"favoriteCount": a.FavoriteCount,
 	}).RowsAffected
 	if rows == 0 {

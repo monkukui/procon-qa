@@ -10,15 +10,15 @@ import (
 
 func QuestionFavorited(c echo.Context) error {
 
-  uid, err := strconv.Atoi(c.Param("uid"))
+	uid, err := strconv.Atoi(c.Param("uid"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
-  qid, err := strconv.Atoi(c.Param("qid"))
+	qid, err := strconv.Atoi(c.Param("qid"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-  goods := model.FindQuestionGoods(&model.QuestionGood{UID: uid, QID: qid})
-  return c.JSON(http.StatusOK, len(goods) != 0)
+	goods := model.FindQuestionGoods(&model.QuestionGood{UID: uid, QID: qid})
+	return c.JSON(http.StatusOK, len(goods) != 0)
 }

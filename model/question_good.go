@@ -1,18 +1,19 @@
 // 質問に対するいいね
 
 package model
+
 import "fmt"
 
 type QuestionGood struct {
-  ID       int `json:"id" gorm:"praimaly_key"`
-  UID      int `json:"uid" gorm:"praimaly_key"`
-  QID      int `json:"qid" gorm:"praimaly_key"`
+	ID  int `json:"id" gorm:"praimaly_key"`
+	UID int `json:"uid" gorm:"praimaly_key"`
+	QID int `json:"qid" gorm:"praimaly_key"`
 }
 
 type QuestionGoods []QuestionGood
 
-func CreateQuestionGood(g * QuestionGood) {
-  db.Create(g)
+func CreateQuestionGood(g *QuestionGood) {
+	db.Create(g)
 }
 
 // いいねを取得

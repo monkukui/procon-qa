@@ -1,32 +1,33 @@
 package model
+
 import "fmt"
 
 type User struct {
-	ID       int    `json:"id" gorm:"praimaly_key"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
-	FavoriteAnswer int    `json:"favorite_answer"`
-	FavoriteQuestion int  `json:"favorite_question"`
-	FavoriteSum int `json:"favorite_sum"`
+	ID               int    `json:"id" gorm:"praimaly_key"`
+	Name             string `json:"name"`
+	Password         string `json:"password"`
+	FavoriteAnswer   int    `json:"favorite_answer"`
+	FavoriteQuestion int    `json:"favorite_question"`
+	FavoriteSum      int    `json:"favorite_sum"`
 }
 
 // パスワードは json として送る必要がない
 type ReturnUser struct {
-	ID       int    `json:"id" gorm:"praimaly_key"`
-	Name     string `json:"name"`
-	FavoriteAnswer int    `json:"favorite_answer"`
-	FavoriteQuestion int  `json:"favorite_question"`
-	FavoriteSum int `json:"favorite_sum"`
+	ID               int    `json:"id" gorm:"praimaly_key"`
+	Name             string `json:"name"`
+	FavoriteAnswer   int    `json:"favorite_answer"`
+	FavoriteQuestion int    `json:"favorite_question"`
+	FavoriteSum      int    `json:"favorite_sum"`
 }
 
 func (u User) IntoReturnUser() ReturnUser {
-  var retUser ReturnUser
-  retUser.ID = u.ID
-  retUser.Name = u.Name
-  retUser.FavoriteAnswer = u.FavoriteAnswer
-  retUser.FavoriteQuestion = u.FavoriteQuestion
-  retUser.FavoriteSum = u.FavoriteSum
-  return retUser
+	var retUser ReturnUser
+	retUser.ID = u.ID
+	retUser.Name = u.Name
+	retUser.FavoriteAnswer = u.FavoriteAnswer
+	retUser.FavoriteQuestion = u.FavoriteQuestion
+	retUser.FavoriteSum = u.FavoriteSum
+	return retUser
 }
 
 // User の配列として定義
@@ -34,11 +35,11 @@ type Users []User
 type ReturnUsers []ReturnUser
 
 func (users Users) IntoReturnUsers() ReturnUsers {
-  var retUsers ReturnUsers
-  for _, s := range users {
-    retUsers = append(retUsers, s.IntoReturnUser())
-  }
-  return retUsers
+	var retUsers ReturnUsers
+	for _, s := range users {
+		retUsers = append(retUsers, s.IntoReturnUser())
+	}
+	return retUsers
 }
 
 func CreateUser(user *User) {
@@ -68,12 +69,12 @@ func FindUsersWithPage(u *User, page int, length int, orderMode string) Users {
 // user を UPDATE
 func UpdateUser(u *User) error {
 	rows := db.Model(u).Update(map[string]interface{}{
-		"id":        u.ID,
-		"name":      u.Name,
-		"password":  u.Password,
-		"favorite_question":  u.FavoriteQuestion,
-		"favorite_answer":    u.FavoriteAnswer,
-		"favorite_sum": u.FavoriteSum,
+		"id":                u.ID,
+		"name":              u.Name,
+		"password":          u.Password,
+		"favorite_question": u.FavoriteQuestion,
+		"favorite_answer":   u.FavoriteAnswer,
+		"favorite_sum":      u.FavoriteSum,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", u)

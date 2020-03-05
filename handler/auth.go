@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"time"
 
-  "golang.org/x/crypto/bcrypt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/monkukui/procon-qa/model"
+	"golang.org/x/crypto/bcrypt"
 	// "github.com/x-color/simple-webapp/model"
 )
 
@@ -45,11 +45,11 @@ func Signup(c echo.Context) error {
 		}
 	}
 
-  hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-  if err != nil {
-    return err
-  }
-  user.Password = string(hash)
+	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	user.Password = string(hash)
 	model.CreateUser(user)
 	return c.JSON(http.StatusCreated, user.IntoReturnUser())
 }
@@ -67,13 +67,13 @@ func Login(c echo.Context) error {
 			Message: "invalid name or password",
 		}
 	}
-  if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password)); err != nil {
-    // 失敗
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password)); err != nil {
+		// 失敗
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
 			Message: "invalid name or password",
 		}
-  }
+	}
 
 	claims := &jwtCustomClaims{
 		user.ID,
