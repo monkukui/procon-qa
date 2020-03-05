@@ -10,8 +10,36 @@ type User struct {
 	FavoriteSum int `json:"favorite_sum"`
 }
 
+// パスワードは json として送る必要がない
+type ReturnUser struct {
+	ID       int    `json:"id" gorm:"praimaly_key"`
+	Name     string `json:"name"`
+	FavoriteAnswer int    `json:"favorite_answer"`
+	FavoriteQuestion int  `json:"favorite_question"`
+	FavoriteSum int `json:"favorite_sum"`
+}
+
+func (u User) IntoReturnUser() ReturnUser {
+  var retUser ReturnUser
+  retUser.ID = u.ID
+  retUser.Name = u.Name
+  retUser.FavoriteAnswer = u.FavoriteAnswer
+  retUser.FavoriteQuestion = u.FavoriteQuestion
+  retUser.FavoriteSum = u.FavoriteSum
+  return retUser
+}
+
 // User の配列として定義
 type Users []User
+type ReturnUsers []ReturnUser
+
+func (users Users) IntoReturnUsers() ReturnUsers {
+  var retUsers ReturnUsers
+  for _, s := range users {
+    retUsers = append(retUsers, s.IntoReturnUser())
+  }
+  return retUsers
+}
 
 func CreateUser(user *User) {
 	db.Create(user)
