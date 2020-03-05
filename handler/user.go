@@ -19,7 +19,7 @@ func GetUser(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 	user := model.FindUser(&model.User{ID: UserID})
-	return c.JSON(http.StatusOK, user)
+	return c.JSON(http.StatusOK, user.IntoReturnUser())
 }
 
 // ユーザをページ取得する
@@ -34,13 +34,14 @@ func GetUsersWithPage(c echo.Context) error {
 	}
 	mode := "favorite_sum desc"
 
-    if modeId == 2 {
-      mode = "favorite_question desc"
-    } else if modeId == 3 {
-      mode = "favorite_answer desc"
-    }
+  if modeId == 2 {
+    mode = "favorite_question desc"
+  } else if modeId == 3 {
+    mode = "favorite_answer desc"
+  }
+
 	users := model.FindUsersWithPage(&model.User{}, PageID, PageLength, mode)
-	return c.JSON(http.StatusOK, users)
+	return c.JSON(http.StatusOK, users.IntoReturnUsers())
 }
 
 // user を削除する

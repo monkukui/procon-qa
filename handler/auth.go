@@ -51,8 +51,7 @@ func Signup(c echo.Context) error {
   }
   user.Password = string(hash)
 	model.CreateUser(user)
-	user.Password = ""
-	return c.JSON(http.StatusCreated, user)
+	return c.JSON(http.StatusCreated, user.IntoReturnUser())
 }
 
 func Login(c echo.Context) error {
