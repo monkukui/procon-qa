@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"fmt"
+	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
-    "fmt"
-	"github.com/labstack/echo"
 	// c-color さんに依存しちゃってる...
 	// なんとか再現性があるように作り変えることができないもんかね...?
 	// でも, wifi なくても起動できるんだよなぁ
@@ -16,7 +16,7 @@ import (
 
 // answers のサイズを取得する
 func GetAnswerSize(c echo.Context) error {
-  return c.JSON(http.StatusOK, len(model.FindAnswers(&model.Answer{}, "id desc")))
+	return c.JSON(http.StatusOK, len(model.FindAnswers(&model.Answer{}, "id desc")))
 }
 
 // 質問に紐ずいた, 回答を全取得する
@@ -30,16 +30,16 @@ func GetAnswersForQuestion(c echo.Context) error {
 	if err != nil {
 		return echo.ErrNotFound
 	}
-	modeId, err := strconv.Atoi(c.Param("mode"))        // ソートの設定
-    if err != nil {
+	modeId, err := strconv.Atoi(c.Param("mode")) // ソートの設定
+	if err != nil {
 		return echo.ErrNotFound
 	}
 
 	mode := "id desc"
 
-    if modeId == 2 {
-      mode = "favorite_count desc"
-    }
+	if modeId == 2 {
+		mode = "favorite_count desc"
+	}
 
 	answers := model.FindAnswers(&model.Answer{QID: QuestionID}, mode)
 	return c.JSON(http.StatusOK, answers)
@@ -59,7 +59,7 @@ func GetUserAnswersWithPage(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  answers := model.FindAnswersWithPage(&model.Answer{UID: uid}, PageID, PageLength)
+	answers := model.FindAnswersWithPage(&model.Answer{UID: uid}, PageID, PageLength)
 	return c.JSON(http.StatusOK, answers)
 }
 
@@ -103,7 +103,7 @@ func PostAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  // 回答者をユーザーに設定
+	// 回答者をユーザーに設定
 	answer.UID = uid
 
 	model.CreateAnswer(answer)
@@ -123,70 +123,69 @@ func DeleteAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-    if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
-      fmt.Println("他人の回答です")
-    }
+	if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
+		fmt.Println("他人の回答です")
+	}
 
 	return c.NoContent(http.StatusNoContent)
 }
 
 // いいねをする
 func FavoriteAnswer(c echo.Context) error {
-  uid := userIDFromToken(c)
+	uid := userIDFromToken(c)
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
-
-  answerID, err := strconv.Atoi(c.Param("id"))
+	answerID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-  answers := model.FindAnswers(&model.Answer{ID: answerID}, "id desc")
-  if len(answers) == 0 {
-    return echo.ErrNotFound
-  }
-  answer := answers[0]
+	answers := model.FindAnswers(&model.Answer{ID: answerID}, "id desc")
+	if len(answers) == 0 {
+		return echo.ErrNotFound
+	}
+	answer := answers[0]
 
-  if answer.UID == uid {
-    // 自分の回答にいいねはできません
-    return echo.ErrNotFound
-  }
+	if answer.UID == uid {
+		// 自分の回答にいいねはできません
+		return echo.ErrNotFound
+	}
 
-  // question と同じロジック
-  goods := model.FindAnswerGoods(&model.AnswerGood{UID: uid, AID: answerID});
+	// question と同じロジック
+	goods := model.FindAnswerGoods(&model.AnswerGood{UID: uid, AID: answerID})
 
-  if len(goods) == 0 { // いいねをする
-    model.CreateAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
-    answer.FavoriteCount++
-    if err := model.UpdateAnswer(&answer); err != nil {
-      return echo.ErrNotFound
-    }
+	if len(goods) == 0 { // いいねをする
+		model.CreateAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
+		answer.FavoriteCount++
+		if err := model.UpdateAnswer(&answer); err != nil {
+			return echo.ErrNotFound
+		}
 
-    // user.FavoriteAnswer をインクリメント
-    user := model.FindUser(&model.User{ID: answer.UID})
-    user.FavoriteAnswer++
-    user.FavoriteSum++
-    if err := model.UpdateUser(&user); err != nil {
-      return echo.ErrNotFound
-    }
+		// user.FavoriteAnswer をインクリメント
+		user := model.FindUser(&model.User{ID: answer.UID})
+		user.FavoriteAnswer++
+		user.FavoriteSum++
+		if err := model.UpdateUser(&user); err != nil {
+			return echo.ErrNotFound
+		}
 
-  } else { // いいねを取り消す
-    model.DeleteAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
-    answer.FavoriteCount--
-    if err := model.UpdateAnswer(&answer); err != nil {
-      return echo.ErrNotFound
-    }
+	} else { // いいねを取り消す
+		model.DeleteAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
+		answer.FavoriteCount--
+		if err := model.UpdateAnswer(&answer); err != nil {
+			return echo.ErrNotFound
+		}
 
-    // user.FavoriteAnswer をデクリメント
-    user := model.FindUser(&model.User{ID: answer.UID})
-    user.FavoriteAnswer--
-    user.FavoriteSum--
-    if err := model.UpdateUser(&user); err != nil {
-      return echo.ErrNotFound
-    }
-  }
+		// user.FavoriteAnswer をデクリメント
+		user := model.FindUser(&model.User{ID: answer.UID})
+		user.FavoriteAnswer--
+		user.FavoriteSum--
+		if err := model.UpdateUser(&user); err != nil {
+			return echo.ErrNotFound
+		}
+	}
 
-  return c.NoContent(http.StatusNoContent)
+	return c.NoContent(http.StatusNoContent)
 }

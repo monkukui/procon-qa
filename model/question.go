@@ -11,15 +11,15 @@ type Question struct {
 	ID  int `json:"id" gorm:"praimaly_key"` // Id (インクリメント)
 
 	// 以下, 質問の構成要素たち
-	Title          string `json:"title"`
-	Body           string `json:"body"`
-	Url            string `json:"url"`
-	Date           string `json:"date"`
+	Title string `json:"title"`
+	Body  string `json:"body"`
+	Url   string `json:"url"`
+	Date  string `json:"date"`
 
-    Completed      bool   `json:"completed"`
-    AnswerCount    int    `json:"answerCount"`
-    FavoriteCount  int    `json:"favoriteCount"`
-    BrowseCount    int    `json:"browseCount"`
+	Completed     bool `json:"completed"`
+	AnswerCount   int  `json:"answerCount"`
+	FavoriteCount int  `json:"favoriteCount"`
+	BrowseCount   int  `json:"browseCount"`
 }
 
 // Question の配列として定義
@@ -50,21 +50,21 @@ func FindQuestionsWithPage(q *Question, page int, length int, orderMode string) 
 func DeleteQuestion(q *Question) error {
 	if rows := db.Where(q).Delete(&Question{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to delete", q)
-  }
-  return nil
+	}
+	return nil
 }
 
 // question を UPDATE
 func UpdateQuestion(q *Question) error {
 	rows := db.Model(q).Update(map[string]interface{}{
-		"title":     q.Title,
-		"body":      q.Body,
-		"url":       q.Url,
-        "date":      q.Date,
-		"completed": q.Completed,
-        "answerCount": q.AnswerCount,
-        "favoriteCount": q.FavoriteCount,
-        "browseCount" : q.BrowseCount,
+		"title":         q.Title,
+		"body":          q.Body,
+		"url":           q.Url,
+		"date":          q.Date,
+		"completed":     q.Completed,
+		"answerCount":   q.AnswerCount,
+		"favoriteCount": q.FavoriteCount,
+		"browseCount":   q.BrowseCount,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", q)
