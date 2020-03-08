@@ -8,6 +8,9 @@
             不具合・バグなどが存在します．
             正式リリースをお待ちくださいませ．
           </v-card-text>
+          <v-card-actions>
+            <v-btn color="blue darken-1" text @click="betaDialog = false">閉じる</v-btn>
+          </v-card-actions>
         </v-card>
       </v-dialog>
       <v-dialog v-model="dialog" scrollable max-width="600px">
