@@ -5,9 +5,9 @@ package model
 import "fmt"
 
 type AnswerGood struct {
-	ID  int `json:"id" gorm:"praimaly_key"`
-	UID int `json:"uid" gorm:"praimaly_key"`
-	AID int `json:"aid" gorm:"praimaly_key"`
+	ID  int `json:"id" gorm:"praimary_key"`
+	UID int `json:"uid"`
+	AID int `json:"aid"`
 }
 
 type AnswerGoods []AnswerGood

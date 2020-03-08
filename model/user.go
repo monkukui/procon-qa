@@ -3,7 +3,7 @@ package model
 import "fmt"
 
 type User struct {
-	ID               int    `json:"id" gorm:"praimaly_key"`
+	ID               int    `json:"id" gorm:"praimary_key"`
 	Name             string `json:"name"`
 	Password         string `json:"password"`
 	FavoriteAnswer   int    `json:"favorite_answer"`
@@ -13,7 +13,7 @@ type User struct {
 
 // パスワードは json として送る必要がない
 type ReturnUser struct {
-	ID               int    `json:"id" gorm:"praimaly_key"`
+	ID               int    `json:"id" gorm:"praimary_key"`
 	Name             string `json:"name"`
 	FavoriteAnswer   int    `json:"favorite_answer"`
 	FavoriteQuestion int    `json:"favorite_question"`

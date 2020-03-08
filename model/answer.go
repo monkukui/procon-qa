@@ -6,9 +6,9 @@ import "fmt"
 
 // 回答テーブル
 type Answer struct {
+	ID  int `json:"id" gorm:"praimary_key"` // Id (インクリメント)
 	UID int `json:"uid"`                    // User Id
 	QID int `json:"qid"`                    // Question Id (質問に紐ずける)
-	ID  int `json:"id" gorm:"praimaly_key"` // Id (インクリメント)
 
 	// 以下, 回答の構成要素たち
 	Body          string `json:"body"`

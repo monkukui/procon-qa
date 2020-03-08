@@ -8,7 +8,7 @@ import "fmt"
 type Question struct {
 	UID int `json:"uid"`                    // User Id
 	TID int `json:"tid"`                    // Tag Id
-	ID  int `json:"id" gorm:"praimaly_key"` // Id (インクリメント)
+	ID  int `json:"id" gorm:"praimary_key"` // Id (インクリメント)
 
 	// 以下, 質問の構成要素たち
 	Title string `json:"title"`
