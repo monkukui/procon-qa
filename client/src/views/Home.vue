@@ -1,6 +1,15 @@
 <template>
   <div class="home">
     <v-row justify="center">
+      <v-dialog v-model="betaDialog" scrollable max-width="600px">
+        <v-card>
+          <v-card-title>本サイトは，開発途中です</v-card-title>
+          <v-card-text>
+            不具合・バグなどが存在します．
+            正式リリースをお待ちくださいませ．
+          </v-card-text>
+        </v-card>
+      </v-dialog>
       <v-dialog v-model="dialog" scrollable max-width="600px">
         <v-card>
           <v-card-title>質問や回答を行う場合は，ログインが必要です.</v-card-title>
@@ -67,6 +76,7 @@ import RankingPanel from '@/components/RankingPanel.vue';
 export default class Home extends Vue {
   private mode: number = 1;  // 新着, 回答数, 閲覧数, いいね, 解決済みかどうか
   private dialog: boolean = false;
+  private betaDialog: boolean = true;
   private changeMode(mode: number): void {
     this.mode = mode;
   }
