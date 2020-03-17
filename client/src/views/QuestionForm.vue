@@ -146,25 +146,6 @@ export default {
     };
   },
   computed: {
-    getDate() {
-      const now = new Date();
-      const Year = String(now.getFullYear());
-      const Month = String(now.getMonth() + 1);
-      const Day = String(now.getDate());
-      let Hour = String(now.getHours());
-      let Min = String(now.getMinutes());
-      let Sec = String(now.getSeconds());
-      if (Hour.length === 1) {
-        Hour = '0' + Hour;
-      }
-      if (Min.length === 1) {
-        Min = '0' + Hour;
-      }
-      if (Sec.length === 1) {
-        Sec = '0' + Hour;
-      }
-      return Year + '年' + Month + '月' + Day + '日' + Hour + ':' + Min + ':' + Sec;
-    },
     formIsValid() {
       return (
         this.form.title &&
@@ -200,17 +181,20 @@ export default {
         'Authorization': `Bearer ${this.getToken()}`,
         'Content-Type': 'application/json; charset=UTF-8',
       };
+
+      // ここで url は "https://" or "http://" しか受け付けない（サーバ再度側でも弾いている）
+      const checkUrl = this.form.url + "xxxxxxxxxx";
+      if (checkUrl.substr(0, 7) != "http://" && checkUrl.substr(0, 8) != "https://") {
+        alert("url は https:// か http:// から始まるものにしてください");
+        return;
+      }
+
       const body = JSON.stringify({
         title: this.form.title,
         body: this.form.body,
-        date: this.getDate,
-        state: this.form.state,
         url: this.form.url,
-
-        favoriteCount: 0,
-        browseCount: 0,
-        answerCount: 0,
       });
+
       fetch(url, {method, headers, body}).then((response) => {
         if (response.ok) {
           this.snackbar = true;
