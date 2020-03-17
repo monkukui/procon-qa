@@ -211,7 +211,7 @@ func PostQuestion(c echo.Context) error {
   // 文字列長による面倒な分岐を避けるために，ダミー文字を 10 こ付け加える
   checkUrl := question.Url + "xxxxxxxxxx";
 
-  if checkUrl[0:7] != "http://" && checkUrl[0:8] != "https://" {
+  if checkUrl != "xxxxxxxxxx" && checkUrl[0:7] != "http://" && checkUrl[0:8] != "https://" {
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
 			Message: "invalid url fields",
