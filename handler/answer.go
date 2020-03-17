@@ -1,6 +1,7 @@
 package handler
 
 import (
+  "time"
 	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
@@ -82,6 +83,7 @@ func GetAnswer(c echo.Context) error {
 
 // 回答を投稿する
 func PostAnswer(c echo.Context) error {
+  fmt.Println("post answer")
 	answer := new(model.Answer)
 	// answer に 送信されてきたデータを bind している
 	if err := c.Bind(answer); err != nil {
@@ -105,6 +107,8 @@ func PostAnswer(c echo.Context) error {
 
 	// 回答者をユーザーに設定
 	answer.UID = uid
+  answer.FavoriteCount = 0
+  answer.Date = time.Now().Format("2006/01/02 15:04:05")
 
 	model.CreateAnswer(answer)
 

@@ -1,6 +1,7 @@
 package handler
 
 import (
+  "time"
 	"fmt"
 	"github.com/labstack/echo"
 	"github.com/monkukui/procon-qa/model"
@@ -204,6 +205,21 @@ func PostQuestion(c echo.Context) error {
 		}
 	}
 
+  // URL チェック
+  // javascript::alert(1) みたいなのを弾く
+  // https:// か http:// のみにする
+  // 文字列長による面倒な分岐を避けるために，ダミー文字を 10 こ付け加える
+  checkUrl := question.Url + "xxxxxxxxxx";
+
+  if checkUrl[0:7] != "http://" && checkUrl[0:8] != "https://" {
+		return &echo.HTTPError{
+			Code:    http.StatusBadRequest,
+			Message: "invalid url fields",
+		}
+  }
+  // if question.Url[]
+
+
 	uid := userIDFromToken(c)
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
@@ -211,6 +227,12 @@ func PostQuestion(c echo.Context) error {
 
 	question.UID = uid
 	question.Completed = false
+  question.AnswerCount = 0
+  question.FavoriteCount = 0
+  question.BrowseCount = 0
+
+  question.Date = time.Now().Format("2006/01/02 15:04:05")
+
 	model.CreateQuestion(question)
 
 	return c.JSON(http.StatusCreated, question)
