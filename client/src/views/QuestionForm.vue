@@ -210,14 +210,15 @@ export default {
       fetch(url, {method, headers, body}).then((response) => {
         if (response.ok) {
           return response.json();
+          this.snackbar = true;
+          this.resetForm();
         }
       }).then((json) => {
         if (typeof json === 'undefined') {
+          alert("server error");
           return;
         }
       });
-      this.snackbar = true;
-      this.resetForm();
     },
   },
 };
