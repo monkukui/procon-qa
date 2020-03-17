@@ -210,6 +210,10 @@ export default class QuestionPanel extends Vue {
   margin-left: 2%;
 }
 .title {
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #0288D1;
   text-decoration: none;
 }
