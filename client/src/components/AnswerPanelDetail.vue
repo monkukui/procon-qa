@@ -171,7 +171,7 @@ export default class AnswerPanelDetail extends Vue {
 
 <style scoped>
 .answer-panel-detail {
-  margin-top: 5px;
+  margin-top: 30px;
 }
 .mavon-editor {
   z-index: 0;

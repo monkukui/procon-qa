@@ -14,7 +14,6 @@
       </v-app-bar>
       <v-list-item three-line>
         <v-list-item-content>
-          <br>
           <v-list dense>
             <v-list-item>
               <v-list-item-content>

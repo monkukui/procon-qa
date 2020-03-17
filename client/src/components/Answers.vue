@@ -69,6 +69,6 @@ export default class Answers extends Vue {
 
 <style scoped>
 .answers {
-  margin: 0px 0px 20px-24px;
+  margin: 10px;
 }
 </style>

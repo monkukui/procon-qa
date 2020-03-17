@@ -310,6 +310,7 @@ export default class QuestionPanelDetail extends Vue {
   font-size: 75%;
 }
 .question-panel-detail {
+  margin: 10px;
 }
 .mavon-editor {
   height: 100;

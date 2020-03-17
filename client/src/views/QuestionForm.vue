@@ -190,6 +190,10 @@ export default {
       return localStorage.getItem('token');
     },
     submit() {
+      if (this.getToken() === null) {
+        alert("server error");
+        return;
+      }
       const url = 'api/questions';
       const method = 'POST';
       const headers = {
@@ -209,15 +213,16 @@ export default {
       });
       fetch(url, {method, headers, body}).then((response) => {
         if (response.ok) {
+          this.snackbar = true;
+          this.resetForm();
           return response.json();
         }
       }).then((json) => {
         if (typeof json === 'undefined') {
+          alert("server error");
           return;
         }
       });
-      this.snackbar = true;
-      this.resetForm();
     },
   },
 };

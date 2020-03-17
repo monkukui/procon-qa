@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="answer-setting">
     <container fluid>
       <v-row>
         <v-col col="12" sm="4">
@@ -52,4 +52,7 @@ export default class AnswerSetting extends Vue {
 </script>
 
 <style>
+.answer-setting {
+  margin: 10px;
+}
 </style>
