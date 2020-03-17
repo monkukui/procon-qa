@@ -95,7 +95,7 @@ export default class AnswerForm extends Vue {
   }
   private answer(): void {
     if (this.getToken() === null) {
-      alert("server error");
+      alert('server error');
       return;
     }
     const url = 'api/answers';
@@ -115,9 +115,8 @@ export default class AnswerForm extends Vue {
         return response.json();
       }
     }).then((json) => {
-      console.log(json);
-      if (typeof json === 'undefined') {
-        return;
+      if (typeof json !== 'undefined') {
+        location.reload();
       }
     });
   }
