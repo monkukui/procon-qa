@@ -7,7 +7,6 @@
       prominent
       border="left"
     >
-      
     <v-row>
       <v-col cols="12" sm="10">
         あなたの知見を共有してください.<br>
@@ -20,6 +19,8 @@
     </v-alert>
     </div>
     <div v-else>
+      <span class="font-weight-black headline">回答</span>
+      <br>
       <div class="mavon-editor">
         <mavon-editor
           :toolbars="markdownOption"
@@ -114,11 +115,11 @@ export default class AnswerForm extends Vue {
         return response.json();
       }
     }).then((json) => {
+      console.log(json);
       if (typeof json === 'undefined') {
         return;
       }
     });
-    location.reload();
   }
   private getDate(): string {
     const now = new Date();
@@ -143,6 +144,9 @@ export default class AnswerForm extends Vue {
 </script>
 
 <style scoped>
+.answer-form {
+  margin: 10px;
+}
 .mavon-editor {
   z-index: 0;
 }
