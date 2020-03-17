@@ -6,9 +6,9 @@
       <div v-if="isReady">
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="display-1">
+            <div class="question-title">
               {{ question.title }}
-            </v-list-item-title>
+            </div>
           </v-list-item-content>
         </v-list-item>
         <v-divider class="mx-4"></v-divider>
@@ -315,5 +315,10 @@ export default class QuestionPanelDetail extends Vue {
 .mavon-editor {
   height: 100;
   z-index: 0;
+}
+.question-title {
+  font-size: 30px;
+  letter-spacing: 0.05em;
+  color: rgb(66, 66, 66);
 }
 </style>
