@@ -155,7 +155,7 @@ export default class App extends Vue {
   private user: string = '';
   private closeModal: boolean = false;
   private created(): void {
-    let token = this.getToken();
+    const token = this.getToken();
     if (token !== null) {
       const claims = JSON.parse(atob(this.getToken().split('.')[1]));
       this.user = claims.name;

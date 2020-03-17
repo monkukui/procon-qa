@@ -191,7 +191,7 @@ export default {
     },
     submit() {
       if (this.getToken() === null) {
-        alert("server error");
+        alert('server error');
         return;
       }
       const url = 'api/questions';
@@ -219,7 +219,7 @@ export default {
         }
       }).then((json) => {
         if (typeof json === 'undefined') {
-          alert("server error");
+          alert('server error');
           return;
         }
       });
