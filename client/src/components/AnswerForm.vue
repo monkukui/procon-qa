@@ -93,6 +93,10 @@ export default class AnswerForm extends Vue {
     return localStorage.getItem('token');
   }
   private answer(): void {
+    if (this.getToken() === null) {
+      alert("server error");
+      return;
+    }
     const url = 'api/answers';
     const method = 'POST';
     const headers = {
