@@ -115,8 +115,8 @@ export default class AnswerForm extends Vue {
         return response.json();
       }
     }).then((json) => {
-      if (typeof json === 'undefined') {
-        return;
+      if (typeof json !== 'undefined') {
+        location.reload();
       }
     });
   }
