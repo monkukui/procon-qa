@@ -156,13 +156,27 @@
           >
             <v-icon @click="alert = !alert">mdi-delete</v-icon>
           </v-btn> 
-          <v-btn icon
+
+          <v-btn 
+            v-if="isFavorited"
+            icon
             color="pink"
-            :disabled="name === userName || name === ''"
+            :disabled="userName === name|| userName === ''"
           >
             <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
           </v-btn>
-          {{ question.favoriteCount }}
+          <v-btn 
+            v-else
+            icon
+            color="pink lighten-4"
+            :disabled="userName === name|| userName === ''"
+          >
+            <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
+          </v-btn>
+
+          <span v-if="userName !== ''">
+            {{ question.favoriteCount }}
+          </span>
         </v-card-actions>
         <v-row>
           <v-col md="12">
@@ -214,27 +228,42 @@ export default class QuestionPanelDetail extends Vue {
 
   // 元々 string として良いのでは ??
   private questionId!: number;
-
   // データベース Question 通り
   private question: any = {};
-
   // 質問者の名前
   private userName: string = '';
   // ユーザの名前
   private name: string = '';
-
+  private uid: string = '';
   private isReady: boolean = false;
-
   private alert: boolean = false;
+
+  private isFavorited: boolean = false;
 
   private created(): void {
     if (this.getToken() != null) {
       const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+      this.uid = claims.uid;
       this.name = claims.name;
     }
     this.questionId = Number(this.$route.query.questionId);
     this.createQuestion();
     this.browseQuestion();
+    this.updateIsFavorite();
+  }
+  // いいね状態を更新する
+  private updateIsFavorite(): void {
+    const url = 'api/question-good/' + String(this.uid) + '/' + String(this.questionId);
+    const method = 'GET';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((json) => {
+      this.isFavorited = json;
+    });
   }
 
   private updateQuestionCompleted(): void {
@@ -252,6 +281,7 @@ export default class QuestionPanelDetail extends Vue {
     const headers = {authorization: `Bearer ${this.getToken()}`};
     fetch(url, {method, headers}).then(() => {
       this.createQuestion();
+      this.updateIsFavorite();
     });
   }
 

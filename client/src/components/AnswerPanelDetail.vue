@@ -36,9 +36,19 @@
           >
             <v-icon @click="alert = !alert">mdi-delete</v-icon>
           </v-btn> 
-          <v-btn icon
+          <v-btn 
+            v-if="isFavorited"
+            icon
             color="pink"
-            :disabled="name == userName || name == ''"
+            :disabled="userName === name || userName === ''"
+          >
+            <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
+          </v-btn>
+          <v-btn 
+            v-else
+            icon
+            color="pink lighten-4"
+            :disabled="userName === name || userName === ''"
           >
             <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
           </v-btn>
@@ -105,6 +115,7 @@ export default class AnswerPanelDetail extends Vue {
   // 順に，回答者の名前，ユーザの名前
   private userName: string = '';
   private name: string = '';
+  private uid: string = '';
 
   // ロード中の制御
   private isReady: boolean = false;
@@ -112,12 +123,30 @@ export default class AnswerPanelDetail extends Vue {
   // 削除の確認画面の制御
   private alert: boolean = false;
 
+  private isFavorited: boolean = false;
+
   private created(): void {
     if (this.getToken() != null) {
       const claims = JSON.parse(atob(this.getToken().split('.')[1]));
       this.name = claims.name;
+      this.uid = claims.uid;
     }
     this.createAnswer();
+    this.updateIsFavorite();
+  }
+  // いいね状態を更新する
+  private updateIsFavorite(): void {
+    const url = 'api/answer-good/' + String(this.uid) + '/' + String(this.answerId);
+    const method = 'GET';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((json) => {
+      this.isFavorited = json;
+    });
   }
 
   private createAnswer(): void {
@@ -169,6 +198,7 @@ export default class AnswerPanelDetail extends Vue {
     const method = 'put';
     const headers = {authorization: `Bearer ${this.getToken()}`};
     fetch(url, {method, headers}).then(() => {
+      this.updateIsFavorite();
       this.createAnswer();
     });
   }
