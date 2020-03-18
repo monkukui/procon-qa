@@ -38,7 +38,7 @@
             <v-list-item
               key="マイページ"
               link
-              to="/mypage"
+              :to="{ name: 'userpage', query: { uid: this.uid }}"
             >
               <v-list-item-icon>
                 <v-icon>mdi-account</v-icon>
@@ -164,6 +164,7 @@ export default class App extends Vue {
         if (token !== null) {
           const claims = JSON.parse(atob(this.getToken().split('.')[1]));
           this.user = claims.name;
+          this.uid = claims.uid;
         }
       } else {
         localStorage.removeItem('token');
