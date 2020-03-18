@@ -161,7 +161,7 @@
             v-if="isFavorited"
             icon
             color="pink"
-            :disabled="userName === name|| userName === ''"
+            :disabled="userName === name || userName === '' || name == ''"
           >
             <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
           </v-btn>
@@ -169,7 +169,7 @@
             v-else
             icon
             color="pink lighten-4"
-            :disabled="userName === name|| userName === ''"
+            :disabled="userName === name || userName === '' || name == ''"
           >
             <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
           </v-btn>
