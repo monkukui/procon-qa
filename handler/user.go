@@ -27,7 +27,7 @@ func GetUsersWithPage(c echo.Context) error {
 
 	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
 	modeId, err := strconv.Atoi(c.Param("mode")) // ソートの設定
-	PageLength := 10                             // 1 ページあたりの長さ
+	PageLength := 20                             // 1 ページあたりの長さ
 
 	if err != nil {
 		return echo.ErrNotFound
