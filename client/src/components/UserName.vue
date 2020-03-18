@@ -1,6 +1,11 @@
 <template>
   <span v-bind:class="color">
-    {{ name }}
+    <span v-if="name">
+      {{ name }}
+    </span>
+    <span v-else>
+      退会済みのユーザ
+    </span>
   </span>
 </template>
 

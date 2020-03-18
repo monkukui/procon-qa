@@ -112,7 +112,12 @@
 
         <v-card-actions>
           <v-card-text>
-            投稿者: {{ userName }}  
+            投稿者: 
+            <span style="font-size: 14px;">
+              <UserName
+                :name="userName"
+              />
+            </span>
             <br>
             投稿日時: {{ question.date }}
             <br>
@@ -193,10 +198,12 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import SquarePanel from '@/components/SquarePanel.vue';
+import UserName from '@/components/UserName.vue';
 
 @Component({
   components: {
     SquarePanel,
+    UserName,
   },
 })
 export default class QuestionPanelDetail extends Vue {
