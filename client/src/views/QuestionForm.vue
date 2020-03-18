@@ -183,9 +183,9 @@ export default {
       };
 
       // ここで url は "https://" or "http://" しか受け付けない（サーバ再度側でも弾いている）
-      const checkUrl = this.form.url + "xxxxxxxxxx";
-      if (checkUrl != "xxxxxxxxxx" && checkUrl.substr(0, 7) != "http://" && checkUrl.substr(0, 8) != "https://") {
-        alert("url は https:// か http:// から始まるものにしてください");
+      const checkUrl = this.form.url + 'xxxxxxxxxx';
+      if (checkUrl !== 'xxxxxxxxxx' && checkUrl.substr(0, 7) !== 'http://' && checkUrl.substr(0, 8) !== 'https://') {
+        alert('url は https:// か http:// から始まるものにしてください');
         return;
       }
 
