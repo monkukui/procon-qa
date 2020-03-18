@@ -21,7 +21,12 @@
         </v-row>
         <v-card-actions>
           <v-card-text>
-            投稿者: {{ userName }}
+            投稿者: 
+            <span style="font-size: 14px;">
+              <UserName
+                :name="userName"
+              />
+            </span>
             <br>
             投稿日時: {{ answer.date }}
           </v-card-text>
@@ -72,9 +77,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
-import {Answer} from '@/models/Answer.ts';
+import { Answer } from '@/models/Answer.ts';
+import UserName from '@/components/UserName.vue';
 
-@Component
+@Component({
+  components: {
+    UserName,
+  },
+})
 export default class AnswerPanelDetail extends Vue {
   @Prop()
   private answerId!: number;
