@@ -165,8 +165,9 @@ export default class App extends Vue {
           const claims = JSON.parse(atob(this.getToken().split('.')[1]));
           this.user = claims.name;
         }
+      } else {
+        localStorage.removeItem('token');
       }
-      localStorage.removeItem('token');
     });
   }
   private getToken(): any {
