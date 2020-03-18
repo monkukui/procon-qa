@@ -116,6 +116,7 @@
             <span style="font-size: 14px;">
               <UserName
                 :name="userName"
+                :uid="question.uid"
               />
             </span>
             <br>

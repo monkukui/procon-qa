@@ -40,6 +40,7 @@
                 /-->
                 <UserName
                   :name="user.name"
+                  :uid="user.id"
                 />
               </v-list-item-content>
               <v-list-item-content>

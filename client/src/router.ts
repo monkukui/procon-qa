@@ -5,7 +5,7 @@ import Question from './views/Question.vue';
 import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import QuestionForm from './views/QuestionForm.vue';
-import MyPage from './views/MyPage.vue';
+import UserPage from './views/UserPage.vue';
 import TagSearch from './views/TagSearch.vue';
 import About from './views/About.vue';
 
@@ -39,9 +39,9 @@ export default new Router({
       component: QuestionForm,
     },
     {
-      path: '/mypage',
-      name: 'mypage',
-      component: MyPage,
+      path: '/userpage',
+      name: 'userpage',
+      component: UserPage,
     },
     {
       path: '/tagsearch',
