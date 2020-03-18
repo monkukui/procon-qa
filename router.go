@@ -67,5 +67,7 @@ func newRouter() *echo.Echo {
 	// answer_good
 	api.GET("/answer-good/:uid/:aid", handler.AnswerFavorited) // いいね状態かどうか
 
+	api.GET("/token", handler.Token)
+
 	return e
 }

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -99,4 +100,14 @@ func userIDFromToken(c echo.Context) int {
 	claims := user.Claims.(*jwtCustomClaims)
 	uid := claims.UID
 	return uid
+}
+
+func Token(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+	fmt.Println("uid ======= ")
+	fmt.Println(uid)
+	return c.JSON(http.StatusOK, uid)
 }

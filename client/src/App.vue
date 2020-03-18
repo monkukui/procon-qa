@@ -155,11 +155,19 @@ export default class App extends Vue {
   private user: string = '';
   private closeModal: boolean = false;
   private created(): void {
-    const token = this.getToken();
-    if (token !== null) {
-      const claims = JSON.parse(atob(this.getToken().split('.')[1]));
-      this.user = claims.name;
-    }
+    // 認証が必要な api を叩いてみて，その結果によって分岐
+    const url = '/api/token';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        const token = this.getToken();
+        if (token !== null) {
+          const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+          this.user = claims.name;
+        }
+      }
+      localStorage.removeItem('token');
+    });
   }
   private getToken(): any {
     return localStorage.getItem('token');
