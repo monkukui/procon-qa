@@ -88,11 +88,11 @@ export default class UserPage extends Vue {
 
   // 他人
   private userName: string = '';
-  private userId: number = 0;
+  private userId: string | Array<(string | null)> = '';
 
   // 自分
   private myName: string = '';
-  private myId: number = 0;
+  private myId: string = '';
 
 
   private created(): void {

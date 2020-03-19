@@ -153,6 +153,7 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class App extends Vue {
   private drawer: any = null;
   private user: string = '';
+  private uid: string = '';
   private closeModal: boolean = false;
   private created(): void {
     // 認証が必要な api を叩いてみて，その結果によって分岐

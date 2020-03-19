@@ -1,8 +1,12 @@
 <template>
   <span v-bind:class="color">
-    {{ uid }}
     <span v-if="name">
-      <router-link :to="{ name: 'userpage', query: { uid: this.uid }}" >{{ name }}</router-link>
+      <router-link 
+        class="name"
+        :to="{ name: 'userpage', query: { uid: this.uid }}"
+      >
+        {{ name }}
+      </router-link>
     </span>
     <span v-else>
       退会済みのユーザ
@@ -17,7 +21,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 @Component
 export default class UserName extends Vue {
   @Prop()
-  private uid!:string;
+  private uid!: string;
   @Prop()
   private name!: string;
   @Prop()
@@ -37,4 +41,12 @@ export default class UserName extends Vue {
 .user-unrated {color:#000000;}
 .user-admin {color:#C000C0;}
 .username>span {font-weight:bold;}
+.name {
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgb(66, 66, 66);
+  text-decoration: none;
+}
 </style>
