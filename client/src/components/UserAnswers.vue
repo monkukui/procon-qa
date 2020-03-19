@@ -23,6 +23,7 @@ import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
 })
 export default class UserAnswers extends Vue {
 
+  private userId: string | Array<(string | null)> = '';
   private curPageId: number = 1;
 
   private user: string = '';
@@ -31,12 +32,14 @@ export default class UserAnswers extends Vue {
 
   private created(): void {
     // this.getQuestions();
+    this.userId = this.$route.query.uid;
     this.getAnswersWithPage();
   }
 
   // 質問をページ取得する
   private getAnswersWithPage(): void {
-    const url = '/api/user-answers/' + String(this.curPageId);
+    const url = '/api/no-auth/user-answers/' + this.userId + '/' + String(this.curPageId);
+    alert(url);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {

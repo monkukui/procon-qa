@@ -2,13 +2,12 @@
   <div class="user-questions">
     <hr>
     <h1>質問一覧</h1>
-    
     <div v-for="(value, index) in questions" :key=index>
       <QuestionPanel
         :questionId="value.id"
       />
     </div>
-
+    
   </div>
 </template>
 
@@ -23,6 +22,7 @@ import QuestionPanel from '@/components/QuestionPanel.vue';
 })
 export default class UserQuestions extends Vue {
 
+  private userId: string | Array<(string | null)> = '';
   // FIXME boolean の変数を作る
   private tr: boolean = true;
   private fal: boolean = false;
@@ -35,14 +35,15 @@ export default class UserQuestions extends Vue {
 
   private created(): void {
     // this.getQuestions();
+    this.userId = this.$route.query.uid;
     this.getQuestionsWithPage();
   }
 
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
-    const url = '/api/user-questions/' + String(this.curPageId);
+    const url = '/api/no-auth/user-questions/' + this.userId + '/' + String(this.curPageId);
+    alert(url);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
-
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
         return response.json();

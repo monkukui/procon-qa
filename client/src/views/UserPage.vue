@@ -47,16 +47,16 @@
           </v-tab>
         </v-tabs>
         <div v-if="mode=='profile'">
-          <MyProfile />
+          <MyProfile/>
         </div>
         <div v-if="mode=='question'">
-          <UserQuestions />
+          <UserQuestions/>
         </div>
         <div v-if="mode=='answer'">
-          <UserAnswers />
+          <UserAnswers/>
         </div>
         <div v-if="mode=='setting'">
-          <MySetting />
+          <MySetting/>
         </div>
       </v-col>
     </v-row>
