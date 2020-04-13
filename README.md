@@ -254,7 +254,7 @@ AnswerGood {
 ```
 
 ## PUT
-質問の解決ヅミフラグを切り替え
+質問の解決済みフラグを切り替え
 自分の質問じゃない場合, 404 が帰る
 ```
 /api/question/<question_id>/completed

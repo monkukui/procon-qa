@@ -42,6 +42,29 @@
       <v-container fluid>
         <v-row>
           <v-col col="12" sm="8">
+            <v-row>
+              <v-col col="12" sm="4">
+                <img src="../assets/square_logo_white.jpg" alt="ロゴ" width="70%" height="auto">
+              </v-col>
+              <v-col col="12" sm="8">
+                <span class="main-topic">
+                  <v-alert
+                    text
+                    type="success"
+                  >
+                    <p>
+                      <strong>procon-qa</strong> は，競技プログラマーに熱心な人のための Q&A サイトです．
+                    </p>
+                    <p>
+                      質問や回答には，いいねがつきます．
+                    </p>
+                    <p>
+                      質問や回答は，条件に応じてソートすることができます．
+                    </p>
+                  </v-alert>
+                </span>
+              </v-col>
+            </v-row>
             <QuestionSetting 
               @click="changeMode"
               :curMode="mode"
@@ -95,6 +118,6 @@ export default class Home extends Vue {
 </script>
 
 <style scoped>
-.home {
+.main-topic {
 }
 </style>
