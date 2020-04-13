@@ -82,18 +82,15 @@
       <div class="bar">
       <v-app-bar
         app
+        color="white"
         :clipped-left="$vuetify.breakpoint.lgAndUp"
       >
         <!-- -->
         <v-toolbar-title class="headline text-uppercase">
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-          <v-btn
-            text
-            to="/"
-          >
-            <span>PROCON</span>
-            <span class="font-weight-light">QA</span>
-          </v-btn>
+          <router-link to="/">
+            <img class="logo" src="./assets/rectangle_logo.jpg" alt="logo" width="200" height="auto">
+          </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn
@@ -190,5 +187,11 @@ export default class App extends Vue {
 }
 .draw {
   z-index: 2147483647 - 1;
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>
