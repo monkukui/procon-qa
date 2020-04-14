@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/labstack/echo"
 	"github.com/monkukui/procon-qa/model"
 	"net/http"
 	"strconv"
 	"time"
+  "fmt"
 )
 
 // 質問を全取得する
@@ -81,6 +81,131 @@ func GetUserQuestionsWithPage(c echo.Context) error {
 
 	questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id")
 	return c.JSON(http.StatusOK, questions)
+}
+
+// pageId, userId で質問をページ取得する
+func GetUserQuestions(c echo.Context) error {
+
+	uid, err := strconv.Atoi(c.Param("uid"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
+	PageLength := 10                             // 1 ページあたりの長さ
+
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id")
+	return c.JSON(http.StatusOK, questions)
+}
+
+func GetUserQuestionSize(c echo.Context) error {
+
+	uid, err := strconv.Atoi(c.Param("uid"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+  fmt.Println(len(model.FindQuestions(&model.Question{UID: uid})))
+  return c.JSON(http.StatusOK, len(model.FindQuestions(&model.Question{UID: uid})))
+}
+
+// pageId, userId で質問をページ取得する
+func GetUserAnswers(c echo.Context) error {
+
+	uid, err := strconv.Atoi(c.Param("uid"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	PageID, err := strconv.Atoi(c.Param("page")) // ページ番号 (1-indexed)
+	PageLength := 10                             // 1 ページあたりの長さ
+
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  // ユーザーの回答を取得
+  answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
+
+  // このユーザが関与した質問の qid リストを重複無しで構築
+  var qidList []int
+
+  for _, answer := range answers {
+    qidList = append(qidList, answer.QID)
+  }
+
+  // map を使って重複削除
+  mp := make(map[int]bool)
+  var uniqQidList []int
+
+  for _, id := range qidList {
+    if !mp[id] {
+      mp[id] = true
+      uniqQidList = append(uniqQidList, id)
+    }
+  }
+
+
+  // PageLength と PageID を使ってよしなに範囲を決定する
+  lb := (PageID - 1) * PageLength
+  if lb >= len(uniqQidList) {
+    return echo.ErrNotFound
+  }
+
+  var questions model.Questions
+  for i := 0; i < PageLength && lb + i < len(uniqQidList); i++ {
+	  q := model.FindQuestions(&model.Question{ID: uniqQidList[lb + i]})
+    if (len(q) != 1) {
+      return echo.ErrNotFound
+    }
+    questions = append(questions, q[0])
+  }
+
+	return c.JSON(http.StatusOK, questions)
+}
+
+func GetUserAnswerSize(c echo.Context) error {
+	uid, err := strconv.Atoi(c.Param("uid"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  // ユーザーの回答を取得
+  answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
+
+  // このユーザが関与した質問の qid リストを重複無しで構築
+  var qidList []int
+
+  for _, answer := range answers {
+    qidList = append(qidList, answer.QID)
+  }
+
+  // map を使って重複削除
+  mp := make(map[int]bool)
+  userAnswerSize := 0
+
+  for _, id := range qidList {
+    if !mp[id] {
+      mp[id] = true
+      userAnswerSize++
+    }
+  }
+
+  return c.JSON(http.StatusOK, userAnswerSize)
 }
 
 // 質問を 1 つ 取得する
@@ -169,7 +294,6 @@ func FavoriteQuestion(c echo.Context) error {
 
 // 閲覧数をインクリメント
 func BrowseQuestion(c echo.Context) error {
-	fmt.Println("in go")
 	questionID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
@@ -251,7 +375,6 @@ func DeleteQuestion(c echo.Context) error {
 
 	// uid が question の uid と一致していなければダメ
 	if uid != model.FindQuestions(&model.Question{ID: questionID})[0].UID {
-		fmt.Println("他人の質問です")
 		return echo.ErrNotFound
 	}
 

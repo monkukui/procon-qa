@@ -39,6 +39,10 @@ func newRouter() *echo.Echo {
 	noAuth.GET("/answer/:id", handler.GetAnswer)                               // 回答を 1 つ取得
 	noAuth.GET("/user/:uid", handler.GetUser)                                  // user_id から ユーザー名を取得
 	noAuth.PUT("/question/:id/browse", handler.BrowseQuestion)                 // 閲覧
+  noAuth.GET("/user-questions/:uid/:page", handler.GetUserQuestions)         // ユーザが投稿した質問を取得
+  noAuth.GET("/user-answers/:uid/:page", handler.GetUserAnswers)             // ユーザが回答した質問を取得
+  noAuth.GET("/user-questions/count/:uid", handler.GetUserQuestionSize)      // ユーザが投稿した質問の個数を取得
+  noAuth.GET("/user-answers/count/:uid", handler.GetUserAnswerSize)        // ユーザが回答した質問の個数を取得
 
 	// questions
 	api.GET("/questions", handler.GetAllQuestions)                      // 質問の全取得
