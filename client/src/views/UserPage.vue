@@ -1,5 +1,5 @@
 <template>
-  <div class="userpage">
+  <div class="userpage" v-if="userId">
     <!--{{ userInfo }}-->
     <MyProfile/>
     <v-row>
@@ -63,7 +63,9 @@
       </v-col>
     </v-row>
     <!-- <v-btn @click="getUserInfoByAtCoderUserAPI">get</v-btn> -->
-
+  </div>
+  <div v-else>
+    <p>ログインしてください．</p>
   </div>
 </template>
 
