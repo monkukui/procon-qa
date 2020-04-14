@@ -96,7 +96,7 @@
         <v-btn
           v-if="user"
           text
-          to="mypage"
+          :to="{ name: 'userpage', query: { uid: this.uid }}"
         >
           {{ user }}
         </v-btn>
