@@ -1,6 +1,5 @@
 <template>
   <div class="myprofile">
-    <hr>
     <WithdrawButton />
   </div>
 </template>
@@ -14,6 +13,7 @@ import WithdrawButton from '@/components/WithdrawButton.vue';
     WithdrawButton,
   },
 })
+
 export default class MySetting extends Vue {
 
   private userName: string = '';

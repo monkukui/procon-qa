@@ -1,23 +1,13 @@
 <template>
   <div class="userpage">
     <!--{{ userInfo }}-->
+    <MyProfile/>
     <v-row>
-      <v-col col="12" sm="8">
+      <v-col col="12" sm="6">
         <v-tabs
           fixed-tabs
           background-color="transparent"
         >
-          <v-tab @click="changeMode('profile')"
-            class="tab"
-          >
-            <div
-              class="display-100 flex-grow-1 text-center"
-            >
-              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
-                プロフィール
-              </div>
-            </div>
-          </v-tab>
           <v-tab @click="changeMode('question')">
             <div
               class="display-100 flex-grow-1 text-center"
@@ -36,7 +26,16 @@
               </div>
             </div>
           </v-tab>
-          <v-tab @click="changeMode('setting')">
+          <v-tab v-if="myId == userId" @click="changeMode('setting')">
+            <div
+              class="display-100 flex-grow-1 text-center"
+            >
+              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                設定
+              </div>
+            </div>
+          </v-tab>
+          <v-tab v-else @click="changeMode('setting')" disabled>
             <div
               class="display-100 flex-grow-1 text-center"
             >
@@ -46,8 +45,11 @@
             </div>
           </v-tab>
         </v-tabs>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col col="12" sm="8">
         <div v-if="mode=='profile'">
-          <MyProfile/>
         </div>
         <div v-if="mode=='question'">
           <UserQuestions/>
@@ -62,8 +64,6 @@
     </v-row>
     <!-- <v-btn @click="getUserInfoByAtCoderUserAPI">get</v-btn> -->
 
-    {{ userId }}
-    {{ userName }}
   </div>
 </template>
 
@@ -83,7 +83,7 @@ import MySetting from '@/components/MySetting.vue';
   },
 })
 export default class UserPage extends Vue {
-  private mode: string = 'profile';
+  private mode: string = 'question';
   private activeBtn: number = 1;
 
   // 他人
@@ -96,9 +96,11 @@ export default class UserPage extends Vue {
 
 
   private created(): void {
-    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
-    this.myName = claims.name;
-    this.myId = claims.uid;
+    if (this.getToken() !== null) {
+      const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+      this.myName = claims.name;
+      this.myId = claims.uid;
+    }
     this.userId = this.$route.query.uid;
 
     const url = '/api/no-auth/user/' + String(this.userId);
@@ -121,10 +123,3 @@ export default class UserPage extends Vue {
   }
 }
 </script>
-
-<style>
-/* 
-border-radius を変更すれば丸みを帯びさすことができるぞい
-どこに適応させれば良いかわからないんじゃ 
-*/
-</style>

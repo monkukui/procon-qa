@@ -1,7 +1,12 @@
 <template>
   <div class="user-questions">
-    <hr>
     <h1>質問一覧</h1>
+    <p>投稿した質問数{{ totalQuestions }}</p>
+    <v-pagination
+      v-model="curPageId"
+      :length="length"
+      :total-visible="7"
+    ></v-pagination>
     <div v-for="(value, index) in questions" :key=index>
       <QuestionPanel
         :questionId="value.id"
@@ -32,11 +37,29 @@ export default class UserQuestions extends Vue {
   private user: string = '';
   // FIXME any
   private questions = [];
+  private totalQuestions: number = 0;
+  private length: number = 1;
 
   private created(): void {
     // this.getQuestions();
     this.userId = this.$route.query.uid;
     this.getQuestionsWithPage();
+    this.getTotalQuestion();
+  }
+
+  // 質問数を取得する
+  private getTotalQuestion(): void {
+    const url = '/api/no-auth/user-questions/count/' + this.userId;
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((cnt) => {
+      this.totalQuestions = cnt;
+      this.length = Math.ceil(this.totalQuestions / 10); // 切り上げ
+    });
   }
 
   // 質問をページ取得する
@@ -54,20 +77,6 @@ export default class UserQuestions extends Vue {
     });
   }
 
-  // 質問を全取得する
-  private getQuestions(): void {
-    const url = '/api/questions/' + String(this.curPageId);
-    const headers = {Authorization: `Bearer ${this.getToken()}`};
-
-    fetch(url, {headers}).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return [];
-    }).then((json) => {
-      this.questions = json;
-    });
-  }
   private getToken(): any {
     return localStorage.getItem('token');
   }

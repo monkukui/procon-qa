@@ -1,7 +1,12 @@
 <template>
   <div class="user-answers">
-    <hr>
     <h1>回答一覧</h1>
+    <p>回答した質問数{{ totalQuestions }}</p>
+    <v-pagination
+      v-model="curPageId"
+      :length="length"
+      :total-visible="7"
+    ></v-pagination>
     <div v-for="(value, index) in questions" :key=index>
       <!-- answerd とか, answeredTime とかの命名規則を揃える -->
       <!-- 子コンポーネントには QuestionId だけを渡す-->
@@ -30,16 +35,34 @@ export default class UserAnswers extends Vue {
   private user: string = '';
   // FIXME any
   private questions = [];
+  private totalQuestions: number = 0;
+  private length: number = 1;
 
   private created(): void {
     // this.getQuestions();
     this.userId = this.$route.query.uid;
     this.getAnswersWithPage();
+    this.getTotalQuestion();
+  }
+
+  // 質問数を取得する
+  private getTotalQuestion(): void {
+    const url = '/api/no-auth/user-answers/count/' + this.userId;
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((cnt) => {
+      this.totalQuestions = cnt;
+      this.length = Math.ceil(this.totalQuestions / 10); // 切り上げ
+    });
   }
 
   // 質問をページ取得する
   private getAnswersWithPage(): void {
-    const url = '/api/no-auth/user-answers/' + this.userId + '/' + String(this.curPageId);
+    const url = '/api/no-auth/user-answers/' + this.userId + '/' + this.curPageId;
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {

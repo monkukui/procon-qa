@@ -53,7 +53,7 @@
                     type="success"
                   >
                     <p>
-                      <strong>procon-qa</strong> は，競技プログラマーに熱心な人のための Q&A サイトです．
+                      <strong>procon-qa</strong> は，競技プログラマーのための Q&A サイトです．
                     </p>
                     <p>
                       質問や回答には，いいねがつきます．
