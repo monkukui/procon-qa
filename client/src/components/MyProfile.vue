@@ -15,15 +15,13 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 export default class MyProfile extends Vue {
 
   private userName: string = '';
-  private userId: number = 0;
+  private userId: string | Array<(string | null)> = '';
   private userFavoriteAnswer: number = 0;
   private userFavoriteQuestion: number = 0;
   private userFavoriteSum: number = 0;
 
   private created(): void {
-    const claims = JSON.parse(atob(this.getToken().split('.')[1]));
-    this.userName = claims.name;
-    this.userId = claims.uid;
+    this.userId = this.$route.query.uid;
     this.setUser();
   }
   private setUser(): void {
