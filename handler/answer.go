@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
@@ -83,7 +82,6 @@ func GetAnswer(c echo.Context) error {
 
 // 回答を投稿する
 func PostAnswer(c echo.Context) error {
-	fmt.Println("post answer")
 	answer := new(model.Answer)
 	// answer に 送信されてきたデータを bind している
 	if err := c.Bind(answer); err != nil {
@@ -128,7 +126,7 @@ func DeleteAnswer(c echo.Context) error {
 	}
 
 	if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
-		fmt.Println("他人の回答です")
+    return echo.ErrNotFound
 	}
 
 	return c.NoContent(http.StatusNoContent)

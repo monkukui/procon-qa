@@ -1,30 +1,18 @@
 <template>
   <div class="user-questions">
-    <hr>
     <h1>質問一覧</h1>
-    
+    <p>投稿した質問数{{ totalQuestions }}</p>
+    <v-pagination
+      v-model="curPageId"
+      :length="length"
+      :total-visible="7"
+    ></v-pagination>
     <div v-for="(value, index) in questions" :key=index>
-      <!-- answerd とか, questionedTime とかの命名規則を揃える -->
-      <!-- 子コンポーネントには QuestionId だけを渡す-->
-      <v-expansion-panels>
-        <v-expansion-panel style="margin-top: 1%;">
-          <v-expansion-panel-header>
-
-            <router-link class="title" :to="{ name: 'question', query: { questionId: value.id }}" >{{ value.title }}</router-link >
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            回答数: {{ value.answerCount }}
-            いいね: {{ value.favoriteCount }}
-            {{ value.completed }}
-            {{ value.date }}
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-      <!--QuestionPanel
+      <QuestionPanel
         :questionId="value.id"
-      /-->
+      />
     </div>
-
+    
   </div>
 </template>
 
@@ -39,6 +27,7 @@ import QuestionPanel from '@/components/QuestionPanel.vue';
 })
 export default class UserQuestions extends Vue {
 
+  private userId: string | Array<(string | null)> = '';
   // FIXME boolean の変数を作る
   private tr: boolean = true;
   private fal: boolean = false;
@@ -48,17 +37,35 @@ export default class UserQuestions extends Vue {
   private user: string = '';
   // FIXME any
   private questions = [];
+  private totalQuestions: number = 0;
+  private length: number = 1;
 
   private created(): void {
     // this.getQuestions();
+    this.userId = this.$route.query.uid;
     this.getQuestionsWithPage();
+    this.getTotalQuestion();
+  }
+
+  // 質問数を取得する
+  private getTotalQuestion(): void {
+    const url = '/api/no-auth/user-questions/count/' + this.userId;
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((cnt) => {
+      this.totalQuestions = cnt;
+      this.length = Math.ceil(this.totalQuestions / 10); // 切り上げ
+    });
   }
 
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
-    const url = '/api/user-questions/' + String(this.curPageId);
+    const url = '/api/no-auth/user-questions/' + this.userId + '/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
-
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
         return response.json();
@@ -70,20 +77,6 @@ export default class UserQuestions extends Vue {
     });
   }
 
-  // 質問を全取得する
-  private getQuestions(): void {
-    const url = '/api/questions/' + String(this.curPageId);
-    const headers = {Authorization: `Bearer ${this.getToken()}`};
-
-    fetch(url, {headers}).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return [];
-    }).then((json) => {
-      this.questions = json;
-    });
-  }
   private getToken(): any {
     return localStorage.getItem('token');
   }

@@ -25,6 +25,7 @@
             <span style="font-size: 14px;">
               <UserName
                 :name="userName"
+                :uid="answer.uid"
               />
             </span>
             <br>

@@ -38,7 +38,7 @@
             <v-list-item
               key="マイページ"
               link
-              to="/mypage"
+              :to="{ name: 'userpage', query: { uid: this.uid }}"
             >
               <v-list-item-icon>
                 <v-icon>mdi-account</v-icon>
@@ -150,6 +150,7 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class App extends Vue {
   private drawer: any = null;
   private user: string = '';
+  private uid: string = '';
   private closeModal: boolean = false;
   private created(): void {
     // 認証が必要な api を叩いてみて，その結果によって分岐
@@ -161,6 +162,7 @@ export default class App extends Vue {
         if (token !== null) {
           const claims = JSON.parse(atob(this.getToken().split('.')[1]));
           this.user = claims.name;
+          this.uid = claims.uid;
         }
       } else {
         localStorage.removeItem('token');

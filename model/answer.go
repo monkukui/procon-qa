@@ -22,10 +22,6 @@ type Answers []Answer
 // 回答 を作成
 func CreateAnswer(a *Answer) {
 	questions := FindQuestions(&Question{ID: a.QID})
-	fmt.Println("ub CreateAnswer")
-	fmt.Println(a.ID)
-	fmt.Println(a.UID)
-	fmt.Println(a.QID)
 	// questions[0] の 回答数をインクリメント
 	questions[0].AnswerCount++
 	UpdateQuestion(&questions[0])
@@ -54,11 +50,8 @@ func DeleteAnswer(a *Answer) error {
 		return fmt.Errorf("Could not find answer (%v) to delete", a)
 	}
 
-	fmt.Println(a)
 	questions := FindQuestions(&Question{ID: a.QID})
 	// questions[0] の 回答数をデクリメント
-	fmt.Println("in DeletAnswer")
-	fmt.Println(a.QID)
 	questions[0].AnswerCount--
 	UpdateQuestion(&questions[0])
 	return nil
