@@ -42,7 +42,6 @@ export default class UserQuestions extends Vue {
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
     const url = '/api/no-auth/user-questions/' + this.userId + '/' + String(this.curPageId);
-    alert(url);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {

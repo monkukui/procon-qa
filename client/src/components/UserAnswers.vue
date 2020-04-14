@@ -2,11 +2,11 @@
   <div class="user-answers">
     <hr>
     <h1>回答一覧</h1>
-    <div v-for="(value, index) in answers" :key=index>
+    <div v-for="(value, index) in questions" :key=index>
       <!-- answerd とか, answeredTime とかの命名規則を揃える -->
       <!-- 子コンポーネントには QuestionId だけを渡す-->
-      <AnswerPanelDetail
-        :answerId="value.id"
+      <QuestionPanel
+        :questionId="value.id"
       />
     </div>
 
@@ -15,10 +15,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch} from 'vue-property-decorator';
-import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
+import QuestionPanel from '@/components/QuestionPanel.vue';
+
 @Component({
   components: {
-    AnswerPanelDetail,
+    QuestionPanel,
   },
 })
 export default class UserAnswers extends Vue {
@@ -28,7 +29,7 @@ export default class UserAnswers extends Vue {
 
   private user: string = '';
   // FIXME any
-  private answers = [];
+  private questions = [];
 
   private created(): void {
     // this.getQuestions();
@@ -39,7 +40,6 @@ export default class UserAnswers extends Vue {
   // 質問をページ取得する
   private getAnswersWithPage(): void {
     const url = '/api/no-auth/user-answers/' + this.userId + '/' + String(this.curPageId);
-    alert(url);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
@@ -48,8 +48,8 @@ export default class UserAnswers extends Vue {
       }
       return [];
     }).then((json) => {
-      this.answers = [];
-      this.answers = json;
+      this.questions = [];
+      this.questions = json;
     });
   }
 
