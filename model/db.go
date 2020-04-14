@@ -47,4 +47,5 @@ func init() {
 	db.AutoMigrate(&Answer{})       // Answer データベースを作成してみる
 	db.AutoMigrate(&QuestionGood{}) // Answer データベースを作成してみる
 	db.AutoMigrate(&AnswerGood{})   // Answer データベースを作成してみる
+	db.AutoMigrate(&BookMark{})     // BookMark データベースを作成してみる
 }

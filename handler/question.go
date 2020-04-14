@@ -292,6 +292,56 @@ func FavoriteQuestion(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
+// ブックマークをする（or 取り消す）
+func BookMarkQuestion(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	questionID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	questions := model.FindQuestions(&model.Question{ID: questionID})
+	if len(questions) == 0 {
+		return echo.ErrNotFound
+	}
+
+	marks := model.FindBookMarks(&model.BookMark{UID: uid, QID: questionID})
+
+	if len(marks) == 0 { // ブックマークをする
+		model.CreateBookMark(&model.BookMark{UID: uid, QID: questionID})
+	} else { // いいねを取り消す
+		model.DeleteBookMark(&model.BookMark{UID: uid, QID: questionID})
+	}
+
+	return c.NoContent(http.StatusNoContent)
+}
+
+// ブックマークされた質問を取得する
+func GetBookMarkedQuestions(c echo.Context) error {
+
+	uid, err := strconv.Atoi(c.Param("uid")) // ページ番号 (1-indexed)
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  books := model.FindBookMarks(&model.BookMark{UID: uid})
+
+  var questions model.Questions
+  for _, b := range books {
+	  q := model.FindQuestions(&model.Question{ID: b.QID})
+    if (len(q) != 1) {
+      return echo.ErrNotFound
+    }
+    questions = append(questions, q[0])
+  }
+
+	return c.JSON(http.StatusOK, questions)
+}
+
 // 閲覧数をインクリメント
 func BrowseQuestion(c echo.Context) error {
 	questionID, err := strconv.Atoi(c.Param("id"))
