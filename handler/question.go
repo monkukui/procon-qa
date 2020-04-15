@@ -152,8 +152,6 @@ func GetUserAnswers(c echo.Context) error {
     qidList = append(qidList, answer.QID)
   }
 
-  // qid リストを降順ソートする（質問の新着順にするため）TODO
-
   // map を使って重複削除
   mp := make(map[int]bool)
   var uniqQidList []int
@@ -164,6 +162,9 @@ func GetUserAnswers(c echo.Context) error {
       uniqQidList = append(uniqQidList, id)
     }
   }
+
+  // qid リストを降順ソートする（質問の新着順にするため）
+  sort.Sort(sort.Reverse(sort.IntSlice(uniqQidList)))
 
   // PageLength と PageID を使ってよしなに範囲を決定する
   lb := (PageID - 1) * PageLength
@@ -345,7 +346,6 @@ func GetBookMarkedQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  // TODO ID の逆順にすると，新着のブックマークを上に持って来ることができそう　
   books := model.FindBookMarks(&model.BookMark{UID: uid})
 
   PageID, err := strconv.Atoi(c.Param("page"))
