@@ -299,7 +299,7 @@ func BookMarkQuestion(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questionID, err := strconv.Atoi(c.Param("id"))
+	questionID, err := strconv.Atoi(c.Param("qid"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
@@ -320,7 +320,7 @@ func BookMarkQuestion(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-// ブックマークされた質問を取得する
+// ブックマークされた質問を取得する TODO ページ取得するように仕様を変更
 func GetBookMarkedQuestions(c echo.Context) error {
 
 	uid, err := strconv.Atoi(c.Param("uid")) // ページ番号 (1-indexed)

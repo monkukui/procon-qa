@@ -25,68 +25,8 @@
                 />
               </div>
             </v-card-text>
-            <!--v-btn
-              class="tag"
-              color="blue-grey lighten-4"
-              x-small
-            >
-              tag (仮)
-            </v-btn>
-            <v-btn
-              class="tag"
-              color="blue-grey lighten-4"
-              x-small
-            >
-              tag (仮)
-            </v-btn>
-            <v-btn
-              class="tag"
-              color="blue-grey lighten-4"
-              x-small
-            >
-              tag (仮)
-            </v-btn-->
           </v-col>
         </v-row>
-        <!--v-chip
-          class="ma-2"
-          color="blue"
-          text-color="white"
-        >
-          <v-avatar
-            left
-            class="blue darken-4"
-          >
-            {{ question.answerCount }}
-          </v-avatar>
-          回答数
-        </v-chip>
-        <v-chip
-          class="ma-2"
-          color="teal"
-          text-color="white"
-        >
-          <v-avatar
-            left
-            class="teal darken-4"
-          >
-            {{ question.browseCount }}
-          </v-avatar>
-          閲覧数
-        </v-chip>
-        <v-chip
-          class="ma-2"
-          color="pink"
-          text-color="white"
-        >
-          <v-avatar
-            left
-            class="pink darken-4"
-          >
-            {{ question.favoriteCount }}
-          </v-avatar>
-          いいね
-        </v-chip-->
         <v-card-actions>
         <span v-if="question.completed">
           <v-chip
@@ -154,6 +94,7 @@
           <v-btn icon 
             color="error"
             :disabled="name != userName"
+            x-large
           >
             <v-icon @click="alert = !alert">mdi-delete</v-icon>
           </v-btn> 
@@ -161,6 +102,7 @@
           <v-btn 
             v-if="isFavorited"
             icon
+            x-large
             color="pink"
             :disabled="userName === name || userName === '' || name == ''"
           >
@@ -169,6 +111,7 @@
           <v-btn 
             v-else
             icon
+            x-large
             color="pink lighten-4"
             :disabled="userName === name || userName === '' || name == ''"
           >
@@ -178,6 +121,24 @@
           <span v-if="userName !== ''">
             {{ question.favoriteCount }}
           </span>
+
+          <v-btn 
+            v-if="isBookMarked"
+            icon
+            x-large
+            color="blue"
+          >
+            <v-icon @click="bookMark">mdi-bookmark</v-icon>
+          </v-btn>
+          <v-btn 
+            v-else
+            icon
+            x-large
+            color="blue lighten-4"
+          >
+            <v-icon @click="bookMark">mdi-bookmark</v-icon>
+          </v-btn>
+
         </v-card-actions>
         <v-row>
           <v-col md="12">
@@ -240,6 +201,8 @@ export default class QuestionPanelDetail extends Vue {
   private alert: boolean = false;
 
   private isFavorited: boolean = false;
+  private isBookMarked: boolean = false;
+
 
   private created(): void {
     if (this.getToken() != null) {
@@ -251,7 +214,24 @@ export default class QuestionPanelDetail extends Vue {
     this.createQuestion();
     this.browseQuestion();
     this.updateIsFavorite();
+    this.updateIsBookMarked();
   }
+
+  // ブックマーク状態を更新する
+  private updateIsBookMarked(): void {
+    const url = 'api/book-mark/' + String(this.uid) + '/' + String(this.questionId);
+    const method = 'GET';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((json) => {
+      this.isBookMarked = json;
+    });
+  }
+
   // いいね状態を更新する
   private updateIsFavorite(): void {
     const url = 'api/question-good/' + String(this.uid) + '/' + String(this.questionId);
@@ -283,6 +263,16 @@ export default class QuestionPanelDetail extends Vue {
     fetch(url, {method, headers}).then(() => {
       this.createQuestion();
       this.updateIsFavorite();
+    });
+  }
+
+  private bookMark(): void {
+    const url = 'api/book-mark/' + String(this.questionId);
+    const method = 'put';
+    const headers = {authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {method, headers}).then(() => {
+      this.createQuestion();
+      this.updateIsBookMarked();
     });
   }
 

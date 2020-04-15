@@ -44,7 +44,7 @@
           <v-col col="12" sm="8">
             <v-row>
               <v-col col="12" sm="4">
-                <img src="../assets/square_logo_white.jpg" alt="ロゴ" width="70%" height="auto">
+                <img src="../assets/square_logo_white.jpg" alt="ロゴ" width="100%" height="auto">
               </v-col>
               <v-col col="12" sm="8">
                 <span class="main-topic">
@@ -60,6 +60,9 @@
                     </p>
                     <p>
                       質問や回答は，条件に応じてソートすることができます．
+                    </p>
+                    <p>
+                      質問をブックマークすれば，後から見返すことができます．
                     </p>
                   </v-alert>
                 </span>
