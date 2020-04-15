@@ -87,7 +87,7 @@ import MyProfile from '@/components/MyProfile.vue';
 import UserQuestions from '@/components/UserQuestions.vue';
 import UserAnswers from '@/components/UserAnswers.vue';
 import MySetting from '@/components/MySetting.vue';
-import BookMarkedQuestion from '@/components/BookMarkedQuestions';
+import BookMarkedQuestions from '@/components/BookMarkedQuestions.vue';
 
 @Component({
   components: {

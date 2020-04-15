@@ -1,7 +1,7 @@
 <template>
   <div class="user-questions">
-    <h1>質問一覧</h1>
-    <p>投稿した質問数{{ totalQuestions }}</p>
+    <h1>ブックマークした質問一覧</h1>
+    <h2>{{ totalQuestions }} 件の質問</h2>
     <v-pagination
       v-model="curPageId"
       :length="length"
@@ -49,7 +49,7 @@ export default class BookMarkedQuestions extends Vue {
 
   // 質問数を取得する
   private getTotalQuestion(): void {
-    const url = '/api/no-auth/user-questions/count/' + this.userId;
+    const url = '/api/no-auth/book-marked-questions/count/' + this.userId;
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
@@ -64,7 +64,7 @@ export default class BookMarkedQuestions extends Vue {
 
   // 質問をページ取得する
   private getQuestionsWithPage(): void {
-    const url = '/api/no-auth/user-questions/' + this.userId + '/' + String(this.curPageId);
+    const url = '/api/no-auth/book-marked-questions/' + this.userId + '/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {

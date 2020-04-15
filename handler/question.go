@@ -159,7 +159,6 @@ func GetUserAnswers(c echo.Context) error {
     }
   }
 
-
   // PageLength と PageID を使ってよしなに範囲を決定する
   lb := (PageID - 1) * PageLength
   if lb >= len(uniqQidList) {
@@ -320,7 +319,19 @@ func BookMarkQuestion(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-// ブックマークされた質問を取得する TODO ページ取得するように仕様を変更
+// ブックマークされた質問数を取得する
+func GetBookMarkedQuestionSize(c echo.Context) error {
+
+	uid, err := strconv.Atoi(c.Param("uid")) // ページ番号 (1-indexed)
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  books := model.FindBookMarks(&model.BookMark{UID: uid})
+
+	return c.JSON(http.StatusOK, len(books))
+}
+// ブックマークされた質問を取得する 
 func GetBookMarkedQuestions(c echo.Context) error {
 
 	uid, err := strconv.Atoi(c.Param("uid")) // ページ番号 (1-indexed)
@@ -330,9 +341,22 @@ func GetBookMarkedQuestions(c echo.Context) error {
 
   books := model.FindBookMarks(&model.BookMark{UID: uid})
 
+  PageID, err := strconv.Atoi(c.Param("page"))
+  PageLength := 10
+
+  if err != nil {
+    return echo.ErrNotFound
+  }
+
+  // PageLength と PageID を使ってよしなに範囲を決定する
+  lb := (PageID - 1) * PageLength
+  if lb >= len(books) {
+    return echo.ErrNotFound
+  }
+
   var questions model.Questions
-  for _, b := range books {
-	  q := model.FindQuestions(&model.Question{ID: b.QID})
+  for i := 0; i < PageLength && lb + i < len(books); i++ {
+	  q := model.FindQuestions(&model.Question{ID: books[lb + i].QID})
     if (len(q) != 1) {
       return echo.ErrNotFound
     }
