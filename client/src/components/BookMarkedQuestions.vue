@@ -1,6 +1,6 @@
 <template>
-  <div class="user-answers">
-    <h1>回答した質問一覧</h1>
+  <div class="user-questions">
+    <h1>ブックマークした質問一覧</h1>
     <h2>{{ totalQuestions }} 件の質問</h2>
     <v-pagination
       v-model="curPageId"
@@ -8,13 +8,11 @@
       :total-visible="7"
     ></v-pagination>
     <div v-for="(value, index) in questions" :key=index>
-      <!-- answerd とか, answeredTime とかの命名規則を揃える -->
-      <!-- 子コンポーネントには QuestionId だけを渡す-->
       <QuestionPanel
         :questionId="value.id"
       />
     </div>
-
+    
   </div>
 </template>
 
@@ -27,9 +25,13 @@ import QuestionPanel from '@/components/QuestionPanel.vue';
     QuestionPanel,
   },
 })
-export default class UserAnswers extends Vue {
+export default class BookMarkedQuestions extends Vue {
 
   private userId: string | Array<(string | null)> = '';
+  // FIXME boolean の変数を作る
+  private tr: boolean = true;
+  private fal: boolean = false;
+
   private curPageId: number = 1;
 
   private user: string = '';
@@ -41,13 +43,13 @@ export default class UserAnswers extends Vue {
   private created(): void {
     // this.getQuestions();
     this.userId = this.$route.query.uid;
-    this.getAnswersWithPage();
+    this.getQuestionsWithPage();
     this.getTotalQuestion();
   }
 
   // 質問数を取得する
   private getTotalQuestion(): void {
-    const url = '/api/no-auth/user-answers/count/' + this.userId;
+    const url = '/api/no-auth/book-marked-questions/count/' + this.userId;
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
@@ -61,10 +63,9 @@ export default class UserAnswers extends Vue {
   }
 
   // 質問をページ取得する
-  private getAnswersWithPage(): void {
-    const url = '/api/no-auth/user-answers/' + this.userId + '/' + this.curPageId;
+  private getQuestionsWithPage(): void {
+    const url = '/api/no-auth/book-marked-questions/' + this.userId + '/' + String(this.curPageId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
-
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
         return response.json();
@@ -83,12 +84,18 @@ export default class UserAnswers extends Vue {
   // ページが変われば, 質問を取得し直す
   @Watch('curPageId')
   private pageChanged(): void {
-    this.getAnswersWithPage();
+    this.getQuestionsWithPage();
   }
 }
 </script>
 
 <style scoped>
-.answers {
+.title {
+  color: #0288D1;
+  text-decoration: none;
+}
+.title:hover {
+  color: #29B6F6;
+  text-decoration: none;
 }
 </style>

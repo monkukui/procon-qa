@@ -149,7 +149,7 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 })
 export default class App extends Vue {
-  private drawer: boolean = false;
+  private drawer: boolean = true;
   private user: string = '';
   private uid: string = '';
   private closeModal: boolean = false;

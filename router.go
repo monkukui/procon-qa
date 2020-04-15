@@ -40,8 +40,10 @@ func newRouter() *echo.Echo {
 	noAuth.GET("/user/:uid", handler.GetUser)                                  // user_id から ユーザー名を取得
 	noAuth.PUT("/question/:id/browse", handler.BrowseQuestion)                 // 閲覧
   noAuth.GET("/user-questions/:uid/:page", handler.GetUserQuestions)         // ユーザが投稿した質問を取得
+  noAuth.GET("/book-marked-questions/:uid/:page", handler.GetBookMarkedQuestions)         // ユーザが投稿した質問を取得
   noAuth.GET("/user-answers/:uid/:page", handler.GetUserAnswers)             // ユーザが回答した質問を取得
   noAuth.GET("/user-questions/count/:uid", handler.GetUserQuestionSize)      // ユーザが投稿した質問の個数を取得
+  noAuth.GET("/book-marked-questions/count/:uid", handler.GetBookMarkedQuestionSize)      // ユーザが投稿した質問の個数を取得
   noAuth.GET("/user-answers/count/:uid", handler.GetUserAnswerSize)        // ユーザが回答した質問の個数を取得
 
 	// questions
@@ -53,6 +55,7 @@ func newRouter() *echo.Echo {
 	api.POST("/questions", handler.PostQuestion)                        // 質問の投稿
 	api.DELETE("/question/:id", handler.DeleteQuestion)                 // 質問の削除
 	api.PUT("/question/:id/completed", handler.UpdateQuestionCompleted) // 質問の完了フラグの更新
+  api.PUT("/book-mark/:qid", handler.BookMarkQuestion) // ブックマークする（or 取り消す）
 	api.PUT("/question/:id/favorite", handler.FavoriteQuestion)         // いいね
 
 	// answers
@@ -70,6 +73,8 @@ func newRouter() *echo.Echo {
 	api.GET("/question-good/:uid/:qid", handler.QuestionFavorited) // いいね状態かどうか
 	// answer_good
 	api.GET("/answer-good/:uid/:aid", handler.AnswerFavorited) // いいね状態かどうか
+	api.GET("/book-mark/:uid/:qid", handler.QuestionBookMarked) // いいね状態かどうか
+
 
 	api.GET("/token", handler.Token)
 

@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"time"
   "fmt"
+  "sort"
 )
 
 // 質問を全取得する
@@ -102,7 +103,7 @@ func GetUserQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id")
+	questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id desc")
 	return c.JSON(http.StatusOK, questions)
 }
 
@@ -139,6 +140,9 @@ func GetUserAnswers(c echo.Context) error {
 	}
 
   // ユーザーの回答を取得
+  // TODO 質問の新着順にするか，回答の新着順にするかは議論の余地がありそう（誰と議論するんですか？）
+  // 表示させるのは質問なのだから，質問の新着順にするで良さそう
+  // となると，qid の新着順にすると良さそう
   answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
 
   // このユーザが関与した質問の qid リストを重複無しで構築
@@ -159,6 +163,8 @@ func GetUserAnswers(c echo.Context) error {
     }
   }
 
+  // qid リストを降順ソートする（質問の新着順にするため）
+  sort.Sort(sort.Reverse(sort.IntSlice(uniqQidList)))
 
   // PageLength と PageID を使ってよしなに範囲を決定する
   lb := (PageID - 1) * PageLength
@@ -290,6 +296,81 @@ func FavoriteQuestion(c echo.Context) error {
 	}
 
 	return c.NoContent(http.StatusNoContent)
+}
+
+// ブックマークをする（or 取り消す）
+func BookMarkQuestion(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+	questionID, err := strconv.Atoi(c.Param("qid"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	questions := model.FindQuestions(&model.Question{ID: questionID})
+	if len(questions) == 0 {
+		return echo.ErrNotFound
+	}
+
+	marks := model.FindBookMarks(&model.BookMark{UID: uid, QID: questionID})
+
+	if len(marks) == 0 { // ブックマークをする
+		model.CreateBookMark(&model.BookMark{UID: uid, QID: questionID})
+	} else { // いいねを取り消す
+		model.DeleteBookMark(&model.BookMark{UID: uid, QID: questionID})
+	}
+
+	return c.NoContent(http.StatusNoContent)
+}
+
+// ブックマークされた質問数を取得する
+func GetBookMarkedQuestionSize(c echo.Context) error {
+
+	uid, err := strconv.Atoi(c.Param("uid")) // ページ番号 (1-indexed)
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  books := model.FindBookMarks(&model.BookMark{UID: uid})
+
+	return c.JSON(http.StatusOK, len(books))
+}
+// ブックマークされた質問を取得する 
+func GetBookMarkedQuestions(c echo.Context) error {
+
+	uid, err := strconv.Atoi(c.Param("uid")) // ページ番号 (1-indexed)
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+  books := model.FindBookMarks(&model.BookMark{UID: uid})
+
+  PageID, err := strconv.Atoi(c.Param("page"))
+  PageLength := 10
+
+  if err != nil {
+    return echo.ErrNotFound
+  }
+
+  // PageLength と PageID を使ってよしなに範囲を決定する
+  lb := (PageID - 1) * PageLength
+  if lb >= len(books) {
+    return echo.ErrNotFound
+  }
+
+  var questions model.Questions
+  for i := 0; i < PageLength && lb + i < len(books); i++ {
+	  q := model.FindQuestions(&model.Question{ID: books[lb + i].QID})
+    if (len(q) != 1) {
+      return echo.ErrNotFound
+    }
+    questions = append(questions, q[0])
+  }
+
+	return c.JSON(http.StatusOK, questions)
 }
 
 // 閲覧数をインクリメント
