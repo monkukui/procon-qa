@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"time"
   "fmt"
+  "sort"
 )
 
 // 質問を全取得する
@@ -102,7 +103,7 @@ func GetUserQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id")
+	questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id desc")
 	return c.JSON(http.StatusOK, questions)
 }
 
@@ -139,6 +140,9 @@ func GetUserAnswers(c echo.Context) error {
 	}
 
   // ユーザーの回答を取得
+  // TODO 質問の新着順にするか，回答の新着順にするかは議論の余地がありそう（誰と議論するんですか？）
+  // 表示させるのは質問なのだから，質問の新着順にするで良さそう
+  // となると，qid の新着順にすると良さそう
   answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
 
   // このユーザが関与した質問の qid リストを重複無しで構築
@@ -147,6 +151,8 @@ func GetUserAnswers(c echo.Context) error {
   for _, answer := range answers {
     qidList = append(qidList, answer.QID)
   }
+
+  // qid リストを降順ソートする（質問の新着順にするため）TODO
 
   // map を使って重複削除
   mp := make(map[int]bool)
@@ -339,6 +345,7 @@ func GetBookMarkedQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
+  // TODO ID の逆順にすると，新着のブックマークを上に持って来ることができそう　
   books := model.FindBookMarks(&model.BookMark{UID: uid})
 
   PageID, err := strconv.Atoi(c.Param("page"))
