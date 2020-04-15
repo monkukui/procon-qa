@@ -83,13 +83,14 @@
       <v-app-bar
         app
         color="white"
+        height="80"
         :clipped-left="$vuetify.breakpoint.lgAndUp"
       >
         <!-- -->
         <v-toolbar-title class="headline text-uppercase">
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
           <router-link to="/">
-            <img class="logo" src="./assets/rectangle_logo.jpg" alt="logo" width="200" height="auto">
+            <img class="logo" src="./assets/square_logo_white.jpg" alt="logo" width="70" height="auto">
           </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -148,7 +149,7 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 })
 export default class App extends Vue {
-  private drawer: any = null;
+  private drawer: boolean = false;
   private user: string = '';
   private uid: string = '';
   private closeModal: boolean = false;
