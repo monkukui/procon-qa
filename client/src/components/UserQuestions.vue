@@ -1,7 +1,7 @@
 <template>
   <div class="user-questions">
-    <h1>質問一覧</h1>
-    <p>投稿した質問数{{ totalQuestions }}</p>
+    <h1>投稿した質問一覧</h1>
+    <h2>{{ totalQuestions }} 件の質問</h2>
     <v-pagination
       v-model="curPageId"
       :length="length"

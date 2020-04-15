@@ -26,6 +26,15 @@
               </div>
             </div>
           </v-tab>
+          <v-tab @click="changeMode('book-mark')">
+            <div
+              class="display-100 flex-grow-1 text-center"
+            >
+              <div style="color: rgb(66, 66, 66);" class="font-weight-bold">
+                ブックマーク
+              </div>
+            </div>
+          </v-tab>
           <v-tab v-if="myId == userId" @click="changeMode('setting')">
             <div
               class="display-100 flex-grow-1 text-center"
@@ -57,6 +66,9 @@
         <div v-if="mode=='answer'">
           <UserAnswers/>
         </div>
+        <div v-if="mode=='book-mark'">
+          <BookMarkedQuestions />
+        </div>
         <div v-if="mode=='setting'">
           <MySetting/>
         </div>
@@ -75,6 +87,7 @@ import MyProfile from '@/components/MyProfile.vue';
 import UserQuestions from '@/components/UserQuestions.vue';
 import UserAnswers from '@/components/UserAnswers.vue';
 import MySetting from '@/components/MySetting.vue';
+import BookMarkedQuestions from '@/components/BookMarkedQuestions.vue';
 
 @Component({
   components: {
@@ -82,6 +95,7 @@ import MySetting from '@/components/MySetting.vue';
     UserQuestions,
     MyProfile,
     MySetting,
+    BookMarkedQuestions,
   },
 })
 export default class UserPage extends Vue {
