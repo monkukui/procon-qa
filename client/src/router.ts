@@ -8,6 +8,7 @@ import QuestionForm from './views/QuestionForm.vue';
 import UserPage from './views/UserPage.vue';
 import TagSearch from './views/TagSearch.vue';
 import About from './views/About.vue';
+import Completed from './views/Completed.vue';
 
 Vue.use(Router);
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About,
+    },
+    {
+      path: '/completed',
+      name: 'completed',
+      component: Completed,
     },
   ],
   scrollBehavior() {
