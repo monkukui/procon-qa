@@ -202,10 +202,11 @@ export default {
         if (response.ok) {
           return response.json();
         }
-        alert("server error");
+        alert('server error');
       }).then((json) => {
-        const url = "#/completed?qid=" + json.id;
-        location.href = url;
+        const toUrl = '#/completed?qid=' + json.id;
+        location.href = toUrl;
+        location.reload();
       });
     },
   },

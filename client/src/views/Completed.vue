@@ -8,15 +8,28 @@
     >
       質問の投稿が完了しました．
     </v-alert>
-    <v-btn 
-      depressed
-      to="/"
-    >
-      ホームに戻る
-    </v-btn>
-    <div class="twitter_share">
-      <v-btn @click="twitterShare">ツイッターでシェアする</v-btn>
-    </div>
+    <v-row>
+      <v-col cols="12" sm="3">
+        <v-btn 
+          small
+          depressed
+          to="/"
+        >
+          ホームに戻る
+        </v-btn>
+      </v-col>
+      <v-col cols="12" sm="3">
+        <a
+          href="https://twitter.com/share"
+          class="twitter-share-button"
+          :data-url=shareUrl
+          data-text="procon-qa で質問しました！"
+          data-size="large"
+          data-hashtags="procon-qa"
+        >
+        </a>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -29,29 +42,20 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 
 export default class Completed extends Vue {
   private qid!: any;
+  private shareUrl: string = '';
 
   private created(): void {
+    // location.reload();
+    // location.reload(false);
     this.qid = this.$route.query.qid;
-  }
-
-  private twitterShare(): void {
-   //シェアする画面を設定
-   // TODO 実装
-   var shareURL = 'https://twitter.com/intent/tweet?text=' + "procon-qa で質問しました！" + "%20%23proconqa " + '&url=' + 
-   "https://procon-qa.herokuapp.com/#/question?questionId=" + this.qid;
-   //シェア用の画面へ移行
-    location.href = shareURL
+    this.shareUrl = 'https://procon-qa.herokuapp.com/#/question?questionId=' + this.qid;
   }
 }
 </script>
 
 <style scoped>
 .completed {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translateY(-50%) translateX(-50%);
-  transform: translateY(-50%) translateX(-50%);
+  width: 50%;
   padding: 20px;
 }
 .twitter_share{
