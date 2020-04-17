@@ -1,6 +1,5 @@
 <template>
   <div class="completed">
-    {{ qid }}
     <v-alert
       outlined
       type="success"
