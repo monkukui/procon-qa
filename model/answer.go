@@ -54,6 +54,9 @@ func DeleteAnswer(a *Answer) error {
 	// questions[0] の 回答数をデクリメント
 	questions[0].AnswerCount--
 	UpdateQuestion(&questions[0])
+
+  // 回答に付随するいいねを削除
+  DeleteAnswerGood(&AnswerGood{AID: a.ID})
 	return nil
 }
 

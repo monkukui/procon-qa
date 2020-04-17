@@ -51,6 +51,12 @@ func DeleteQuestion(q *Question) error {
 	if rows := db.Where(q).Delete(&Question{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to delete", q)
 	}
+
+	// 関連する answer を全て削除
+	DeleteAnswer(&Answer{QID: q.ID})
+
+  // 関連する good を全て削除
+  DeleteQuestionGood(&QuestionGood{QID: q.ID})
 	return nil
 }
 

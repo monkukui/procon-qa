@@ -12,10 +12,6 @@ type AnswerGood struct {
 
 type AnswerGoods []AnswerGood
 
-func CreateAnswerGood(g *AnswerGood) {
-	db.Create(g)
-}
-
 // いいねを取得
 // 例えば, UID AID 指定で，存在するかを判定できそう
 func FindAnswerGoods(g *AnswerGood) AnswerGoods {
@@ -29,5 +25,29 @@ func DeleteAnswerGood(g *AnswerGood) error {
 	if rows := db.Where(g).Delete(&AnswerGood{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to delete", g)
 	}
+
+	answer := FindAnswers(&Answer{ID: g.AID}, "id")[0]
+  answer.FavoriteCount--
+  UpdateAnswer(&answer)
+
+  // user.FavoriteAnswer をデクリメント
+  user := FindUser(&User{ID: answer.UID})
+  user.FavoriteAnswer--
+  user.FavoriteSum--
+  UpdateUser(&user)
 	return nil
 }
+
+func CreateAnswerGood(g *AnswerGood) {
+	answer := FindAnswers(&Answer{ID: g.AID}, "id")[0]
+  answer.FavoriteCount++
+  UpdateAnswer(&answer)
+
+  // user.FavoriteAnswer をインクリメント
+  user := FindUser(&User{ID: answer.UID})
+  user.FavoriteAnswer++
+  user.FavoriteSum++
+  UpdateUser(&user)
+	db.Create(g)
+}
+
