@@ -200,15 +200,13 @@ export default {
 
       fetch(url, {method, headers, body}).then((response) => {
         if (response.ok) {
-          this.snackbar = true;
-          this.resetForm();
           return response.json();
         }
+        alert('server error');
       }).then((json) => {
-        if (typeof json === 'undefined') {
-          alert('server error');
-          return;
-        }
+        const toUrl = '#/completed?qid=' + json.id;
+        location.href = toUrl;
+        location.reload();
       });
     },
   },
