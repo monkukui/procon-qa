@@ -84,10 +84,6 @@ func UpdateUser(u *User) error {
 
 // user を 1 つ削除
 func DeleteUser(u *User) error {
-	if rows := db.Where(u).Delete(&User{}).RowsAffected; rows == 0 {
-		return fmt.Errorf("Could not find Todo (%v) to delete", u)
-	}
-
 	if err := DeleteQuestionGood(&QuestionGood{UID: u.ID}); err != nil {
 		return fmt.Errorf("質問に対するいいねを削除できませんでした")
 	}
@@ -95,5 +91,10 @@ func DeleteUser(u *User) error {
 	if err := DeleteAnswerGood(&AnswerGood{UID: u.ID}); err != nil {
 		return fmt.Errorf("回答に対するいいねを削除できませんでした")
 	}
+
+	if rows := db.Where(u).Delete(&User{}).RowsAffected; rows == 0 {
+		return fmt.Errorf("Could not find Todo (%v) to delete", u)
+	}
+
 	return nil
 }

@@ -45,6 +45,8 @@ func newRouter() *echo.Echo {
   noAuth.GET("/user-questions/count/:uid", handler.GetUserQuestionSize)      // ユーザが投稿した質問の個数を取得
   noAuth.GET("/book-marked-questions/count/:uid", handler.GetBookMarkedQuestionSize)      // ユーザが投稿した質問の個数を取得
   noAuth.GET("/user-answers/count/:uid", handler.GetUserAnswerSize)        // ユーザが回答した質問の個数を取得
+  noAuth.GET("/question-good/count", handler.CountQuestionGood)      // 質問へのいいねの総数
+  noAuth.GET("/answer-good/count", handler.CountAnswerGood)          // 回答へのいいねの総数
 
 	// questions
 	api.GET("/questions", handler.GetAllQuestions)                      // 質問の全取得

@@ -22,18 +22,19 @@ func FindQuestionGoods(g *QuestionGood) QuestionGoods {
 
 // good を 1 つ削除
 func DeleteQuestionGood(g *QuestionGood) error {
-	if rows := db.Where(g).Delete(&QuestionGood{}).RowsAffected; rows == 0 {
-		return fmt.Errorf("Could not find Todo (%v) to delete", g)
-	}
+	db.Where(g).Delete(&QuestionGood{})
 
 	question := FindQuestions(&Question{ID: g.QID})[0]
   question.FavoriteCount--
   UpdateQuestion(&question)
 
   // user.FavoriteQuestion をインクリメント
+  fmt.Println("in DeleteQuestionGood")
   user := FindUser(&User{ID: question.UID})
+  fmt.Println(user)
   user.FavoriteQuestion--
   user.FavoriteSum--
+  fmt.Println(user)
   UpdateUser(&user)
 	return nil
 }
