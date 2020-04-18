@@ -12,10 +12,6 @@ type AnswerGood struct {
 
 type AnswerGoods []AnswerGood
 
-func CreateAnswerGood(g *AnswerGood) {
-	db.Create(g)
-}
-
 // いいねを取得
 // 例えば, UID AID 指定で，存在するかを判定できそう
 func FindAnswerGoods(g *AnswerGood) AnswerGoods {
@@ -24,10 +20,35 @@ func FindAnswerGoods(g *AnswerGood) AnswerGoods {
 	return goods
 }
 
-// good を 1 つ削除
+// good を複数削除
 func DeleteAnswerGood(g *AnswerGood) error {
-	if rows := db.Where(g).Delete(&AnswerGood{}).RowsAffected; rows == 0 {
-		return fmt.Errorf("Could not find Todo (%v) to delete", g)
-	}
+	db.Where(g).Delete(&AnswerGood{})
+
+	answer := FindAnswers(&Answer{ID: g.AID}, "id")[0]
+  answer.FavoriteCount--
+  UpdateAnswer(&answer)
+
+  // user.FavoriteAnswer をデクリメント
+  user := FindUser(&User{ID: answer.UID})
+  fmt.Println("in DeleteAnswerGood")
+  fmt.Println(user)
+  user.FavoriteAnswer--
+  user.FavoriteSum--
+  fmt.Println(user)
+  UpdateUser(&user)
 	return nil
 }
+
+func CreateAnswerGood(g *AnswerGood) {
+	answer := FindAnswers(&Answer{ID: g.AID}, "id")[0]
+  answer.FavoriteCount++
+  UpdateAnswer(&answer)
+
+  // user.FavoriteAnswer をインクリメント
+  user := FindUser(&User{ID: answer.UID})
+  user.FavoriteAnswer++
+  user.FavoriteSum++
+  UpdateUser(&user)
+	db.Create(g)
+}
+
