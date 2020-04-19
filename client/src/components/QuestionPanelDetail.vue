@@ -91,54 +91,72 @@
           >
             <v-icon>mdi-check</v-icon>解決済みにする
           </v-btn>
-          <v-btn icon 
-            color="error"
-            :disabled="name != userName"
-            x-large
-          >
-            <v-icon @click="alert = !alert">mdi-delete</v-icon>
-          </v-btn> 
-
-          <v-btn 
-            v-if="isFavorited"
-            icon
-            x-large
-            color="pink"
-            :disabled="userName === name || userName === '' || name == ''"
-          >
-            <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
-          </v-btn>
-          <v-btn 
-            v-else
-            icon
-            x-large
-            color="pink lighten-4"
-            :disabled="userName === name || userName === '' || name == ''"
-          >
-            <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
-          </v-btn>
-
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn icon 
+                color="error"
+                :disabled="name != userName"
+                x-large
+                v-on="on"
+              >
+                <v-icon @click="alert = !alert">mdi-delete</v-icon>
+              </v-btn>
+            </template> 
+            <span>消去</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn 
+                v-if="isFavorited"
+                icon
+                x-large
+                color="pink"
+                :disabled="userName === name || userName === '' || name == ''"
+                v-on="on"
+              >
+                <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
+              </v-btn>
+              <v-btn 
+                v-else
+                icon
+                x-large
+                color="pink lighten-4"
+                :disabled="userName === name || userName === '' || name == ''"
+                v-on="on"
+              >
+                <v-icon @click="favoriteQuestion">mdi-heart</v-icon>
+              </v-btn>
+            </template>
+            <span>いいね</span>
+          </v-tooltip>
           <span v-if="userName !== ''">
             {{ question.favoriteCount }}
           </span>
-
-          <v-btn 
-            v-if="isBookMarked"
-            icon
-            x-large
-            color="blue"
-          >
-            <v-icon @click="bookMark">mdi-bookmark</v-icon>
-          </v-btn>
-          <v-btn 
-            v-else
-            icon
-            x-large
-            color="blue lighten-4"
-          >
-            <v-icon @click="bookMark">mdi-bookmark</v-icon>
-          </v-btn>
-
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn 
+                v-if="isBookMarked"
+                icon
+                x-large
+                color="blue"
+                :disabled="name == ''"
+                v-on="on"
+              >
+                <v-icon @click="bookMark">mdi-bookmark</v-icon>
+              </v-btn>
+              <v-btn 
+                v-else
+                icon
+                x-large
+                color="blue lighten-4"
+                :disabled="name == ''"
+                v-on="on"
+              >
+                <v-icon @click="bookMark">mdi-bookmark</v-icon>
+              </v-btn>
+            </template>
+            <span>ブックマーク</span>
+          </v-tooltip>
         </v-card-actions>
         <v-row>
           <v-col md="12">
