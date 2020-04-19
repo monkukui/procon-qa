@@ -403,7 +403,12 @@ func PostQuestion(c echo.Context) error {
 	question.FavoriteCount = 0
 	question.BrowseCount = 0
 
-	question.Date = time.Now().Format("2006/01/02 15:04:05")
+  now := time.Now()
+  nowUTC := now.UTC()
+  jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+  nowJST := nowUTC.In(jst)
+
+	question.Date = nowJST.Format("2006/01/02 15:04:05")
 
 	model.CreateQuestion(question)
 
