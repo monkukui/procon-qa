@@ -106,7 +106,13 @@ func PostAnswer(c echo.Context) error {
 	// 回答者をユーザーに設定
 	answer.UID = uid
 	answer.FavoriteCount = 0
-	answer.Date = time.Now().Format("2006/01/02 15:04:05")
+
+  now := time.Now()
+  nowUTC := now.UTC()
+  jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+  nowJST := nowUTC.In(jst)
+
+	answer.Date = nowJST.Format("2006/01/02 15:04:05")
 
 	model.CreateAnswer(answer)
 
