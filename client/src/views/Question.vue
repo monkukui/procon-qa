@@ -9,6 +9,24 @@
             :questionedTime="questionedTime"
           />
         </v-col>
+        <v-col cols="12" sm="8" class="left-margin" v-if="!isAnswering">
+          <v-alert
+            dense
+            text
+            type="success"
+            width="50%"
+          >
+            あなたの知見を共有してください
+          </v-alert>
+          <v-btn class="ma-2" tile outlined color="success" @click="clickAnswerButton">
+            <v-icon left>mdi-pencil</v-icon> 回答する
+          </v-btn>
+        </v-col>
+        <v-col cols="12" sm="8" v-if="isAnswering">
+          <AnswerForm
+            @answer="postAnswer"
+          />
+        </v-col>
         <v-col cols="12" sm="8">
           <AnswerSetting
             @click="changeMode"
@@ -16,10 +34,8 @@
           />
           <Answers 
             :mode="mode" 
+            :xor="xor"
           />
-        </v-col>
-        <v-col cols="12" sm="8">
-          <AnswerForm />
         </v-col>
       </v-row>
     </v-container>
@@ -49,9 +65,18 @@ export default class Question extends Vue {
   private title: any = '';
   private body: any = '';
   private questionedTime: any = '';
+  private xor: boolean = false;
+  private isAnswering: boolean = false;
+
+  private clickAnswerButton(): void {
+    this.isAnswering = true;
+  }
 
   private changeMode(mode: number): void {
     this.mode = mode;
+  }
+  private postAnswer(): void {
+    this.xor = !this.xor;
   }
   private mounted() {
     this.title = this.$route.query.title;
@@ -60,3 +85,9 @@ export default class Question extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.left-margin {
+  margin-left: 15px;
+}
+</style>

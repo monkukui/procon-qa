@@ -8,18 +8,17 @@
       border="left"
     >
     <v-row>
-      <v-col cols="12" sm="10">
+      <v-col cols="12" sm="8">
         あなたの知見を共有してください.<br>
         質問に回答するには，ログインする必要があります.
       </v-col>
-      <v-col cols="12" sm="2">
+      <v-col cols="12" sm="4">
         <v-btn large color="primary" to="/login">ログイン</v-btn>
       </v-col>
     </v-row>
     </v-alert>
     </div>
     <div v-else>
-      <span class="font-weight-black headline">回答</span>
       <br>
       <div class="mavon-editor">
         <mavon-editor
@@ -37,7 +36,7 @@
         @click="answer"
         large
         :disabled="text == ''"
-      >回答する</v-btn>
+      >送信</v-btn>
     </div>
   </div>
 </template>
@@ -93,6 +92,7 @@ export default class AnswerForm extends Vue {
   private getToken(): string | null {
     return localStorage.getItem('token');
   }
+
   private answer(): void {
     if (this.getToken() === null) {
       alert('server error');
@@ -114,7 +114,8 @@ export default class AnswerForm extends Vue {
       }
     }).then((json) => {
       if (typeof json !== 'undefined') {
-        location.reload();
+        // 親コンポーネントに発火させる
+        this.$emit("answer");
       }
     });
   }

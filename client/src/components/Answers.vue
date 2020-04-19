@@ -29,6 +29,8 @@ import AnswerPanelDetail from '@/components/AnswerPanelDetail.vue';
 export default class Answers extends Vue {
   @Prop()
   private mode!: number;
+  @Prop()
+  private xor!: boolean;
   private questionId!: number;
   private answers = [];
   private isReady: boolean = false;
@@ -61,6 +63,11 @@ export default class Answers extends Vue {
   // mode が変われば，質問を再取得
   @Watch('mode')
   private modeChanged(): void {
+    this.getAnswers();
+  }
+
+  @Watch('xor')
+  private xorChanged(): void {
     this.getAnswers();
   }
 
