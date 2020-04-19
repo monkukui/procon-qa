@@ -24,7 +24,7 @@
           :data-url=shareUrl
           data-text="procon-qa で質問しました！"
           data-size="large"
-          data-hashtags="procon-qa"
+          data-hashtags="proconqa"
         >
         </a>
       </v-col>
