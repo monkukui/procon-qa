@@ -9,7 +9,7 @@
             :questionedTime="questionedTime"
           />
         </v-col>
-        <v-col cols="12" sm="8" class="left-margin">
+        <v-col cols="12" sm="8" class="left-margin" v-if="!isAnswering">
           <v-alert
             dense
             text

@@ -8,18 +8,17 @@
       border="left"
     >
     <v-row>
-      <v-col cols="12" sm="10">
+      <v-col cols="12" sm="8">
         あなたの知見を共有してください.<br>
         質問に回答するには，ログインする必要があります.
       </v-col>
-      <v-col cols="12" sm="2">
+      <v-col cols="12" sm="4">
         <v-btn large color="primary" to="/login">ログイン</v-btn>
       </v-col>
     </v-row>
     </v-alert>
     </div>
     <div v-else>
-      <span class="font-weight-black headline">回答</span>
       <br>
       <div class="mavon-editor">
         <mavon-editor
