@@ -115,7 +115,7 @@ export default class AnswerForm extends Vue {
     }).then((json) => {
       if (typeof json !== 'undefined') {
         // 親コンポーネントに発火させる
-        this.$emit("answer");
+        this.$emit('answer');
       }
     });
   }
