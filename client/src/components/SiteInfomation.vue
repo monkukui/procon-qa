@@ -24,7 +24,6 @@
                 <v-list-item-title>{{ totalQuestions }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-
             <v-list-item v-if="isReadyTotalAnswer">
               <v-list-item-content>
                 <v-list-item-title>回答数</v-list-item-title>
@@ -66,17 +65,53 @@ export default class SiteInformation extends Vue {
   private totalQuestions: number = 0;
   private totalAnswers: number = 0;
   private totalUsers: number = 0;
+  private totalQuestionGood: number = 0;
+  private totalAnswerGood: number = 0;
   private completedRate: string = '0.0';
 
   private isReadyTotalQuestion: boolean = false;
   private isReadyCompletedRate: boolean = false;
   private isReadyTotalAnswer: boolean = false;
   private isReadyTotalUser: boolean = false;
+  private isReadyTotalQuestionGood: boolean = false;
+  private isReadyTotalAnswerGood: boolean = false;
 
   private created(): void {
     this.getTotalQuestion();
     this.getTotalAnswer();
     this.getTotalUser();
+    this.getTotalQuestionGood();
+    this.getTotalAnswerGood();
+  }
+
+  // 質問へのいいね数を取得する
+  private getTotalQuestionGood(): void {
+    const url = '/api/no-auth/question-good/count';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((cnt) => {
+      this.totalQuestionGood = cnt;
+      this.isReadyTotalQuestionGood = true;
+    });
+  }
+
+  // 回答へのいいね数を取得する
+  private getTotalAnswerGood(): void {
+    const url = '/api/no-auth/answer-good/count';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+    fetch(url, {headers}).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((cnt) => {
+      this.totalAnswerGood = cnt;
+      this.isReadyTotalAnswerGood = true;
+    });
   }
 
   // 質問数を取得する

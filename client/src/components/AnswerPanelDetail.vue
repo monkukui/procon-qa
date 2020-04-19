@@ -34,12 +34,14 @@
           <v-btn icon
             color="error"
             :disabled="name != userName"
+            x-large
           >
             <v-icon @click="alert = !alert">mdi-delete</v-icon>
           </v-btn> 
           <v-btn 
             v-if="isFavorited"
             icon
+            x-large
             color="pink"
             :disabled="userName === name || userName === '' || name == ''"
           >
@@ -48,6 +50,7 @@
           <v-btn 
             v-else
             icon
+            x-large
             color="pink lighten-4"
             :disabled="userName === name || userName === '' || name == ''"
           >

@@ -37,7 +37,7 @@
         @click="answer"
         large
         :disabled="text == ''"
-      >回答する</v-btn>
+      >送信</v-btn>
     </div>
   </div>
 </template>
@@ -93,6 +93,7 @@ export default class AnswerForm extends Vue {
   private getToken(): string | null {
     return localStorage.getItem('token');
   }
+
   private answer(): void {
     if (this.getToken() === null) {
       alert('server error');
@@ -114,7 +115,8 @@ export default class AnswerForm extends Vue {
       }
     }).then((json) => {
       if (typeof json !== 'undefined') {
-        location.reload();
+        // 親コンポーネントに発火させる
+        this.$emit("answer");
       }
     });
   }
