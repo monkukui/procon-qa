@@ -8,6 +8,11 @@
         <v-card-title>
           <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link>
         <v-spacer />
+        <TwitterIcon
+          twitter_id="monkukui2"
+          size="36"
+          api_size="n"
+        />
         <span style="font-size: 14px;">
           <UserName
             :name="userName"
@@ -124,12 +129,14 @@
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator';
 import SquarePanel from '@/components/SquarePanel.vue';
 import UserName from '@/components/UserName.vue';
+import TwitterIcon from '@/components/TwitterIcon.vue';
 import { Question } from '@/models/Question.ts';
 
 @Component({
   components: {
     UserName,
     SquarePanel,
+    TwitterIcon,
   },
 })
 export default class QuestionPanel extends Vue {
