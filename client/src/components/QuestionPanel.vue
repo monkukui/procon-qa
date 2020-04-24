@@ -9,7 +9,7 @@
           <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link>
         <v-spacer />
         <TwitterIcon
-          twitterId="monkukui2"
+          :twitterId="userTwitterId"
           size="36"
           apiSize="n"
         />
@@ -161,6 +161,9 @@ export default class QuestionPanel extends Vue {
   // 質問者の名前
   private userName: string = '';
 
+  // 質問者の twitter Id
+  private userTwitterId: string = '';
+
   // コンポーネントが作られた時に呼び出される関数
   private created(): void {
     this.init();
@@ -198,6 +201,7 @@ export default class QuestionPanel extends Vue {
       return [];
     }).then((json) => {
       this.userName = json.name;
+      this.userTwitterId = json.twitter_id;
       this.isReady = true;
     });
   }
