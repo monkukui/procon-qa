@@ -9,9 +9,9 @@
           <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link>
         <v-spacer />
         <TwitterIcon
-          twitter_id="monkukui2"
+          twitterId="monkukui2"
           size="36"
-          api_size="n"
+          apiSize="n"
         />
         <span style="font-size: 14px;">
           <UserName

@@ -6,7 +6,7 @@
     </v-avatar-->
     <v-avatar :size=size>
       <img
-        :src=img_url
+        :src=imgUrl
         alt="icon"
       >
     </v-avatar>
@@ -21,14 +21,14 @@ export default class TwitterIcon extends Vue {
   @Prop()
   private size!: string;
   @Prop()
-  private api_size!: string;  // m (24 * 24), n (48 * 48), b (73 * 73), o (original size)
+  private apiSize!: string;  // m (24 * 24), n (48 * 48), b (73 * 73), o (original size)
   @Prop()
-  private twitter_id!: string; 
+  private twitterId!: string;
 
-  private img_url: string = '';
+  private imgUrl: string = '';
 
   private created() {
-    this.img_url = "https://tweetimag.es/i/" + this.twitter_id + "_" + this.api_size;
+    this.imgUrl = 'https://tweetimag.es/i/' + this.twitterId + '_' + this.apiSize;
   }
 }
 </script>
