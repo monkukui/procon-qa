@@ -66,3 +66,34 @@ func DeleteUser(c echo.Context) error {
 
 	return c.NoContent(http.StatusNoContent)
 }
+
+func UpdateUser(c echo.Context) error {
+	uid := userIDFromToken(c)
+	user := model.FindUser(&model.User{ID: uid})
+  if user.ID == 0 {
+		return echo.ErrNotFound
+	}
+
+  postUser := new(model.User);
+	if err := c.Bind(postUser); err != nil {
+		return err
+	}
+  if postUser.Name == "" {
+		return &echo.HTTPError{
+			Code:    http.StatusBadRequest,
+			Message: "invalid name",
+		}
+  }
+	if u := model.FindUser(&model.User{Name: postUser.Name}); u.ID != 0 && user.Name != u.Name {
+		return &echo.HTTPError{
+			Code:    http.StatusConflict,
+			Message: "name already exists",
+		}
+	}
+
+  user.Name = postUser.Name
+  user.TwitterId = postUser.TwitterId
+
+  model.UpdateUser(&user)
+  return c.JSON(http.StatusOK, user.IntoReturnUser())
+}

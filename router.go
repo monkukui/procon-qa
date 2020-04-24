@@ -77,6 +77,9 @@ func newRouter() *echo.Echo {
 	api.GET("/answer-good/:uid/:aid", handler.AnswerFavorited) // いいね状態かどうか
 	api.GET("/book-mark/:uid/:qid", handler.QuestionBookMarked) // いいね状態かどうか
 
+  // User
+  api.PUT("/update-user", handler.UpdateUser)    // User の基本情報を更新
+
 
 	api.GET("/token", handler.Token)
 
