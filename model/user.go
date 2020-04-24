@@ -6,6 +6,7 @@ type User struct {
 	ID               int    `json:"id" gorm:"praimary_key"`
 	Name             string `json:"name"`
 	Password         string `json:"password"`
+  TwitterId        string `json:"twitter_id"`
 	FavoriteAnswer   int    `json:"favorite_answer"`
 	FavoriteQuestion int    `json:"favorite_question"`
 	FavoriteSum      int    `json:"favorite_sum"`
@@ -15,6 +16,7 @@ type User struct {
 type ReturnUser struct {
 	ID               int    `json:"id" gorm:"praimary_key"`
 	Name             string `json:"name"`
+  TwitterId        string `json:"twitter_id"`
 	FavoriteAnswer   int    `json:"favorite_answer"`
 	FavoriteQuestion int    `json:"favorite_question"`
 	FavoriteSum      int    `json:"favorite_sum"`
@@ -24,6 +26,7 @@ func (u User) IntoReturnUser() ReturnUser {
 	var retUser ReturnUser
 	retUser.ID = u.ID
 	retUser.Name = u.Name
+  retUser.TwitterId = u.TwitterId
 	retUser.FavoriteAnswer = u.FavoriteAnswer
 	retUser.FavoriteQuestion = u.FavoriteQuestion
 	retUser.FavoriteSum = u.FavoriteSum
@@ -72,6 +75,7 @@ func UpdateUser(u *User) error {
 		"id":                u.ID,
 		"name":              u.Name,
 		"password":          u.Password,
+    "twitter_id":        u.TwitterId,
 		"favorite_question": u.FavoriteQuestion,
 		"favorite_answer":   u.FavoriteAnswer,
 		"favorite_sum":      u.FavoriteSum,

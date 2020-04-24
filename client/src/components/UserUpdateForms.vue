@@ -9,7 +9,7 @@
         v-model="name"
         :rules="nameRules"
         :counter="14"
-        label="表示名"
+        label="ユーザ名"
         required
       >
       </v-text-field>
@@ -86,7 +86,7 @@ export default class UserUpdateForms extends Vue {
         if (response.status === 400) {
           alert('Name are empty. Please retry');
         } else if (response.status === 409) {
-          alert('この表示名は使われています．別の名前をお試しください．');
+          alert('このユーザ名は使われています．別の名前をお試しください．');
           this.name = '';
         }
       }
