@@ -2,13 +2,14 @@
   <div class="question">
     <v-container fluid>
       <v-row>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="12">
           <QuestionPanelDetail
             :title="title"
             :body="body"
             :questionedTime="questionedTime"
           />
         </v-col>
+
         <v-col cols="12" sm="8" class="left-margin" v-if="!isAnswering">
           <v-alert
             dense
@@ -28,6 +29,7 @@
           />
         </v-col>
         <v-col cols="12" sm="8">
+
           <AnswerSetting
             @click="changeMode"
             :curMode="mode"
@@ -87,6 +89,7 @@ export default class Question extends Vue {
 </script>
 
 <style scoped>
+
 .left-margin {
   margin-left: 15px;
 }
