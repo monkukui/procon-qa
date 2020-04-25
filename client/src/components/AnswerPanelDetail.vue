@@ -61,6 +61,7 @@
                 v-on="on"
               >
                 <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
+                {{ answer.favoriteCount }}
               </v-btn>
               <v-btn 
                 v-else
@@ -71,11 +72,11 @@
                 v-on="on"
               >
                 <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
+                {{ answer.favoriteCount }}
               </v-btn>
             </template>
             <span>いいね</span>
           </v-tooltip>
-          {{ answer.favoriteCount }}
         </v-card-actions>
         <v-row>
           <v-col md="12">
