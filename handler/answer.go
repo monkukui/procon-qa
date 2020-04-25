@@ -106,7 +106,13 @@ func PostAnswer(c echo.Context) error {
 	// 回答者をユーザーに設定
 	answer.UID = uid
 	answer.FavoriteCount = 0
-	answer.Date = time.Now().Format("2006/01/02 15:04:05")
+
+  now := time.Now()
+  nowUTC := now.UTC()
+  jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+  nowJST := nowUTC.In(jst)
+
+	answer.Date = nowJST.Format("2006/01/02 15:04:05")
 
 	model.CreateAnswer(answer)
 
@@ -144,7 +150,7 @@ func FavoriteAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	answers := model.FindAnswers(&model.Answer{ID: answerID}, "id desc")
+	answers := model.FindAnswers(&model.Answer{ID: answerID}, "id")
 	if len(answers) == 0 {
 		return echo.ErrNotFound
 	}
@@ -160,33 +166,9 @@ func FavoriteAnswer(c echo.Context) error {
 
 	if len(goods) == 0 { // いいねをする
 		model.CreateAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
-		answer.FavoriteCount++
-		if err := model.UpdateAnswer(&answer); err != nil {
-			return echo.ErrNotFound
-		}
-
-		// user.FavoriteAnswer をインクリメント
-		user := model.FindUser(&model.User{ID: answer.UID})
-		user.FavoriteAnswer++
-		user.FavoriteSum++
-		if err := model.UpdateUser(&user); err != nil {
-			return echo.ErrNotFound
-		}
 
 	} else { // いいねを取り消す
 		model.DeleteAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
-		answer.FavoriteCount--
-		if err := model.UpdateAnswer(&answer); err != nil {
-			return echo.ErrNotFound
-		}
-
-		// user.FavoriteAnswer をデクリメント
-		user := model.FindUser(&model.User{ID: answer.UID})
-		user.FavoriteAnswer--
-		user.FavoriteSum--
-		if err := model.UpdateUser(&user); err != nil {
-			return echo.ErrNotFound
-		}
 	}
 
 	return c.NoContent(http.StatusNoContent)

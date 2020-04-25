@@ -142,6 +142,19 @@
         <router-view></router-view>
       </v-container>
     </v-content>
+    <div class="footer">
+      <v-footer
+        absolute
+        class="font-weight-medium"
+      >
+        <v-col
+          class="text-center"
+          cols="12"
+        >
+          {{ new Date().getFullYear() }} — <strong>procon-qa</strong>
+        </v-col>
+      </v-footer>
+    </div>
   </v-app>
 </template>
 <script lang="ts">
@@ -203,10 +216,12 @@ export default class App extends Vue {
 .draw {
   z-index: 2147483647 - 1;
 }
-
 .logo {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+.footer {
+  margin-bottom: 100px;
 }
 </style>

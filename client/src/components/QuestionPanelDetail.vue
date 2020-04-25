@@ -129,24 +129,31 @@
           <span v-if="userName !== ''">
             {{ question.favoriteCount }}
           </span>
-
-          <v-btn 
-            v-if="isBookMarked"
-            icon
-            x-large
-            color="blue"
-          >
-            <v-icon @click="bookMark">mdi-bookmark</v-icon>
-          </v-btn>
-          <v-btn 
-            v-else
-            icon
-            x-large
-            color="blue lighten-4"
-          >
-            <v-icon @click="bookMark">mdi-bookmark</v-icon>
-          </v-btn>
-
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn 
+                v-if="isBookMarked"
+                icon
+                x-large
+                color="blue"
+                :disabled="name == ''"
+                v-on="on"
+              >
+                <v-icon @click="bookMark">mdi-bookmark</v-icon>
+              </v-btn>
+              <v-btn 
+                v-else
+                icon
+                x-large
+                color="blue lighten-4"
+                :disabled="name == ''"
+                v-on="on"
+              >
+                <v-icon @click="bookMark">mdi-bookmark</v-icon>
+              </v-btn>
+            </template>
+            <span>ブックマーク</span>
+          </v-tooltip>
         </v-card-actions>
         <v-row>
           <v-col md="12">

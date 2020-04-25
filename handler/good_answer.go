@@ -22,3 +22,7 @@ func AnswerFavorited(c echo.Context) error {
 	goods := model.FindAnswerGoods(&model.AnswerGood{UID: uid, AID: aid})
 	return c.JSON(http.StatusOK, len(goods) != 0)
 }
+
+func CountAnswerGood(c echo.Context) error {
+  return c.JSON(http.StatusOK, len(model.FindAnswerGoods(&model.AnswerGood{})))
+}

@@ -64,14 +64,6 @@ func DeleteUser(c echo.Context) error {
 		fmt.Println("削除できませんでした")
 	}
 
-	if err := model.DeleteQuestionGood(&model.QuestionGood{UID: uid}); err != nil {
-		fmt.Println("質問に対するいいねを削除できませんでした")
-	}
-
-	if err := model.DeleteAnswerGood(&model.AnswerGood{UID: uid}); err != nil {
-		fmt.Println("回答に対するいいねを削除できませんでした")
-	}
-
 	return c.NoContent(http.StatusNoContent)
 }
 

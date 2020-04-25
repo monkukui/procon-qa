@@ -37,28 +37,44 @@
             <br>
             投稿日時: {{ answer.date }}
           </v-card-text>
-          <v-btn icon
-            color="error"
-            :disabled="name != userName"
-          >
-            <v-icon @click="alert = !alert">mdi-delete</v-icon>
-          </v-btn> 
-          <v-btn 
-            v-if="isFavorited"
-            icon
-            color="pink"
-            :disabled="userName === name || userName === '' || name == ''"
-          >
-            <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
-          </v-btn>
-          <v-btn 
-            v-else
-            icon
-            color="pink lighten-4"
-            :disabled="userName === name || userName === '' || name == ''"
-          >
-            <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
-          </v-btn>
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn icon
+                color="error"
+                :disabled="name != userName"
+                x-large
+                v-on="on"
+              >
+                <v-icon @click="alert = !alert">mdi-delete</v-icon>
+              </v-btn> 
+            </template> 
+            <span>消去</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-btn 
+                v-if="isFavorited"
+                icon
+                x-large
+                color="pink"
+                :disabled="userName === name || userName === '' || name == ''"
+                v-on="on"
+              >
+                <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
+              </v-btn>
+              <v-btn 
+                v-else
+                icon
+                x-large
+                color="pink lighten-4"
+                :disabled="userName === name || userName === '' || name == ''"
+                v-on="on"
+              >
+                <v-icon @click="favoriteAnswer">mdi-heart</v-icon>
+              </v-btn>
+            </template>
+            <span>いいね</span>
+          </v-tooltip>
           {{ answer.favoriteCount }}
         </v-card-actions>
         <v-row>
