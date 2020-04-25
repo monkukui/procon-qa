@@ -20,6 +20,12 @@
           </v-col>
         </v-row>
         <v-card-actions>
+          <TwitterIcon
+            :twitterId="userTwitterId"
+            :uid="answer.uid"
+            size="60"
+            apiSize="b"
+          />
           <v-card-text>
             投稿者: 
             <span style="font-size: 14px;">
@@ -89,11 +95,13 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import { Answer } from '@/models/Answer.ts';
+import TwitterIcon from '@/components/TwitterIcon.vue';
 import UserName from '@/components/UserName.vue';
 
 @Component({
   components: {
     UserName,
+    TwitterIcon,
   },
 })
 export default class AnswerPanelDetail extends Vue {
@@ -113,10 +121,11 @@ export default class AnswerPanelDetail extends Vue {
   private tr: boolean = true;
   private fa: boolean = false;
 
-  // 順に，回答者の名前，ユーザの名前
+  // 順に，回答者の名前，ユーザの名前, twitterId
   private userName: string = '';
   private name: string = '';
   private uid: string = '';
+  private userTwitterId: string = '';
 
   // ロード中の制御
   private isReady: boolean = false;
@@ -177,6 +186,7 @@ export default class AnswerPanelDetail extends Vue {
       return [];
     }).then((json) => {
       this.userName = json.name;
+      this.userTwitterId = json.twitter_id;
     });
   }
 

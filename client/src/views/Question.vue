@@ -2,14 +2,14 @@
   <div class="question">
     <v-container fluid>
       <v-row>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="12">
           <QuestionPanelDetail
             :title="title"
             :body="body"
             :questionedTime="questionedTime"
           />
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="12">
           <AnswerSetting
             @click="changeMode"
             :curMode="mode"
@@ -18,7 +18,7 @@
             :mode="mode" 
           />
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="12">
           <AnswerForm />
         </v-col>
       </v-row>
@@ -60,3 +60,9 @@ export default class Question extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.question {
+  margin: 20px;
+}
+</style>

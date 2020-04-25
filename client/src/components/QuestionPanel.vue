@@ -10,6 +10,7 @@
         <v-spacer />
         <TwitterIcon
           :twitterId="userTwitterId"
+          :uid="uid"
           size="36"
           apiSize="n"
         />
@@ -161,6 +162,9 @@ export default class QuestionPanel extends Vue {
   // 質問者の名前
   private userName: string = '';
 
+  // 質問者の uid
+  private uid: string = '';
+
   // 質問者の twitter Id
   private userTwitterId: string = '';
 
@@ -201,6 +205,7 @@ export default class QuestionPanel extends Vue {
       return [];
     }).then((json) => {
       this.userName = json.name;
+      this.uid = json.id;
       this.userTwitterId = json.twitter_id;
       this.isReady = true;
     });

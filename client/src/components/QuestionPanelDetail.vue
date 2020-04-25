@@ -9,6 +9,31 @@
             <div class="question-title">
               {{ question.title }}
             </div>
+            <v-row>
+              <v-col cols="12" sm="3">
+                <span v-if="question.completed">
+                  <v-chip
+                    label
+                    class="ma-2"
+                    color="rgb(116, 181, 103)"
+                    text-color="white"
+                  >
+                    解決済みの質問
+                  </v-chip>
+                </span>
+                <span v-else>
+                  <v-chip
+                    label
+                    class="ma-2"
+                    color="rgb(231, 175, 95)"
+                    text-color="white"
+                  >
+                    未解決の質問
+                  </v-chip>
+                </span>
+              </v-col>
+            </v-row>
+
           </v-list-item-content>
         </v-list-item>
         <v-divider class="mx-4"></v-divider>
@@ -28,29 +53,12 @@
           </v-col>
         </v-row>
         <v-card-actions>
-        <span v-if="question.completed">
-          <v-chip
-            label
-            class="ma-2"
-            color="rgb(116, 181, 103)"
-            text-color="white"
-          >
-            解決済みの質問
-          </v-chip>
-        </span>
-        <span v-else>
-          <v-chip
-            label
-            class="ma-2"
-            color="rgb(231, 175, 95)"
-            text-color="white"
-          >
-            未解決の質問
-          </v-chip>
-        </span>
-        </v-card-actions>
-
-        <v-card-actions>
+          <TwitterIcon
+            :twitterId="userTwitterId"
+            :uid="question.uid"
+            size="60"
+            apiSize="b"
+          />
           <v-card-text>
             投稿者: 
             <span style="font-size: 14px;">
@@ -67,30 +75,30 @@
             </span>
           </v-card-text>
         </v-btn>
-          <v-btn 
-            v-if="question.completed"
-            :disabled="name != userName"
-            @click="updateQuestionCompleted" 
-            class="ma-2"
-            tile
-            outlined 
-            color="rgb(223, 177, 109)"
-            rounded
-          >
-            <v-icon>mdi-undo-variant</v-icon>未解決に戻す
-          </v-btn>
-          <v-btn 
-            v-else
-            :disabled="name != userName"
-            @click="updateQuestionCompleted" 
-            class="ma-2"
-            tile
-            outlined 
-            color="rgb(131, 179, 112)"
-            rounded
-          >
-            <v-icon>mdi-check</v-icon>解決済みにする
-          </v-btn>
+          <span v-if="name == userName">
+            <v-btn 
+              v-if="question.completed"
+              @click="updateQuestionCompleted" 
+              class="ma-2"
+              tile
+              outlined 
+              color="rgb(223, 177, 109)"
+              rounded
+            >
+              <v-icon>mdi-undo-variant</v-icon>未解決に戻す
+            </v-btn>
+            <v-btn 
+              v-else
+              @click="updateQuestionCompleted" 
+              class="ma-2"
+              tile
+              outlined 
+              color="rgb(131, 179, 112)"
+              rounded
+            >
+              <v-icon>mdi-check</v-icon>解決済みにする
+            </v-btn>
+          </span>
           <v-btn icon 
             color="error"
             :disabled="name != userName"
@@ -175,11 +183,13 @@
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import SquarePanel from '@/components/SquarePanel.vue';
 import UserName from '@/components/UserName.vue';
+import TwitterIcon from '@/components/TwitterIcon.vue';
 
 @Component({
   components: {
     SquarePanel,
     UserName,
+    TwitterIcon,
   },
 })
 export default class QuestionPanelDetail extends Vue {
@@ -194,6 +204,8 @@ export default class QuestionPanelDetail extends Vue {
   private question: any = {};
   // 質問者の名前
   private userName: string = '';
+  // 質問者の twitter Id;
+  private userTwitterId: string = '';
   // ユーザの名前
   private name: string = '';
   private uid: string = '';
@@ -310,6 +322,7 @@ export default class QuestionPanelDetail extends Vue {
       return [];
     }).then((json) => {
       this.userName = json.name;
+      this.userTwitterId = json.twitter_id;
     });
   }
 
@@ -345,7 +358,7 @@ export default class QuestionPanelDetail extends Vue {
   z-index: 0;
 }
 .question-title {
-  font-size: 30px;
+  font-size: 50px;
   letter-spacing: 0.05em;
   color: rgb(66, 66, 66);
 }
