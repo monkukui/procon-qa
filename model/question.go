@@ -48,9 +48,21 @@ func FindQuestionsWithPage(q *Question, page int, length int, orderMode string) 
 
 // question を 1 つ削除
 func DeleteQuestion(q *Question) error {
-	if rows := db.Where(q).Delete(&Question{}).RowsAffected; rows == 0 {
-		return fmt.Errorf("Could not find Todo (%v) to delete", q)
-	}
+
+	// 関連する answer を全て削除
+  answers := FindAnswers(&Answer{QID: q.ID}, "id")
+  for _, answer := range answers {
+    DeleteAnswer(&answer)
+  }
+
+  // 関連する good を全て削除
+  goods := FindQuestionGoods(&QuestionGood{QID: q.ID})
+  for _, good := range goods {
+    DeleteQuestionGood(&good)
+  }
+
+  // question を削除
+	db.Where(q).Delete(&Question{})
 	return nil
 }
 

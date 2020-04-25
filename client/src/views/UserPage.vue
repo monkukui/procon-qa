@@ -139,3 +139,9 @@ export default class UserPage extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.userpage {
+  margin: 30px;
+}
+</style>

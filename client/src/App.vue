@@ -99,7 +99,9 @@
           text
           :to="{ name: 'userpage', query: { uid: this.uid }}"
         >
-          {{ user }}
+          <div style="text-transform: lowercase;">
+            {{ user }}
+          </div>
         </v-btn>
         <v-btn
           v-if="user"
@@ -162,7 +164,7 @@ import { Component, Vue } from 'vue-property-decorator';
   },
 })
 export default class App extends Vue {
-  private drawer: boolean = true;
+  private drawer: boolean = false;
   private user: string = '';
   private uid: string = '';
   private closeModal: boolean = false;
@@ -175,9 +177,19 @@ export default class App extends Vue {
         const token = this.getToken();
         if (token !== null) {
           const claims = JSON.parse(atob(this.getToken().split('.')[1]));
-          this.user = claims.name;
           this.uid = claims.uid;
         }
+
+        const urlForUserName = '/api/no-auth/user/' + String(this.uid);
+
+        fetch(urlForUserName, {headers}).then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return [];
+        }).then((json) => {
+          this.user = json.name;
+        });
       } else {
         localStorage.removeItem('token');
       }
