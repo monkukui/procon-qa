@@ -3,8 +3,8 @@
   <v-app>
     <div class="bar">
       <v-navigation-drawer
-        app
         dark
+        app
         v-model="drawer"
         :clipped="$vuetify.breakpoint.lgAndUp"
       >
@@ -73,8 +73,8 @@
                 <v-list-item-title>このサイトについて</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            
           </v-list>
+
         <!-- -->
       </v-navigation-drawer>
       </div>

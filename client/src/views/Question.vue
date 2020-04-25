@@ -10,7 +10,7 @@
           />
         </v-col>
 
-        <v-col cols="12" sm="8" class="left-margin" v-if="!isAnswering">
+        <v-col cols="12" sm="12" class="left-margin" v-if="!isAnswering">
           <v-alert
             dense
             text
@@ -23,12 +23,12 @@
             <v-icon left>mdi-pencil</v-icon> 回答する
           </v-btn>
         </v-col>
-        <v-col cols="12" sm="8" v-if="isAnswering">
+        <v-col cols="12" sm="12" v-if="isAnswering">
           <AnswerForm
             @answer="postAnswer"
           />
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="12">
 
           <AnswerSetting
             @click="changeMode"
@@ -89,8 +89,8 @@ export default class Question extends Vue {
 </script>
 
 <style scoped>
-
-.left-margin {
-  margin-left: 15px;
+.question {
+  margin: 40px;
 }
+
 </style>
