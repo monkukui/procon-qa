@@ -80,7 +80,7 @@ func Login(c echo.Context) error {
 		user.ID,
 		user.Name,
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
+			ExpiresAt: time.Now().Add(time.Hour * 24 * 365 * 50).Unix(),
 		},
 	}
 
