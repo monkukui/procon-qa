@@ -105,6 +105,11 @@
           indeterminate
         ></v-progress-circular>
       </div>
+
+      <v-divider class="mx-4"></v-divider>
+      <AnswerComments 
+        :aid="answerId"
+      />
     </v-card>
   </div>
 </template>
@@ -114,11 +119,13 @@ import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import { Answer } from '@/models/Answer.ts';
 import TwitterIcon from '@/components/TwitterIcon.vue';
 import UserName from '@/components/UserName.vue';
+import AnswerComments from '@/components/AnswerComments.vue';
 
 @Component({
   components: {
     UserName,
     TwitterIcon,
+    AnswerComments,
   },
 })
 export default class AnswerPanelDetail extends Vue {

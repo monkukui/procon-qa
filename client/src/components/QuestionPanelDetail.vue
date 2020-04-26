@@ -197,21 +197,29 @@
           indeterminate
         ></v-progress-circular>
       </div>
+
+      <!-- コメント -->
+      <v-divider class="mx-4"></v-divider>
+      <QuestionComments 
+        :qid="questionId"
+      />
     </v-card>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import { Component, Vue, Emit } from 'vue-property-decorator';
 import SquarePanel from '@/components/SquarePanel.vue';
 import UserName from '@/components/UserName.vue';
 import TwitterIcon from '@/components/TwitterIcon.vue';
+import QuestionComments from '@/components/QuestionComments.vue';
 
 @Component({
   components: {
     SquarePanel,
     UserName,
     TwitterIcon,
+    QuestionComments,
   },
 })
 export default class QuestionPanelDetail extends Vue {
@@ -221,7 +229,7 @@ export default class QuestionPanelDetail extends Vue {
   private tr: boolean = true;
 
   // 元々 string として良いのでは ??
-  private questionId!: number;
+  private questionId: string | Array<(string | null)> = '';
   // データベース Question 通り
   private question: any = {};
   // 質問者の名前
@@ -244,7 +252,7 @@ export default class QuestionPanelDetail extends Vue {
       this.uid = claims.uid;
       this.name = claims.name;
     }
-    this.questionId = Number(this.$route.query.questionId);
+    this.questionId = this.$route.query.questionId;
     this.createQuestion();
     this.browseQuestion();
     this.updateIsFavorite();
@@ -253,7 +261,7 @@ export default class QuestionPanelDetail extends Vue {
 
   // ブックマーク状態を更新する
   private updateIsBookMarked(): void {
-    const url = 'api/book-mark/' + String(this.uid) + '/' + String(this.questionId);
+    const url = 'api/book-mark/' + this.uid + '/' + this.questionId;
     const method = 'GET';
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
@@ -268,7 +276,7 @@ export default class QuestionPanelDetail extends Vue {
 
   // いいね状態を更新する
   private updateIsFavorite(): void {
-    const url = 'api/question-good/' + String(this.uid) + '/' + String(this.questionId);
+    const url = 'api/question-good/' + this.uid + '/' + this.questionId;
     const method = 'GET';
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
@@ -301,7 +309,7 @@ export default class QuestionPanelDetail extends Vue {
   }
 
   private bookMark(): void {
-    const url = 'api/book-mark/' + String(this.questionId);
+    const url = 'api/book-mark/' + this.questionId;
     const method = 'put';
     const headers = {authorization: `Bearer ${this.getToken()}`};
     fetch(url, {method, headers}).then(() => {
@@ -311,14 +319,14 @@ export default class QuestionPanelDetail extends Vue {
   }
 
   private browseQuestion(): void {
-    const url = 'api/no-auth/question/' + String(this.questionId) + '/browse';
+    const url = 'api/no-auth/question/' + this.questionId + '/browse';
     const method = 'put';
     fetch(url, {method});
 
   }
 
   private createQuestion(): void {
-    const url = '/api/no-auth/question/' + String(this.questionId);
+    const url = '/api/no-auth/question/' + this.questionId;
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
@@ -335,7 +343,7 @@ export default class QuestionPanelDetail extends Vue {
 
   private setUser(): void {
 
-    const url = 'api/no-auth/user/' + String(this.question.uid);
+    const url = 'api/no-auth/user/' + this.question.uid;
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
@@ -349,7 +357,7 @@ export default class QuestionPanelDetail extends Vue {
   }
 
   private deleteQuestion(): void {
-    const url = 'api/question/' + String(this.questionId);
+    const url = 'api/question/' + this.questionId;
     const method = 'DELETE';
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 

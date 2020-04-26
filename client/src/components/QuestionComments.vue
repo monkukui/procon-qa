@@ -1,0 +1,52 @@
+<template>
+  <div>
+    <div v-for="(comment, index) in comments" :key=index>
+      <CommentPanel
+        :uid="comment.uid"
+        :body="comment.body"
+        :date="comment.date"
+      />
+    </div>
+    <CommentForm 
+      :qid="qid"
+      aid="-1"
+    />
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import CommentPanel from '@/components/CommentPanel.vue';
+import CommentForm from '@/components/CommentForm.vue';
+
+@Component({
+  components: {
+    CommentPanel,
+    CommentForm,
+  },
+})
+export default class QuestionComments extends Vue {
+  @Prop()
+  private qid!: string;
+
+  private comments: any[] = [];
+  private getComments(): void {
+    const url = '/api/no-auth/question-comment/' + this.qid;
+    fetch(url).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        alert('error');
+      }
+      return [];
+    }).then((json) => {
+      this.comments = [];
+      this.comments = json;
+    });
+  }
+
+  private created() {
+    this.getComments();
+  }
+}
+</script>

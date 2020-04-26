@@ -6,12 +6,14 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+  "fmt"
 )
 
 // qid からコメントを全取得する
 func GetQuestionComments(c echo.Context) error {
 
   qid, err := strconv.Atoi(c.Param("qid"))
+  fmt.Println("hogehoge")
   if err != nil {
     return echo.ErrNotFound
   }
