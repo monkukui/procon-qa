@@ -7,7 +7,7 @@
       <v-btn
         color="primary"
         outlined
-        @click="answer"
+        @click="comment"
         small
         :disabled="text == ''"
       >コメントを送信</v-btn>
@@ -36,7 +36,7 @@ export default class CommentForm extends Vue {
     return localStorage.getItem('token');
   }
 
-  private answer(): void {
+  private comment(): void {
     if (this.getToken() === null) {
       alert('server error');
       return;
@@ -63,7 +63,8 @@ export default class CommentForm extends Vue {
     }).then((json) => {
       if (typeof json !== 'undefined') {
         // 親コンポーネントに発火させる
-        alert('コメントを送信しました');
+        this.$emit('comment');
+        this.text = '';
       }
     });
   }

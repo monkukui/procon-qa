@@ -8,6 +8,7 @@
       />
     </div>
     <CommentForm 
+      @comment="postComment"
       :qid="qid"
       aid="-1"
     />
@@ -29,7 +30,13 @@ export default class QuestionComments extends Vue {
   @Prop()
   private qid!: string;
 
+  private xor: boolean = false;
+
   private comments: any[] = [];
+
+  private postComment(): void {
+    this.getComments();
+  }
   private getComments(): void {
     const url = '/api/no-auth/question-comment/' + this.qid;
     fetch(url).then((response) => {

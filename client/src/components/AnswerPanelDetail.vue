@@ -105,8 +105,7 @@
           indeterminate
         ></v-progress-circular>
       </div>
-
-      <v-divider class="mx-4"></v-divider>
+      
       <v-col
         md="8"
         class="ml-auto"

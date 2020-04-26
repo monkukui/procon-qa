@@ -9,6 +9,7 @@
     </div>
 
     <CommentForm
+      @comment="postComment"
       qid="-1"
       :aid="aid"
     />
@@ -32,6 +33,10 @@ export default class AnswerComments extends Vue {
   private aid!: string;
 
   private comments: any[] = [];
+
+  private postComment(): void {
+    this.getComments();
+  }
 
   private getComments(): void {
     const url = '/api/no-auth/answer-comment/' + this.aid;
