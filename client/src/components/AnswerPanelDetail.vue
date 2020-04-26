@@ -107,9 +107,14 @@
       </div>
 
       <v-divider class="mx-4"></v-divider>
-      <AnswerComments 
-        :aid="answerId"
-      />
+      <v-col
+        md="8"
+        class="ml-auto"
+      >
+        <AnswerComments 
+          :aid="answerId"
+        />
+      </v-col>
     </v-card>
   </div>
 </template>

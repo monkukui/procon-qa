@@ -200,9 +200,14 @@
 
       <!-- コメント -->
       <v-divider class="mx-4"></v-divider>
-      <QuestionComments 
-        :qid="questionId"
-      />
+      <v-col
+        md="8"
+        class="ml-auto"
+      >
+        <QuestionComments 
+          :qid="questionId"
+        />
+      </v-col>
     </v-card>
   </div>
 </template>

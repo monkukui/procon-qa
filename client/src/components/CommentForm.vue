@@ -1,23 +1,6 @@
 <template>
   <div class="comment-form">
-    <div v-if="!isLoggedIn">
-      <v-alert
-      outlined
-      type="warning"
-      prominent
-      border="left"
-    >
-    <v-row>
-      <v-col cols="12" sm="8">
-        ログインする必要があります.
-      </v-col>
-      <v-col cols="12" sm="4">
-        <v-btn large color="primary" to="/login">ログイン</v-btn>
-      </v-col>
-    </v-row>
-    </v-alert>
-    </div>
-    <div v-else>
+    <div v-if="isLoggedIn">
       <v-textarea
         v-model="text"
       />
