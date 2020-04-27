@@ -107,7 +107,7 @@
       </div>
       
       <v-col
-        md="8"
+        md="10"
         class="ml-auto"
       >
         <AnswerComments 

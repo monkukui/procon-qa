@@ -3,6 +3,8 @@
     <div v-if="isLoggedIn">
       <v-textarea
         v-model="text"
+        outlined
+        label="コメント"
       />
       <v-btn
         color="primary"

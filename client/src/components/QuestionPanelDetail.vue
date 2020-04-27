@@ -200,7 +200,7 @@
 
       <!-- コメント -->
       <v-col
-        md="8"
+        md="10"
         class="ml-auto"
       >
         <QuestionComments 

@@ -2,27 +2,23 @@
   <div>
     <v-divider></v-divider>
     <v-row>
-      <v-col cols="12" sm="8">
+      <v-col cols="12" sm="9">
         <p>{{ body }}</p>
+        <span class="grey--text lighten-4">{{ date }}</span>
       </v-col>
-      <v-col cols="12" sm="4">
-        <v-row>
-          <v-col cols="12" sm="4">
-            <TwitterIcon
-              :twitterId="twitterId"
-              :uid="uid"
-              size="36"
-              apiSize="n"
-            />
-          </v-col>
-          <v-col cols="12" sm="8">
-            <UserName
-              :name="name"
-              :uid="uid"
-            />
-          </v-col>
-        </v-row>
-        <p>{{ date }}</p>
+      <v-col cols="12" sm="3">
+        <div class="text-right">
+          <TwitterIcon
+            :twitterId="twitterId"
+            :uid="uid"
+            size="36"
+            apiSize="n"
+          />
+          <UserName
+            :name="name"
+            :uid="uid"
+          />
+        </div>
       </v-col>
     </v-row>
   </div>
