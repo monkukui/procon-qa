@@ -53,6 +53,12 @@ func DeleteAnswer(a *Answer) error {
     DeleteAnswerGood(&good)
   }
 
+  // 関連するコメントを全て削除
+  comments := FindAnswerComments(&AnswerComment{AID: a.ID})
+  for _, comment := range comments {
+    DeleteAnswerComment(&comment)
+  }
+
   // answer を削除
 	db.Where(a).Delete(&Answer{})
 

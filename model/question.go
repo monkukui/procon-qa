@@ -61,6 +61,12 @@ func DeleteQuestion(q *Question) error {
     DeleteQuestionGood(&good)
   }
 
+  // 関連するコメントを全て削除
+  comments := FindQuestionComments(&QuestionComment{QID: q.ID})
+  for _, comment := range comments {
+    DeleteQuestionComment(&comment)
+  }
+
   // question を削除
 	db.Where(q).Delete(&Question{})
 	return nil
