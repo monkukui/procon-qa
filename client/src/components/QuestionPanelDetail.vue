@@ -331,9 +331,8 @@ export default class QuestionPanelDetail extends Vue {
 
   private createQuestion(): void {
     const url = '/api/no-auth/question/' + this.questionId;
-    const headers = {Authorization: `Bearer ${this.getToken()}`};
 
-    fetch(url, {headers}).then((response) => {
+    fetch(url).then((response) => {
       if (response.ok) {
         return response.json();
       }
