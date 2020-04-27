@@ -47,6 +47,8 @@ func newRouter() *echo.Echo {
   noAuth.GET("/user-answers/count/:uid", handler.GetUserAnswerSize)        // ユーザが回答した質問の個数を取得
   noAuth.GET("/question-good/count", handler.CountQuestionGood)      // 質問へのいいねの総数
   noAuth.GET("/answer-good/count", handler.CountAnswerGood)          // 回答へのいいねの総数
+  noAuth.GET("/question-comment/:qid", handler.GetQuestionComments)   // 質問に対するコメントを取得
+  noAuth.GET("/answer-comment/:aid", handler.GetAnswerComments)       // 回答に対するコメントを取得
 
 	// questions
 	api.GET("/questions", handler.GetAllQuestions)                      // 質問の全取得
@@ -80,6 +82,9 @@ func newRouter() *echo.Echo {
   // User
   api.PUT("/update-user", handler.UpdateUser)    // User の基本情報を更新
 
+  // Comment
+	api.POST("/question-comment", handler.PostQuestionComment) // 質問へのコメントの投稿
+	api.POST("/answer-comment", handler.PostAnswerComment) // 回答へのコメントの投稿
 
 	api.GET("/token", handler.Token)
 

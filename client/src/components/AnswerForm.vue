@@ -34,7 +34,7 @@
       <v-btn
         color="primary"
         @click="answer"
-        large
+        x-large
         :disabled="text == ''"
       >送信</v-btn>
     </div>

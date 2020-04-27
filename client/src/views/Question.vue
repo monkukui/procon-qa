@@ -9,19 +9,14 @@
             :questionedTime="questionedTime"
           />
         </v-col>
-
-        <v-col cols="12" sm="12" class="left-margin" v-if="!isAnswering">
-          <v-alert
-            dense
-            text
-            type="success"
-            width="50%"
-          >
-            あなたの知見を共有してください
-          </v-alert>
-          <v-btn class="ma-2" tile outlined color="success" @click="clickAnswerButton">
-            <v-icon left>mdi-pencil</v-icon> 回答する
-          </v-btn>
+          
+        <v-divider class="mx-6"></v-divider>
+        <v-col cols="12" sm="12" v-if="!isAnswering">
+          <span class="answerButton">
+            <v-btn x-large color="primary" @click="clickAnswerButton">
+              <v-icon left>mdi-pencil</v-icon>回答する
+            </v-btn>
+          </span>
         </v-col>
         <v-col cols="12" sm="12" v-if="isAnswering">
           <AnswerForm
@@ -29,7 +24,6 @@
           />
         </v-col>
         <v-col cols="12" sm="12">
-
           <AnswerSetting
             @click="changeMode"
             :curMode="mode"
@@ -91,6 +85,9 @@ export default class Question extends Vue {
 <style scoped>
 .question {
   margin: 40px;
+}
+.answerButton {
+  margin-left: 40px;
 }
 
 </style>
