@@ -84,7 +84,7 @@ import RankingPanel from '@/components/RankingPanel.vue';
 export default class Home extends Vue {
   private mode: number = 1;  // 新着, 回答数, 閲覧数, いいね, 解決済みかどうか
   private dialog: boolean = false;
-  private betaDialog: boolean = true;
+  private betaDialog: boolean = false;
   private changeMode(mode: number): void {
     this.mode = mode;
   }
