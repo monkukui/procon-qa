@@ -86,6 +86,11 @@ func newRouter() *echo.Echo {
 	api.POST("/question-comment", handler.PostQuestionComment) // 質問へのコメントの投稿
 	api.POST("/answer-comment", handler.PostAnswerComment) // 回答へのコメントの投稿
 
+  // Notification
+  api.POST("/notification/:uid/:qid/:type", handler.PostNotification) // 質問へのコメントの投稿
+  api.GET("/notification/:uid", handler.GetNotification) // 質問へのコメントの投稿
+	// api.DELETE("/notification", handler.PostQuestionComment) // TODO 必要になったら実装h
+
 	api.GET("/token", handler.Token)
 
 	return e

@@ -50,4 +50,5 @@ func init() {
 	db.AutoMigrate(&BookMark{})     // BookMark データベースを作成してみる
 	db.AutoMigrate(&QuestionComment{})
 	db.AutoMigrate(&AnswerComment{})
+	db.AutoMigrate(&Notification{})
 }
