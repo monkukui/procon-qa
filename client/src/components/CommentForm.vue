@@ -25,7 +25,7 @@ import { Prop, Component, Vue } from 'vue-property-decorator';
 })
 export default class CommentForm extends Vue {
   @Prop()
-  private qid!: string; 
+  private qid!: string;
   @Prop()
   private aid!: string;
   @Prop()

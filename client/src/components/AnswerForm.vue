@@ -145,7 +145,6 @@ export default class AnswerForm extends Vue {
       }
     });
   }
-  
 }
 </script>
 
