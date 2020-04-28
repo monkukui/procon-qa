@@ -21,6 +21,7 @@
         <v-col cols="12" sm="12" v-if="isAnswering">
           <AnswerForm
             @answer="postAnswer"
+            :uid="uid"
           />
         </v-col>
         <v-col cols="12" sm="12">
@@ -63,6 +64,7 @@ export default class Question extends Vue {
   // TODO getParam とかでとってくる
   // TODO any は最悪なのでなんとかする (string | undefined とかにしてもエラーがでる)
   private qid: any = '';
+  private uid: string = '';
   private xor: boolean = false;
   private isAnswering: boolean = false;
   private exsist: number = 0; // 0 待機中，1 ok，2 not found
@@ -85,9 +87,12 @@ export default class Question extends Vue {
     fetch(url).then((response) => {
       if (response.ok) {
         this.exsist = 1;
+        return response.json();
       } else {
         this.exsist = 2;
       }
+    }).then((json) => {
+      this.uid = json.uid;
     });
   }
 }

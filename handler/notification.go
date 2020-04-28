@@ -1,6 +1,7 @@
 package handler
 
 import (
+  "fmt"
 	"net/http"
 	"strconv"
 	"github.com/labstack/echo"
@@ -9,6 +10,11 @@ import (
 
 func PostNotification(c echo.Context) error {
 
+  notification := new(model.Notification)
+  // notification.body を bind
+	if err := c.Bind(notification); err != nil {
+		return err
+	}
 
 	uid, err := strconv.Atoi(c.Param("uid"))
 	if err != nil {
@@ -25,15 +31,16 @@ func PostNotification(c echo.Context) error {
 
   // uid を取得 ここでは ouid になるな(動作主なので)
   ouid := userIDFromToken(c)
+  fmt.Println(ouid)
 	if user := model.FindUser(&model.User{ID: ouid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
-  notification := new(model.Notification)
   notification.UID = uid
   notification.OUID = ouid
   notification.QID = qid
   notification.Type = t
+  fmt.Println(notification)
 
   model.CreateNotification(notification)
   return c.JSON(http.StatusCreated, notification)

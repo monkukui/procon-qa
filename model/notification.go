@@ -13,6 +13,7 @@ type Notification struct {
 	QID int `json:"qid"`
   Type int `json:"type"`
   Watched bool `json:"watched"`
+  Body string `json:"body"`
 }
 
 type Notifications []Notification

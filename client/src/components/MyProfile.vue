@@ -1,16 +1,22 @@
 <template>
   <div class="myprofile">
-    <h1>{{ userName }}</h1>
-    <TwitterIcon
-      :twitterId="userTwitterId"
-      :uid="userId"
-      size="100"
-      apiSize="o"
-    />
-    
-    <p>質問への獲得いいね数： {{ userFavoriteQuestion }}</p>
-    <p>回答への獲得いいね数： {{ userFavoriteAnswer }}</p>
-    <p>合計獲得いいね数：{{ userFavoriteAnswer + userFavoriteQuestion }}</p>
+      <h1>{{ userName }}</h1>
+      <TwitterIcon
+        :twitterId="userTwitterId"
+        :uid="userId"
+        size="100"
+        apiSize="o"
+      />
+      <br>
+      <p>Twitter ID： 
+        <span v-if="userTwitterId">
+          <a :href="userTwitterLink">@{{ userTwitterId }}</a>
+        </span>
+      </p>
+      <p>質問への獲得いいね数： {{ userFavoriteQuestion }}</p>
+      <p>回答への獲得いいね数： {{ userFavoriteAnswer }}</p>
+      <p>合計獲得いいね数：{{ userFavoriteAnswer + userFavoriteQuestion }}</p>
+    <v-divider></v-divider>
   </div>
 </template>
 
@@ -27,6 +33,7 @@ export default class MyProfile extends Vue {
 
   private userName: string = '';
   private userTwitterId: string = '';
+  private userTwitterLink: string = '';
   private userId: string | Array<(string | null)> = '';
   private userFavoriteAnswer: number = 0;
   private userFavoriteQuestion: number = 0;
@@ -50,6 +57,7 @@ export default class MyProfile extends Vue {
       this.userFavoriteQuestion = json.favorite_question;
       this.userFavoriteAnswer = json.favorite_answer;
       this.userFavoriteSum = json.favorite_sum;
+      this.userTwitterLink = 'https://twitter.com/' + this.userTwitterId;
     });
   }
   private getToken(): any {

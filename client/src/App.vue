@@ -36,6 +36,19 @@
             </v-list-item>
 
             <v-list-item
+              key="通知"
+              link
+              to="/notification"
+            >
+              <v-list-item-icon>
+                <v-icon>mdi-bell</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>通知</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item
               key="マイページ"
               link
               :to="{ name: 'userpage', query: { uid: this.uid }}"
@@ -176,7 +189,7 @@ export default class App extends Vue {
       if (response.ok) {
         const token = this.getToken();
         if (token !== null) {
-          const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+          const claims = JSON.parse(atob(token.split('.')[1]));
           this.uid = claims.uid;
         }
 
