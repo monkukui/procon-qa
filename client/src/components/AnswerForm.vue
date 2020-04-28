@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Prop, Component, Vue } from 'vue-property-decorator';
 @Component({
   components: {
   },
@@ -80,6 +80,8 @@ export default class AnswerForm extends Vue {
     save: false,
     navigation: false,
   };
+  @Prop()
+  private uid!: string;
   private fa: boolean = false;
   private tr: boolean = true;
   private questionId!: number;
@@ -110,14 +112,36 @@ export default class AnswerForm extends Vue {
     });
     fetch(url, {method, headers, body}).then((response) => {
       if (response.ok) {
-        return response.json();
-      }
-    }).then((json) => {
-      if (typeof json !== 'undefined') {
         // 親コンポーネントに発火させる
-        this.text = '';
-        alert('回答を送信しました');
+        this.postNotification();
         this.$emit('answer');
+      }
+    });
+  }
+
+  // 通知を発行
+  private postNotification(): void {
+    const url = 'api/notification/' + this.uid + '/' + this.questionId + '/1';
+    const method = 'POST';
+
+    if (this.getToken() === null) {
+      alert('server error');
+      return;
+    }
+    const headers = {
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+
+    // body もつけるか TODO
+    const body = JSON.stringify({
+      body: this.text,
+    });
+
+    fetch(url, {method, headers, body}).then((response) => {
+      if (response.ok) {
+        alert('回答を送信しました');
+        this.text = '';
       }
     });
   }

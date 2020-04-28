@@ -9,6 +9,7 @@ import UserPage from './views/UserPage.vue';
 import TagSearch from './views/TagSearch.vue';
 import About from './views/About.vue';
 import Completed from './views/Completed.vue';
+import UserNotification from './views/UserNotification.vue';
 
 Vue.use(Router);
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/completed',
       name: 'completed',
       component: Completed,
+    },
+    {
+      path: '/notification',
+      name: 'notification',
+      component: UserNotification,
     },
   ],
   scrollBehavior() {

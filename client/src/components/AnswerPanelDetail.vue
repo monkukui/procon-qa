@@ -112,6 +112,8 @@
       >
         <AnswerComments 
           :aid="answerId"
+          :uid="answer.uid"
+          :qid="answer.qid"
         />
       </v-col>
     </v-card>

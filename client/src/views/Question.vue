@@ -1,5 +1,5 @@
 <template>
-  <div class="question">
+  <div class="question" v-if="exsist==1">
     <v-container fluid>
       <v-row>
         <v-col cols="12" sm="12">
@@ -21,6 +21,7 @@
         <v-col cols="12" sm="12" v-if="isAnswering">
           <AnswerForm
             @answer="postAnswer"
+            :uid="uid"
           />
         </v-col>
         <v-col cols="12" sm="12">
@@ -35,6 +36,10 @@
         </v-col>
       </v-row>
     </v-container>
+  </div>
+  <div v-else-if="exsist==2">
+    <h1>質問が見つかりません</h1>
+    <p>すでに削除された可能性があります</p>
   </div>
 </template>
 
@@ -58,11 +63,11 @@ export default class Question extends Vue {
   private mode: number = 1;  // 新着(1)，いいね(2)
   // TODO getParam とかでとってくる
   // TODO any は最悪なのでなんとかする (string | undefined とかにしてもエラーがでる)
-  private title: any = '';
-  private body: any = '';
-  private questionedTime: any = '';
+  private qid: any = '';
+  private uid: string = '';
   private xor: boolean = false;
   private isAnswering: boolean = false;
+  private exsist: number = 0; // 0 待機中，1 ok，2 not found
 
   private clickAnswerButton(): void {
     this.isAnswering = true;
@@ -74,10 +79,21 @@ export default class Question extends Vue {
   private postAnswer(): void {
     this.xor = !this.xor;
   }
-  private mounted() {
-    this.title = this.$route.query.title;
-    this.body = this.$route.query.body;
-    this.questionedTime = this.$route.query.questionedTime;
+  private created(): void {
+    // この質問が存在するかを判定
+
+    this.qid = this.$route.query.questionId;
+    const url = '/api/no-auth/question/' + this.qid;
+    fetch(url).then((response) => {
+      if (response.ok) {
+        this.exsist = 1;
+        return response.json();
+      } else {
+        this.exsist = 2;
+      }
+    }).then((json) => {
+      this.uid = json.uid;
+    });
   }
 }
 </script>

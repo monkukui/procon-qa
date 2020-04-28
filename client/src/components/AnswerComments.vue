@@ -10,8 +10,10 @@
 
     <CommentForm
       @comment="postComment"
-      qid="-1"
+      :qid="qid"
       :aid="aid"
+      :uid="uid"
+      type="3"
     />
   </div>
 </template>
@@ -31,6 +33,12 @@ import CommentForm from '@/components/CommentForm.vue';
 export default class AnswerComments extends Vue {
   @Prop()
   private aid!: string;
+  @Prop()
+  private uid!: string;
+  @Prop()
+  private type!: string;
+  @Prop()
+  private qid!: string;
 
   private comments: any[] = [];
 

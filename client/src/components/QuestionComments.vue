@@ -11,6 +11,8 @@
       @comment="postComment"
       :qid="qid"
       aid="-1"
+      :uid="uid"
+      type="2"
     />
   </div>
 </template>
@@ -29,6 +31,8 @@ import CommentForm from '@/components/CommentForm.vue';
 export default class QuestionComments extends Vue {
   @Prop()
   private qid!: string;
+  @Prop()
+  private uid!: string;
 
   private xor: boolean = false;
 
