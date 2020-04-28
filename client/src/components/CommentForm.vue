@@ -25,9 +25,13 @@ import { Prop, Component, Vue } from 'vue-property-decorator';
 })
 export default class CommentForm extends Vue {
   @Prop()
-  private qid!: string;
+  private qid!: string; 
   @Prop()
   private aid!: string;
+  @Prop()
+  private uid!: string; // これはコメントされる側の id
+  @Prop()
+  private type!: string; // 通知発行に必要 2 なら質問へのコメント，3 なら回答へのコメント
 
   private text: string = '';
   private isLoggedIn: boolean = false;
@@ -43,14 +47,14 @@ export default class CommentForm extends Vue {
       alert('server error');
       return;
     }
-    const url = (this.qid !== '-1') ? '/api/question-comment' : 'api/answer-comment';
+    const url = (this.type === '2') ? '/api/question-comment' : 'api/answer-comment';
     const method = 'POST';
     const headers = {
       'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json; charset=UTF-8',
     };
 
-    const body = (this.qid !== '-1') ? JSON.stringify({
+    const body = (this.type === '2') ? JSON.stringify({
         body: this.text,
         qid: Number(this.qid),
       }) : JSON.stringify({
@@ -66,6 +70,32 @@ export default class CommentForm extends Vue {
       if (typeof json !== 'undefined') {
         // 親コンポーネントに発火させる
         this.$emit('comment');
+        this.postNotification();
+      }
+    });
+  }
+
+  // 通知を発行
+  private postNotification(): void {
+    const url = 'api/notification/' + this.uid + '/' + this.qid + '/' + this.type;
+    const method = 'POST';
+
+    if (this.getToken() === null) {
+      alert('server error');
+      return;
+    }
+    const headers = {
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+
+    // body もつけるか TODO
+    const body = JSON.stringify({
+      body: this.text,
+    });
+
+    fetch(url, {method, headers, body}).then((response) => {
+      if (response.ok) {
         this.text = '';
       }
     });

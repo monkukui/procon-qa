@@ -205,6 +205,7 @@
       >
         <QuestionComments 
           :qid="questionId"
+          :uid="question.uid"
         />
       </v-col>
     </v-card>
