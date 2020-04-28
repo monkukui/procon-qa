@@ -26,7 +26,7 @@ func CreateNotification(n *Notification) {
 // Notification の配列を取得
 func FindNotifications(n *Notification) Notifications {
   var ret Notifications
-  db.Where(n).Find(&ret)
+  db.Where(n).Order("id desc").Find(&ret)
   return ret
 }
 
