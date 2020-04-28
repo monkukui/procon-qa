@@ -3,6 +3,7 @@
     <v-divider
       v-if="shouldDivide"
     />
+    {{ watched }}
     <v-list three-line>
       <template>
         <v-list-item
@@ -50,6 +51,8 @@ export default class QuestionPanel extends Vue {
   private type!: number;
   @Prop({required: true})
   private body!: string;
+  @Prop({required: true})
+  private watched!: string;
   @Prop({required: true})
   private shouldDivide!: boolean;
 

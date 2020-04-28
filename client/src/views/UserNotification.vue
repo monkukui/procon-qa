@@ -9,6 +9,7 @@
             :qid="item.qid"
             :type="item.type"
             :body="item.body"
+            :watched="item.watched"
             :shouldDivide="index !== 0"
           />
         </div>

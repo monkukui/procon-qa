@@ -40,6 +40,7 @@ func PostNotification(c echo.Context) error {
   notification.OUID = ouid
   notification.QID = qid
   notification.Type = t
+  notification.Watched = false
   fmt.Println(notification)
 
   model.CreateNotification(notification)
@@ -52,6 +53,11 @@ func GetNotification(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  ret := model.FindNotifications(&model.Notification{UID: uid})
-  return c.JSON(http.StatusOK, ret)
+  items := model.FindNotifications(&model.Notification{UID: uid})
+  for _, item := range items {
+    item.Watched = true // 既読をつける
+    model.UpdateNotification(&item)
+  }
+
+  return c.JSON(http.StatusOK, items)
 }

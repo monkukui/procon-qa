@@ -6,6 +6,8 @@
 
 package model
 
+import "fmt"
+
 type Notification struct {
 	ID  int `json:"id" gorm:"praimary_key"`
 	UID int `json:"uid"` // 通知される人
@@ -34,4 +36,16 @@ func FindNotifications(n *Notification) Notifications {
 func DeleteNotification(n *Notification) error {
   db.Where(n).Delete(&Notification{})
   return nil
+}
+
+// notification を UPDATE
+// 通知に関して，変更するのは既読フラグだけなのでこれでいい
+func UpdateNotification(n *Notification) error {
+	rows := db.Model(n).Update(map[string]interface{}{
+    "watched": n.Watched,
+	}).RowsAffected
+	if rows == 0 {
+		return fmt.Errorf("Could not find Todo (%v) to update", n)
+	}
+	return nil
 }
