@@ -2,6 +2,7 @@
   <div class="comment-form">
     <div v-if="isLoggedIn">
       <v-textarea
+        height="1"
         v-model="text"
         outlined
         label="コメント"
