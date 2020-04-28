@@ -1,6 +1,6 @@
 <template>
   <span v-bind:class="color">
-    <span v-if="name">
+    <span v-if="isExist">
       <router-link 
         class="name"
         :to="{ name: 'userpage', query: { uid: this.uid }}"
@@ -9,7 +9,7 @@
       </router-link>
     </span>
     <span v-else>
-      退会済みのユーザ
+      {{ name }}
     </span>
   </span>
 </template>
@@ -23,9 +23,32 @@ export default class UserName extends Vue {
   @Prop()
   private uid!: string;
   @Prop()
-  private name!: string;
-  @Prop()
   private color!: string;
+
+  private name: string = '';
+  private isExist: boolean = false;
+
+
+  private created(): void {
+    this.setUser();
+  }
+
+  private setUser(): void {
+    const url = 'api/no-auth/user/' + this.uid;
+    fetch(url).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((json) => {
+      this.name = json.name;
+      if (this.name === '') {
+        this.name = '退会済みのユーザ';
+      } else {
+        this.isExist = true;
+      }
+    });
+  }
 }
 </script>
 

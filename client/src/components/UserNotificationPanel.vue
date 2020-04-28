@@ -8,22 +8,22 @@
         <v-list-item
           :to="{ name: 'question', query: { questionId: this.qid }}"
         >
+          <v-list-item-content>
+            <v-list-item-title v-html="title"></v-list-item-title>
+            <v-list-item-subtitle v-html="body"></v-list-item-subtitle>
+          </v-list-item-content>
           <span class="icon">
             <TwitterIcon
               size="48"
               apiSize="b"
               :twitterId="twitterId"
-              :uid="uid"
+              :uid="ouid"
             />
             <UserName
-              :uid="uid"
+              :uid="ouid"
               :name="name"
             />
           </span>
-          <v-list-item-content>
-            <v-list-item-title v-html="title"></v-list-item-title>
-            <v-list-item-subtitle v-html="body"></v-list-item-subtitle>
-          </v-list-item-content>
         </v-list-item>
       </template>
     </v-list>
