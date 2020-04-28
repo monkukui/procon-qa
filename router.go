@@ -89,6 +89,7 @@ func newRouter() *echo.Echo {
   // Notification
   api.POST("/notification/:uid/:qid/:type", handler.PostNotification) // 質問へのコメントの投稿
   api.GET("/notification/:uid", handler.GetNotification) // 質問へのコメントの投稿
+
 	// api.DELETE("/notification", handler.PostQuestionComment) // TODO 必要になったら実装h
 
 	api.GET("/token", handler.Token)
