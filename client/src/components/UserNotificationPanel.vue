@@ -3,12 +3,21 @@
     <v-divider
       v-if="shouldDivide"
     />
-    {{ watched }}
     <v-list three-line>
       <template>
         <v-list-item
           :to="{ name: 'question', query: { questionId: this.qid }}"
         >
+            <v-chip
+              v-if="!watched"
+              color="cyan"
+              label
+              text-color="white"
+              style="margin-right: 20px;"
+            >
+              <v-icon left>mdi-bell</v-icon>
+              New
+            </v-chip>
           <v-list-item-content>
             <v-list-item-title v-html="title"></v-list-item-title>
             <v-list-item-subtitle v-html="body"></v-list-item-subtitle>

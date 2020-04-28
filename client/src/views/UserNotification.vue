@@ -64,7 +64,6 @@ export default class UserNotification extends Vue {
       if (response.ok) {
         return response.json();
       }
-      alert('server error');
       this.isReady = true;
       return [];
     }).then((json) => {

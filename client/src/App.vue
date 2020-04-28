@@ -41,7 +41,8 @@
               to="/notification"
             >
               <v-list-item-icon>
-                <v-icon>mdi-bell</v-icon>
+                <v-icon v-if="notification" color="amber lighten-1">mdi-bell</v-icon>
+                <v-icon v-else>mdi-bell</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>通知</v-list-item-title>
@@ -181,6 +182,8 @@ export default class App extends Vue {
   private user: string = '';
   private uid: string = '';
   private closeModal: boolean = false;
+  private notification: boolean = false; // 通知があるかどうかのフラグ
+
   private created(): void {
     // 認証が必要な api を叩いてみて，その結果によって分岐
     const url = '/api/token';
