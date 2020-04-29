@@ -97,9 +97,21 @@ export default class CommentForm extends Vue {
 
     fetch(url, {method, headers, body}).then((response) => {
       if (response.ok) {
+        this.userUpdate();
         this.text = '';
       }
     });
+  }
+
+  // uid さんの NotficationFlag を true にする
+  private userUpdate(): void {
+    const url = '/api/notification/' + this.uid + '/1';
+    const method = 'PUT';
+    const headers = {
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    fetch(url, {method, headers});
   }
 }
 </script>

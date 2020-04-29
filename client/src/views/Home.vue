@@ -43,7 +43,7 @@
         <v-row>
           <v-col col="12" sm="8">
             <v-row>
-              <v-col col="12" sm="12">
+              <v-col col="12" sm="10">
                 <img src="../assets/rectangle_logo.jpg" alt="ロゴ" width="70%" height="auto">
               </v-col>
             </v-row>

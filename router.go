@@ -80,7 +80,8 @@ func newRouter() *echo.Echo {
 	api.GET("/book-mark/:uid/:qid", handler.QuestionBookMarked) // いいね状態かどうか
 
   // User
-  api.PUT("/update-user", handler.UpdateUser)    // User の基本情報を更新
+  api.PUT("/update-user", handler.UpdateUser)    // User の基本情報と通知フラグを更新
+  api.PUT("/notification/:uid/:flag", handler.UpdateUserNotification);
 
   // Comment
 	api.POST("/question-comment", handler.PostQuestionComment) // 質問へのコメントの投稿
@@ -89,6 +90,7 @@ func newRouter() *echo.Echo {
   // Notification
   api.POST("/notification/:uid/:qid/:type", handler.PostNotification) // 質問へのコメントの投稿
   api.GET("/notification/:uid", handler.GetNotification) // 質問へのコメントの投稿
+
 	// api.DELETE("/notification", handler.PostQuestionComment) // TODO 必要になったら実装h
 
 	api.GET("/token", handler.Token)

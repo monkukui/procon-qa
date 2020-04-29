@@ -94,6 +94,27 @@ func UpdateUser(c echo.Context) error {
   user.Name = postUser.Name
   user.TwitterId = postUser.TwitterId
 
+  fmt.Println(user)
+
   model.UpdateUser(&user)
   return c.JSON(http.StatusOK, user.IntoReturnUser())
+}
+
+
+func UpdateUserNotification(c echo.Context) error {
+
+	uid, err := strconv.Atoi(c.Param("uid"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	flag, err := strconv.Atoi(c.Param("flag"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+	user := model.FindUser(&model.User{ID: uid})
+  user.NotificationFlag = (flag == 1)
+  model.UpdateUser(&user)
+  return c.JSON(http.StatusOK, user.IntoReturnUser())
+
 }

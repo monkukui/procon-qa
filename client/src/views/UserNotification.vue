@@ -50,6 +50,7 @@ export default class UserNotification extends Vue {
       this.uid = claims.uid;
     }
     this.getNotifications();
+    this.userUpdate();
   }
 
   private getToken(): any {
@@ -72,6 +73,18 @@ export default class UserNotification extends Vue {
       this.isReady = true;
     });
   }
+
+  // uid さんの NotficationFlag を false にする
+  private userUpdate(): void {
+    const url = '/api/notification/' + this.uid + '/0';
+    const method = 'PUT';
+    const headers = {
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    fetch(url, {method, headers});
+  }
+
 
 }
 </script>
