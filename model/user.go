@@ -10,6 +10,8 @@ type User struct {
 	FavoriteAnswer   int    `json:"favorite_answer"`
 	FavoriteQuestion int    `json:"favorite_question"`
 	FavoriteSum      int    `json:"favorite_sum"`
+
+  NotificationFlag bool `json:"notification_flag"`
 }
 
 // パスワードは json として送る必要がない
@@ -20,6 +22,8 @@ type ReturnUser struct {
 	FavoriteAnswer   int    `json:"favorite_answer"`
 	FavoriteQuestion int    `json:"favorite_question"`
 	FavoriteSum      int    `json:"favorite_sum"`
+
+  NotificationFlag bool `json:"notification_flag"`
 }
 
 func (u User) IntoReturnUser() ReturnUser {
@@ -30,6 +34,7 @@ func (u User) IntoReturnUser() ReturnUser {
 	retUser.FavoriteAnswer = u.FavoriteAnswer
 	retUser.FavoriteQuestion = u.FavoriteQuestion
 	retUser.FavoriteSum = u.FavoriteSum
+  retUser.NotificationFlag = u.NotificationFlag
 	return retUser
 }
 
@@ -79,6 +84,7 @@ func UpdateUser(u *User) error {
 		"favorite_question": u.FavoriteQuestion,
 		"favorite_answer":   u.FavoriteAnswer,
 		"favorite_sum":      u.FavoriteSum,
+    "notification_flag": u.NotificationFlag,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", u)

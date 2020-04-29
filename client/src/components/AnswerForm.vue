@@ -2,11 +2,11 @@
   <div class="answer-form">
     <div v-if="!isLoggedIn">
       <v-alert
-      outlined
-      type="warning"
-      prominent
-      border="left"
-    >
+        outlined
+        type="warning"
+        prominent
+        border="left"
+      >
     <v-row>
       <v-col cols="12" sm="8">
         あなたの知見を共有してください.<br>
@@ -140,10 +140,22 @@ export default class AnswerForm extends Vue {
 
     fetch(url, {method, headers, body}).then((response) => {
       if (response.ok) {
+        this.userUpdate();
         alert('回答を送信しました');
         this.text = '';
       }
     });
+  }
+
+  // uid さんの NotficationFlag を true にする
+  private userUpdate(): void {
+    const url = '/api/notification/' + this.uid + '/1';
+    const method = 'PUT';
+    const headers = {
+      'Authorization': `Bearer ${this.getToken()}`,
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    fetch(url, {method, headers});
   }
 }
 </script>

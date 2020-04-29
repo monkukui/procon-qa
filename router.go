@@ -80,7 +80,8 @@ func newRouter() *echo.Echo {
 	api.GET("/book-mark/:uid/:qid", handler.QuestionBookMarked) // いいね状態かどうか
 
   // User
-  api.PUT("/update-user", handler.UpdateUser)    // User の基本情報を更新
+  api.PUT("/update-user", handler.UpdateUser)    // User の基本情報と通知フラグを更新
+  api.PUT("/notification/:uid/:flag", handler.UpdateUserNotification);
 
   // Comment
 	api.POST("/question-comment", handler.PostQuestionComment) // 質問へのコメントの投稿
