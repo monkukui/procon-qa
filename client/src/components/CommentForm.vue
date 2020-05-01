@@ -2,16 +2,16 @@
   <div class="comment-form">
     <div v-if="isLoggedIn">
       <v-textarea
-        height="1"
+        rows="1"
+        light
         v-model="text"
         outlined
         label="コメント"
       />
       <v-btn
         color="primary"
-        outlined
         @click="comment"
-        small
+        large 
         :disabled="text == ''"
       >コメントを送信</v-btn>
     </div>
@@ -118,6 +118,6 @@ export default class CommentForm extends Vue {
 
 <style scoped>
 .comment-form {
-  margin: 10px;
+  margin-top: 30px;
 }
 </style>

@@ -7,8 +7,17 @@
         :date="comment.date"
       />
     </div>
-
+    
+    <v-btn
+      class="ma-2"
+      outlined
+      color="indigo"
+      @click="commentFormOpen = !commentFormOpen"
+    >
+      コメントを追加する
+    </v-btn>
     <CommentForm
+      v-if="commentFormOpen"
       @comment="postComment"
       :qid="qid"
       :aid="aid"
@@ -41,6 +50,7 @@ export default class AnswerComments extends Vue {
   private qid!: string;
 
   private comments: any[] = [];
+  private commentFormOpen: boolean = false;
 
   private postComment(): void {
     this.getComments();

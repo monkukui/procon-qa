@@ -252,12 +252,12 @@ export default class App extends Vue {
   margin-bottom: 100px;
 }
 .notification_draw {
-  position: absolute;
+  position: relative;
   left: -12px;
   top: -8px;
 }
 .notification_bar {
-  position: absolute;
+  position: relative;
   left: -20px;
   top: -10px;
 }
