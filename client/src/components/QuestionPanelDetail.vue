@@ -38,7 +38,7 @@
         </v-list-item>
         <v-divider class="mx-4"></v-divider>
         <v-row>
-          <v-col md="12"> 
+          <v-col cols="12" sm="12">
             <v-card-text>
               <div class="mavon-editor">
                 <mavon-editor 
@@ -50,6 +50,13 @@
                 />
               </div>
             </v-card-text>
+          </v-col>
+          <v-col cols="12" sm="12">
+            <div class="url">
+              <span v-if="question.url">
+                URL: <a :href="question.url">{{ question.url }}</a>
+              </span>
+            </div>
           </v-col>
         </v-row>
         <v-card-actions>
@@ -69,10 +76,6 @@
             </span>
             <br>
             投稿日時: {{ question.date }}
-            <br>
-            <span v-if="question.url">
-              URL: <a :href="question.url">{{ question.url }}</a>
-            </span>
           </v-card-text>
         </v-btn>
           <span v-if="name == userName">
@@ -395,5 +398,9 @@ export default class QuestionPanelDetail extends Vue {
   font-size: 50px;
   letter-spacing: 0.05em;
   color: rgb(66, 66, 66);
+}
+.url {
+  margin-left: 20px;
+  font-size: 16px;
 }
 </style>

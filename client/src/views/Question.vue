@@ -10,7 +10,6 @@
           />
         </v-col>
           
-        <v-divider class="mx-6"></v-divider>
         <v-col cols="12" sm="12" v-if="!isAnswering">
           <span class="answerButton">
             <v-btn x-large color="primary" @click="clickAnswerButton">
