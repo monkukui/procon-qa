@@ -2,7 +2,6 @@
 
 package model
 
-import "fmt"
 
 type QuestionGood struct {
 	ID  int `json:"id" gorm:"praimary_key"`
@@ -29,12 +28,9 @@ func DeleteQuestionGood(g *QuestionGood) error {
   UpdateQuestion(&question)
 
   // user.FavoriteQuestion をインクリメント
-  fmt.Println("in DeleteQuestionGood")
   user := FindUser(&User{ID: question.UID})
-  fmt.Println(user)
   user.FavoriteQuestion--
   user.FavoriteSum--
-  fmt.Println(user)
   UpdateUser(&user)
 	return nil
 }

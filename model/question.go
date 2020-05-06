@@ -52,19 +52,20 @@ func DeleteQuestion(q *Question) error {
 	// 関連する answer を全て削除
   answers := FindAnswers(&Answer{QID: q.ID}, "id")
   for _, answer := range answers {
-    DeleteAnswer(&answer)
+    // DeleteAnswer(&answer) これだとダメ id だけ渡すようにしなきゃ
+    DeleteAnswer(&Answer{ID: answer.ID})
   }
 
   // 関連する good を全て削除
   goods := FindQuestionGoods(&QuestionGood{QID: q.ID})
   for _, good := range goods {
-    DeleteQuestionGood(&good)
+    DeleteQuestionGood(&QuestionGood{ID: good.ID})
   }
 
   // 関連するコメントを全て削除
   comments := FindQuestionComments(&QuestionComment{QID: q.ID})
   for _, comment := range comments {
-    DeleteQuestionComment(&comment)
+    DeleteQuestionComment(&QuestionComment{ID: comment.ID})
   }
 
   // question を削除

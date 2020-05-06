@@ -4,6 +4,7 @@ package model
 
 import "fmt"
 
+
 // 回答テーブル
 type Answer struct {
 	ID  int `json:"id" gorm:"praimary_key"` // Id (インクリメント)
@@ -50,13 +51,15 @@ func DeleteAnswer(a *Answer) error {
   // 関連する good を削除
   goods := FindAnswerGoods(&AnswerGood{AID: a.ID})
   for _, good := range goods {
-    DeleteAnswerGood(&good)
+    // DeleteAnswerGood(&good) ダメ，id 指定
+    DeleteAnswerGood(&AnswerGood{ID: good.ID})
   }
 
   // 関連するコメントを全て削除
   comments := FindAnswerComments(&AnswerComment{AID: a.ID})
   for _, comment := range comments {
-    DeleteAnswerComment(&comment)
+    // DeleteAnswerComment(&comment) ダメ，id 指定してくだいさい
+    DeleteAnswerComment(&AnswerComment{ID: comment.ID})
   }
 
   // answer を削除
