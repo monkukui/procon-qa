@@ -51,7 +51,7 @@
               </div>
             </v-card-text>
           </v-col>
-          <v-col cols="12" sm="12">
+          <v-col v-if="question.url" cols="12" sm="12">
             <div class="url">
               <span v-if="question.url">
                 URL: <a :href="question.url">{{ question.url }}</a>
@@ -59,6 +59,30 @@
             </div>
           </v-col>
         </v-row>
+        <div v-if="name == userName">
+          <v-btn 
+            v-if="question.completed"
+            @click="updateQuestionCompleted" 
+            class="ma-2"
+            tile
+            outlined 
+            color="rgb(223, 177, 109)"
+            rounded
+          >
+            <v-icon>mdi-undo-variant</v-icon>未解決に戻す
+          </v-btn>
+          <v-btn 
+            v-else
+            @click="updateQuestionCompleted" 
+            class="ma-2"
+            tile
+            outlined 
+            color="rgb(131, 179, 112)"
+            rounded
+          >
+            <v-icon>mdi-check</v-icon>解決済みにする
+          </v-btn>
+        </div>
         <v-card-actions>
           <TwitterIcon
             :twitterId="userTwitterId"
@@ -78,30 +102,6 @@
             投稿日時: {{ question.date }}
           </v-card-text>
         </v-btn>
-          <span v-if="name == userName">
-            <v-btn 
-              v-if="question.completed"
-              @click="updateQuestionCompleted" 
-              class="ma-2"
-              tile
-              outlined 
-              color="rgb(223, 177, 109)"
-              rounded
-            >
-              <v-icon>mdi-undo-variant</v-icon>未解決に戻す
-            </v-btn>
-            <v-btn 
-              v-else
-              @click="updateQuestionCompleted" 
-              class="ma-2"
-              tile
-              outlined 
-              color="rgb(131, 179, 112)"
-              rounded
-            >
-              <v-icon>mdi-check</v-icon>解決済みにする
-            </v-btn>
-          </span>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
               <v-btn icon 
