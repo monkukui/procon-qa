@@ -102,7 +102,34 @@
             投稿日時: {{ question.date }}
           </v-card-text>
         </v-btn>
-          <v-tooltip top>
+        <v-menu left :offset-x="tr">
+          <template v-slot:activator="{ on }">
+            <v-btn icon 
+              color="error"
+              :disabled="name != userName"
+              x-large
+              v-on="on"
+            >
+              <v-icon @click="alert = !alert">mdi-delete</v-icon>
+            </v-btn> 
+          </template>
+          <v-card>
+            <v-list>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>本当に削除しますか？</v-list-item-title>
+                  <v-list-item-subtitle>この操作は取り消せません．</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text @click="menu = false">キャンセル</v-btn>
+              <v-btn color="error" @click="deleteQuestion">削除する</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
+          <!--v-tooltip top>
             <template v-slot:activator="{ on }">
               <v-btn icon 
                 color="error"
@@ -114,7 +141,7 @@
               </v-btn> 
             </template>
             <span>消去</span>
-          </v-tooltip>
+          </v-tooltip-->
 
           <v-tooltip top>
             <template v-slot:activator="{ on }">
@@ -173,25 +200,10 @@
             <span>ブックマーク</span>
           </v-tooltip>
         </v-card-actions>
-        <v-row>
+        <!--v-row>
           <v-col md="12">
-            <v-alert
-              outlined
-              :value="alert"
-              transition="scale-transition"
-            >
-              <v-col col="12" sm="8">
-                <h1>本当に削除しますか?</h1>
-                <p>この操作は取り消せません.質問に付与された「いいね」も取り消されます.</p>
-              </v-col>
-              <v-col col="12" sm="4">
-                <v-btn color="error" @click="deleteQuestion">削除する</v-btn>
-                &nbsp;
-                <v-btn @click="alert = !alert">戻る</v-btn>
-              </v-col>
-            </v-alert>
           </v-col>
-        </v-row>
+        </v-row-->
       </div>
       <div v-else class="text-center">
         <v-progress-circular
