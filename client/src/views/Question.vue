@@ -99,7 +99,7 @@ export default class Question extends Vue {
 
 <style scoped>
 .question {
-  margin: 40px;
+  max-width: 1000px;
 }
 .answerButton {
   margin-left: 40px;

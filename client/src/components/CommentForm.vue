@@ -8,12 +8,21 @@
         outlined
         label="コメント"
       />
-      <v-btn
-        color="primary"
-        @click="comment"
-        large 
-        :disabled="text == ''"
-      >コメントを送信</v-btn>
+      <v-row>
+        <v-col
+          cols="auto"
+          class="mr-auto"
+        >
+        </v-col>
+        <v-col cols="auto">
+          <v-btn
+            color="primary"
+            @click="comment"
+            large 
+            :disabled="text == ''"
+          >コメントを送信</v-btn>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
