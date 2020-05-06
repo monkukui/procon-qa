@@ -29,7 +29,7 @@ func FindQuestionComments(q *QuestionComment) QuestionComments {
 func DeleteQuestionComment(q *QuestionComment) error {
 
   // 関連して消すべきものが今のところはない
-  db.Where(q).Delete(&Question{})
+  db.Where(QuestionComment{ID: q.ID}).Delete(&Question{})
   return nil
 }
 

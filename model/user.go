@@ -102,7 +102,7 @@ func DeleteUser(u *User) error {
 		return fmt.Errorf("回答に対するいいねを削除できませんでした")
 	}
 
-	if rows := db.Where(u).Delete(&User{}).RowsAffected; rows == 0 {
+  if rows := db.Where(User{ID: u.ID}).Delete(&User{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to delete", u)
 	}
 

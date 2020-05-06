@@ -53,13 +53,13 @@ func DeleteQuestion(q *Question) error {
   answers := FindAnswers(&Answer{QID: q.ID}, "id")
   for _, answer := range answers {
     // DeleteAnswer(&answer) これだとダメ id だけ渡すようにしなきゃ
-    DeleteAnswer(&Answer{ID: answer.ID})
+    DeleteAnswer(&Answer{ID: answer.ID, QID: answer.QID})
   }
 
   // 関連する good を全て削除
   goods := FindQuestionGoods(&QuestionGood{QID: q.ID})
   for _, good := range goods {
-    DeleteQuestionGood(&QuestionGood{ID: good.ID})
+    DeleteQuestionGood(&QuestionGood{ID: good.ID, QID: q.ID})
   }
 
   // 関連するコメントを全て削除
@@ -69,7 +69,7 @@ func DeleteQuestion(q *Question) error {
   }
 
   // question を削除
-	db.Where(q).Delete(&Question{})
+  db.Where(Question{ID: q.ID}).Delete(&Question{})
 	return nil
 }
 

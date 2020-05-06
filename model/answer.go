@@ -52,7 +52,7 @@ func DeleteAnswer(a *Answer) error {
   goods := FindAnswerGoods(&AnswerGood{AID: a.ID})
   for _, good := range goods {
     // DeleteAnswerGood(&good) ダメ，id 指定
-    DeleteAnswerGood(&AnswerGood{ID: good.ID})
+    DeleteAnswerGood(&AnswerGood{ID: good.ID, AID: a.ID})
   }
 
   // 関連するコメントを全て削除
@@ -63,7 +63,7 @@ func DeleteAnswer(a *Answer) error {
   }
 
   // answer を削除
-	db.Where(a).Delete(&Answer{})
+  db.Where(Answer{ID: a.ID}).Delete(&Answer{})
 
 	questions := FindQuestions(&Question{ID: a.QID})
 	// questions[0] の 回答数をデクリメント
