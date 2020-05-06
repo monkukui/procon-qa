@@ -44,7 +44,9 @@
                 />
               </v-list-item-content>
               <v-list-item-content>
-                <v-list-item-title>{{ user.favorite_sum }}</v-list-item-title>
+                  <v-list-item-title>
+                    <span class="userFavoriteSum">{{ user.favorite_sum }}</span>
+                  </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -85,5 +87,8 @@ export default class RankingPanel extends Vue {
 <style>
 .title {
   color: rgb(256, 256, 256);
+}
+.userFavoriteSum {
+  margin-left: 10px;
 }
 </style>
