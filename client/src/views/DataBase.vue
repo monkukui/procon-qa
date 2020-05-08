@@ -9,6 +9,8 @@
     <p>ユーザ数 {{ userCount }}</p>
     <p>質問へのいいね {{ questionGoodCount }}</p>
     <p>回答へのいいね {{ answerGoodCount }}</p>
+    <p>質問へのコメント数 {{ questionCommentCount }}</p>
+    <p>回答へコメント数 {{ answerCommentCount }}</p>
   </div>
 </template>
 
@@ -26,6 +28,8 @@ export default class DataBase extends Vue {
   private userCount: number = -1000000;
   private questionGoodCount: number = -1000000;
   private answerGoodCount: number = -1000000;
+  private questionCommentCount: number = -1000000;
+  private answerCommentCount: number = -1000000;
 
   private created(): void {
     this.getQuestionSize();
@@ -33,6 +37,8 @@ export default class DataBase extends Vue {
     this.getUserSize();
     this.getQuestionGoodSize();
     this.getAnswerGoodSize();
+    this.getQuestionCommentSize();
+    this.getAnswerCommentSize();
   }
 
   // 質問数取得
@@ -105,6 +111,36 @@ export default class DataBase extends Vue {
       return [];
     }).then((json) => {
       this.answerGoodCount = json;
+    });
+  }
+
+  // 質問へのコメント数
+  private getQuestionCommentSize(): void {
+    const url = '/api/no-auth/question-comment/count';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+
+    fetch(url).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((json) => {
+      this.questionCommentCount = json;
+    });
+  }
+
+  // 回答へのコメント数
+  private getAnswerCommentSize(): void {
+    const url = '/api/no-auth/answer-comment/count';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+
+    fetch(url).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return [];
+    }).then((json) => {
+      this.answerCommentCount = json;
     });
   }
 

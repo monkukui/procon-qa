@@ -52,3 +52,7 @@ func PostAnswerComment(c echo.Context) error {
 
   return c.JSON(http.StatusCreated, comment)
 }
+
+func CountAnswerComment(c echo.Context) error {
+  return c.JSON(http.StatusOK, len(model.FindAnswerComments(&model.AnswerComment{})))
+}

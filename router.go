@@ -49,6 +49,9 @@ func newRouter() *echo.Echo {
   noAuth.GET("/answer-good/count", handler.CountAnswerGood)          // 回答へのいいねの総数
   noAuth.GET("/question-comment/:qid", handler.GetQuestionComments)   // 質問に対するコメントを取得
   noAuth.GET("/answer-comment/:aid", handler.GetAnswerComments)       // 回答に対するコメントを取得
+  noAuth.GET("/question-comment/count", handler.CountQuestionComment)   // 質問に対するコメントの総数を取得
+  noAuth.GET("/answer-comment/count", handler.CountAnswerComment)       // 回答に対するコメントの総数を取得
+
 
 	// questions
 	api.GET("/questions", handler.GetAllQuestions)                      // 質問の全取得

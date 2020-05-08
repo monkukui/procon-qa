@@ -66,6 +66,7 @@ func FindUsers(u *User) Users {
 	return users
 }
 
+
 // 条件を満たす「質問」を, 固定長取得する
 // page := ページ番号( 1-indexed ),  length := 1 ページあたりのアイテム数
 func FindUsersWithPage(u *User, page int, length int, orderMode string) Users {
@@ -94,13 +95,6 @@ func UpdateUser(u *User) error {
 
 // user を 1 つ削除
 func DeleteUser(u *User) error {
-	if err := DeleteQuestionGood(&QuestionGood{UID: u.ID}); err != nil {
-		return fmt.Errorf("質問に対するいいねを削除できませんでした")
-	}
-
-	if err := DeleteAnswerGood(&AnswerGood{UID: u.ID}); err != nil {
-		return fmt.Errorf("回答に対するいいねを削除できませんでした")
-	}
 
   if rows := db.Where(User{ID: u.ID}).Delete(&User{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to delete", u)

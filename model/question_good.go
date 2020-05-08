@@ -5,7 +5,7 @@ package model
 
 type QuestionGood struct {
 	ID  int `json:"id" gorm:"praimary_key"`
-	UID int `json:"uid"`
+	UID int `json:"uid"` //  いいねをした人
 	QID int `json:"qid"`
 }
 
