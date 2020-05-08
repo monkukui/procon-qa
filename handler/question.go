@@ -14,10 +14,7 @@ import (
 func GetAllQuestions(c echo.Context) error {
 	// todos := model.FindTodos(&model.Todo{UID: uid})
 	// &model.Question{} とすることで, 条件なしで取得する <=> 全取得 となる
-	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
-		return echo.ErrNotFound
-	}
+
 	questions := model.FindQuestions(&model.Question{})
 	return c.JSON(http.StatusOK, questions)
 }

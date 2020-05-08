@@ -2,11 +2,10 @@
 
 package model
 
-import "fmt"
 
 type QuestionGood struct {
 	ID  int `json:"id" gorm:"praimary_key"`
-	UID int `json:"uid"`
+	UID int `json:"uid"` //  いいねをした人
 	QID int `json:"qid"`
 }
 
@@ -22,19 +21,16 @@ func FindQuestionGoods(g *QuestionGood) QuestionGoods {
 
 // good を 1 つ削除
 func DeleteQuestionGood(g *QuestionGood) error {
-	db.Where(g).Delete(&QuestionGood{})
+  db.Where(QuestionGood{ID: g.ID}).Delete(&QuestionGood{})
 
 	question := FindQuestions(&Question{ID: g.QID})[0]
   question.FavoriteCount--
   UpdateQuestion(&question)
 
   // user.FavoriteQuestion をインクリメント
-  fmt.Println("in DeleteQuestionGood")
   user := FindUser(&User{ID: question.UID})
-  fmt.Println(user)
   user.FavoriteQuestion--
   user.FavoriteSum--
-  fmt.Println(user)
   UpdateUser(&user)
 	return nil
 }

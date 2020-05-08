@@ -10,6 +10,7 @@ import TagSearch from './views/TagSearch.vue';
 import About from './views/About.vue';
 import Completed from './views/Completed.vue';
 import UserNotification from './views/UserNotification.vue';
+import DataBase from './views/DataBase.vue';
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/notification',
       name: 'notification',
       component: UserNotification,
+    },
+    {
+      path: '/database',
+      name: 'database',
+      component: DataBase,
     },
   ],
   scrollBehavior() {
