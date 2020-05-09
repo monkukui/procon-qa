@@ -1,21 +1,25 @@
 <template>
   <div class="myprofile">
-      <h1>{{ userName }}</h1>
-      <TwitterIcon
-        :twitterId="userTwitterId"
-        :uid="userId"
-        size="100"
-        apiSize="o"
-      />
-      <br>
-      <p>Twitter ID： 
-        <span v-if="userTwitterId">
-          <a :href="userTwitterLink">@{{ userTwitterId }}</a>
-        </span>
-      </p>
-      <p>質問への獲得いいね数： {{ userFavoriteQuestion }}</p>
-      <p>回答への獲得いいね数： {{ userFavoriteAnswer }}</p>
-      <p>合計獲得いいね数：{{ userFavoriteAnswer + userFavoriteQuestion }}</p>
+    <UserName
+      :name="userName"
+      :uid="userId"
+      size="large"
+    />
+    <TwitterIcon
+      :twitterId="userTwitterId"
+      :uid="userId"
+      size="100"
+      apiSize="o"
+    />
+    <br>
+    <p>Twitter ID： 
+      <span v-if="userTwitterId">
+        <a :href="userTwitterLink">@{{ userTwitterId }}</a>
+      </span>
+    </p>
+    <p>質問への獲得いいね数： {{ userFavoriteQuestion }}</p>
+    <p>回答への獲得いいね数： {{ userFavoriteAnswer }}</p>
+    <p>合計獲得いいね数：{{ userFavoriteAnswer + userFavoriteQuestion }}</p>
     <v-divider></v-divider>
   </div>
 </template>
@@ -23,10 +27,12 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import TwitterIcon from '@/components/TwitterIcon.vue';
+import UserName from '@/components/UserName.vue';
 
 @Component({
   components: {
     TwitterIcon,
+    UserName,
   },
 })
 export default class MyProfile extends Vue {
