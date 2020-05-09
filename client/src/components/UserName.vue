@@ -5,7 +5,11 @@
         :class="color"
         :to="{ name: 'userpage', query: { uid: this.uid }}"
       >
-        <span class="name">{{ name }}</span>
+        <span v-if="size==='large'">
+          <h1>{{ name }}</h1>
+        </span>
+        <span v-else class="name">{{ name }}</span>
+        
       </router-link>
     </span>
     <span v-else>
@@ -22,6 +26,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 export default class UserName extends Vue {
   @Prop()
   private uid!: string;
+  @Prop()
+  private size!: string;
 
   private color: string = '';
 
