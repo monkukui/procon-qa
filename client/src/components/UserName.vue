@@ -49,21 +49,21 @@ export default class UserName extends Vue {
       }
 
 
-      if (favoriteSum <= 0) {
+      if (favoriteSum < 1) {
         this.color = 'user-unrated';
-      } else if (favoriteSum <= 1) {
+      } else if (favoriteSum < 2) {
         this.color = 'user-gray';
-      } else if (favoriteSum <= 2) {
+      } else if (favoriteSum < 4) {
         this.color = 'user-brown';
-      } else if (favoriteSum <= 4) {
+      } else if (favoriteSum < 8) {
         this.color = 'user-green';
-      } else if (favoriteSum <= 8) {
+      } else if (favoriteSum < 16) {
         this.color = 'user-cyan';
-      } else if (favoriteSum <= 16) {
+      } else if (favoriteSum < 32) {
         this.color = 'user-blue';
-      } else if (favoriteSum <= 32) {
+      } else if (favoriteSum < 64) {
         this.color = 'user-yellow';
-      } else if (favoriteSum <= 64) {
+      } else if (favoriteSum < 128) {
         this.color = 'user-orange';
       } else {
         this.color = 'user-red';
