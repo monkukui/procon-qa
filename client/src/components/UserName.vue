@@ -41,8 +41,7 @@ export default class UserName extends Vue {
       return [];
     }).then((json) => {
       this.name = json.name;
-      let favoriteSum = json.favorite_sum;
-      console.log(json);
+      const favoriteSum = json.favorite_sum;
       if (this.name === '') {
         this.name = '退会済みのユーザ';
       } else {
