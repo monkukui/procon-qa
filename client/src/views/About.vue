@@ -24,9 +24,10 @@
       :headers="headers"
       :items="desserts"
       class="elevation-1"
+      hide-default-footer
     >
       <template v-slot:item.calories="{ item }">
-        <font :color="getColor(item.calories)">{{ item.calories }}</font>
+        <font :color="getColor(item.calories)"><strong>{{ item.calories }}</strong></font>
       </template>
     </v-data-table>
 
@@ -60,7 +61,7 @@
 </template>
 <script>
   export default {
-    data () {
+    data() {
       return {
         headers: [
           {
@@ -108,22 +109,32 @@
             calories: '黒色',
           },
         ],
-      }
+      };
     },
     methods: {
-      getColor (calories) {
-        if (calories == '赤色') return 'red';
-        else if (calories == '橙色') return 'orange';
-        else if (calories == '黄色') return 'yellow';
-        else if (calories == '青色') return 'blue';
-        else if (calories == '水色') return 'cyan';
-        else if (calories == '緑色') return 'green';
-        else if (calories == '茶色') return 'brown';
-        else if (calories == '灰色') return 'grey';
-        else return 'black';
+      getColor(calories) {
+        if (calories === '赤色') {
+          return '#FF0000';
+        } else if (calories === '橙色') {
+          return '#FF8000';
+        } else if (calories === '黄色') {
+          return '#C0C000';
+        } else if (calories === '青色') {
+          return '#0000FF';
+        } else if (calories === '水色') {
+          return '#00C0C0';
+        } else if (calories === '緑色') {
+          return '#008000';
+        } else if (calories === '茶色') {
+          return '#804000';
+        } else if (calories === '灰色') {
+          return '#808080';
+        } else {
+          return 'black';
+        }
       },
     },
-  }
+  };
 </script>
 
 
