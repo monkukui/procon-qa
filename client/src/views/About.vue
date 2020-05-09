@@ -16,7 +16,6 @@
     <p><v-icon large color="rgb(129, 180, 111)">mdi-check</v-icon> 取得したいいねの総数に応じて，色が付与されます</p>
     <p><v-icon large color="rgb(129, 180, 111)">mdi-check</v-icon> 質問と回答には，いいねがつきます</p>
     <p><v-icon large color="rgb(129, 180, 111)">mdi-check</v-icon> 自分の投稿には，いいねをつけることができません</p>
-    <p><v-icon large color="rgb(129, 180, 111)">mdi-check</v-icon> 自分の投稿には，いいねをつけることができません</p>
     <br>
     <br>
     
