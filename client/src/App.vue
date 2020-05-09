@@ -166,6 +166,12 @@
           cols="12"
         >
           {{ new Date().getFullYear() }} — <strong>procon-qa</strong>
+          <v-btn icon href="https://github.com/monkukui/procon-qa">
+            <v-icon color="rgb(37, 41, 46)">mdi-github</v-icon>
+          </v-btn>
+          <v-btn icon href="https://twitter.com/monkukui2">
+            <v-icon color="rgb(73, 160, 236)">mdi-twitter</v-icon>
+          </v-btn>
         </v-col>
       </v-footer>
     </div>
