@@ -52,7 +52,7 @@ func Signup(c echo.Context) error {
 	}
 	user.Password = string(hash)
 
-  user.NotificationFlag = false
+	user.NotificationFlag = false
 	model.CreateUser(user)
 	return c.JSON(http.StatusCreated, user.IntoReturnUser())
 }

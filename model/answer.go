@@ -4,7 +4,6 @@ package model
 
 import "fmt"
 
-
 // 回答テーブル
 type Answer struct {
 	ID  int `json:"id" gorm:"praimary_key"` // Id (インクリメント)
@@ -48,22 +47,22 @@ func FindAnswersWithPage(a *Answer, page int, length int) Answers {
 // answer を 1 つ削除
 func DeleteAnswer(a *Answer) error {
 
-  // 関連する good を削除
-  goods := FindAnswerGoods(&AnswerGood{AID: a.ID})
-  for _, good := range goods {
-    // DeleteAnswerGood(&good) ダメ，id 指定
-    DeleteAnswerGood(&AnswerGood{ID: good.ID, AID: a.ID})
-  }
+	// 関連する good を削除
+	goods := FindAnswerGoods(&AnswerGood{AID: a.ID})
+	for _, good := range goods {
+		// DeleteAnswerGood(&good) ダメ，id 指定
+		DeleteAnswerGood(&AnswerGood{ID: good.ID, AID: a.ID})
+	}
 
-  // 関連するコメントを全て削除
-  comments := FindAnswerComments(&AnswerComment{AID: a.ID})
-  for _, comment := range comments {
-    // DeleteAnswerComment(&comment) ダメ，id 指定してくだいさい
-    DeleteAnswerComment(&AnswerComment{ID: comment.ID})
-  }
+	// 関連するコメントを全て削除
+	comments := FindAnswerComments(&AnswerComment{AID: a.ID})
+	for _, comment := range comments {
+		// DeleteAnswerComment(&comment) ダメ，id 指定してくだいさい
+		DeleteAnswerComment(&AnswerComment{ID: comment.ID})
+	}
 
-  // answer を削除
-  db.Where(Answer{ID: a.ID}).Delete(&Answer{})
+	// answer を削除
+	db.Where(Answer{ID: a.ID}).Delete(&Answer{})
 
 	questions := FindQuestions(&Question{ID: a.QID})
 	// questions[0] の 回答数をデクリメント

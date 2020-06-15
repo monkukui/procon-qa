@@ -1,10 +1,12 @@
 package handler
 
 import (
-	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/labstack/echo"
+
 	// c-color さんに依存しちゃってる...
 	// なんとか再現性があるように作り変えることができないもんかね...?
 	// でも, wifi なくても起動できるんだよなぁ
@@ -107,10 +109,10 @@ func PostAnswer(c echo.Context) error {
 	answer.UID = uid
 	answer.FavoriteCount = 0
 
-  now := time.Now()
-  nowUTC := now.UTC()
-  jst := time.FixedZone("Asia/Tokyo", 9*60*60)
-  nowJST := nowUTC.In(jst)
+	now := time.Now()
+	nowUTC := now.UTC()
+	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+	nowJST := nowUTC.In(jst)
 
 	answer.Date = nowJST.Format("2006/01/02 15:04:05")
 
@@ -132,7 +134,7 @@ func DeleteAnswer(c echo.Context) error {
 	}
 
 	if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
-    return echo.ErrNotFound
+		return echo.ErrNotFound
 	}
 
 	return c.NoContent(http.StatusNoContent)

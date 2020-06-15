@@ -1,11 +1,11 @@
 package main
 
 import (
-  "os"
+	"os"
 )
 
 func main() {
 	router := newRouter()
-	router.Logger.Fatal(router.Start(":"+os.Getenv("PORT")))
-  // router.Logger.Fatal(router.Start(":8080"))
+	router.Logger.Fatal(router.Start(":" + os.Getenv("PORT")))
+	// router.Logger.Fatal(router.Start(":8080"))
 }

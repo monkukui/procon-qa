@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"strconv"
+
 	"github.com/labstack/echo"
 	"github.com/monkukui/procon-qa/model"
 )
@@ -23,5 +24,5 @@ func QuestionFavorited(c echo.Context) error {
 }
 
 func CountQuestionGood(c echo.Context) error {
-  return c.JSON(http.StatusOK, len(model.FindQuestionGoods(&model.QuestionGood{})))
+	return c.JSON(http.StatusOK, len(model.FindQuestionGoods(&model.QuestionGood{})))
 }

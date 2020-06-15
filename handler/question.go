@@ -1,13 +1,14 @@
 package handler
 
 import (
-	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
+	"fmt"
 	"net/http"
+	"sort"
 	"strconv"
 	"time"
-  "fmt"
-  "sort"
+
+	"github.com/labstack/echo"
+	"github.com/monkukui/procon-qa/model"
 )
 
 // 質問を全取得する
@@ -113,8 +114,8 @@ func GetUserQuestionSize(c echo.Context) error {
 	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
-  fmt.Println(len(model.FindQuestions(&model.Question{UID: uid})))
-  return c.JSON(http.StatusOK, len(model.FindQuestions(&model.Question{UID: uid})))
+	fmt.Println(len(model.FindQuestions(&model.Question{UID: uid})))
+	return c.JSON(http.StatusOK, len(model.FindQuestions(&model.Question{UID: uid})))
 }
 
 // pageId, userId で質問をページ取得する
@@ -136,47 +137,47 @@ func GetUserAnswers(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  // ユーザーの回答を取得
-  // TODO 質問の新着順にするか，回答の新着順にするかは議論の余地がありそう（誰と議論するんですか？）
-  // 表示させるのは質問なのだから，質問の新着順にするで良さそう
-  // となると，qid の新着順にすると良さそう
-  answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
+	// ユーザーの回答を取得
+	// TODO 質問の新着順にするか，回答の新着順にするかは議論の余地がありそう（誰と議論するんですか？）
+	// 表示させるのは質問なのだから，質問の新着順にするで良さそう
+	// となると，qid の新着順にすると良さそう
+	answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
 
-  // このユーザが関与した質問の qid リストを重複無しで構築
-  var qidList []int
+	// このユーザが関与した質問の qid リストを重複無しで構築
+	var qidList []int
 
-  for _, answer := range answers {
-    qidList = append(qidList, answer.QID)
-  }
+	for _, answer := range answers {
+		qidList = append(qidList, answer.QID)
+	}
 
-  // map を使って重複削除
-  mp := make(map[int]bool)
-  var uniqQidList []int
+	// map を使って重複削除
+	mp := make(map[int]bool)
+	var uniqQidList []int
 
-  for _, id := range qidList {
-    if !mp[id] {
-      mp[id] = true
-      uniqQidList = append(uniqQidList, id)
-    }
-  }
+	for _, id := range qidList {
+		if !mp[id] {
+			mp[id] = true
+			uniqQidList = append(uniqQidList, id)
+		}
+	}
 
-  // qid リストを降順ソートする（質問の新着順にするため）
-  sort.Sort(sort.Reverse(sort.IntSlice(uniqQidList)))
+	// qid リストを降順ソートする（質問の新着順にするため）
+	sort.Sort(sort.Reverse(sort.IntSlice(uniqQidList)))
 
-  // PageLength と PageID を使ってよしなに範囲を決定する
-  lb := (PageID - 1) * PageLength
-  if lb >= len(uniqQidList) {
-    return echo.ErrNotFound
-  }
+	// PageLength と PageID を使ってよしなに範囲を決定する
+	lb := (PageID - 1) * PageLength
+	if lb >= len(uniqQidList) {
+		return echo.ErrNotFound
+	}
 
-  var questions model.Questions
-  for i := 0; i < PageLength && lb + i < len(uniqQidList); i++ {
-	  q := model.FindQuestions(&model.Question{ID: uniqQidList[lb + i]})
-    if (len(q) != 1) {
-      return echo.ErrNotFound
-    }
-    questions = append(questions, q[0])
-  }
+	var questions model.Questions
+	for i := 0; i < PageLength && lb+i < len(uniqQidList); i++ {
+		q := model.FindQuestions(&model.Question{ID: uniqQidList[lb+i]})
+		if len(q) != 1 {
+			return echo.ErrNotFound
+		}
+		questions = append(questions, q[0])
+	}
 
 	return c.JSON(http.StatusOK, questions)
 }
@@ -187,28 +188,28 @@ func GetUserAnswerSize(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  // ユーザーの回答を取得
-  answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
+	// ユーザーの回答を取得
+	answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
 
-  // このユーザが関与した質問の qid リストを重複無しで構築
-  var qidList []int
+	// このユーザが関与した質問の qid リストを重複無しで構築
+	var qidList []int
 
-  for _, answer := range answers {
-    qidList = append(qidList, answer.QID)
-  }
+	for _, answer := range answers {
+		qidList = append(qidList, answer.QID)
+	}
 
-  // map を使って重複削除
-  mp := make(map[int]bool)
-  userAnswerSize := 0
+	// map を使って重複削除
+	mp := make(map[int]bool)
+	userAnswerSize := 0
 
-  for _, id := range qidList {
-    if !mp[id] {
-      mp[id] = true
-      userAnswerSize++
-    }
-  }
+	for _, id := range qidList {
+		if !mp[id] {
+			mp[id] = true
+			userAnswerSize++
+		}
+	}
 
-  return c.JSON(http.StatusOK, userAnswerSize)
+	return c.JSON(http.StatusOK, userAnswerSize)
 }
 
 // 質問を 1 つ 取得する
@@ -299,11 +300,12 @@ func GetBookMarkedQuestionSize(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  books := model.FindBookMarks(&model.BookMark{UID: uid})
+	books := model.FindBookMarks(&model.BookMark{UID: uid})
 
 	return c.JSON(http.StatusOK, len(books))
 }
-// ブックマークされた質問を取得する 
+
+// ブックマークされた質問を取得する
 func GetBookMarkedQuestions(c echo.Context) error {
 
 	uid, err := strconv.Atoi(c.Param("uid")) // ページ番号 (1-indexed)
@@ -311,29 +313,29 @@ func GetBookMarkedQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-  books := model.FindBookMarks(&model.BookMark{UID: uid})
+	books := model.FindBookMarks(&model.BookMark{UID: uid})
 
-  PageID, err := strconv.Atoi(c.Param("page"))
-  PageLength := 10
+	PageID, err := strconv.Atoi(c.Param("page"))
+	PageLength := 10
 
-  if err != nil {
-    return echo.ErrNotFound
-  }
+	if err != nil {
+		return echo.ErrNotFound
+	}
 
-  // PageLength と PageID を使ってよしなに範囲を決定する
-  lb := (PageID - 1) * PageLength
-  if lb >= len(books) {
-    return echo.ErrNotFound
-  }
+	// PageLength と PageID を使ってよしなに範囲を決定する
+	lb := (PageID - 1) * PageLength
+	if lb >= len(books) {
+		return echo.ErrNotFound
+	}
 
-  var questions model.Questions
-  for i := 0; i < PageLength && lb + i < len(books); i++ {
-	  q := model.FindQuestions(&model.Question{ID: books[lb + i].QID})
-    if (len(q) != 1) {
-      return echo.ErrNotFound
-    }
-    questions = append(questions, q[0])
-  }
+	var questions model.Questions
+	for i := 0; i < PageLength && lb+i < len(books); i++ {
+		q := model.FindQuestions(&model.Question{ID: books[lb+i].QID})
+		if len(q) != 1 {
+			return echo.ErrNotFound
+		}
+		questions = append(questions, q[0])
+	}
 
 	return c.JSON(http.StatusOK, questions)
 }
@@ -400,10 +402,10 @@ func PostQuestion(c echo.Context) error {
 	question.FavoriteCount = 0
 	question.BrowseCount = 0
 
-  now := time.Now()
-  nowUTC := now.UTC()
-  jst := time.FixedZone("Asia/Tokyo", 9*60*60)
-  nowJST := nowUTC.In(jst)
+	now := time.Now()
+	nowUTC := now.UTC()
+	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+	nowJST := nowUTC.In(jst)
 	question.Date = nowJST.Format("2006/01/02 15:04:05")
 
 	model.CreateQuestion(question)
