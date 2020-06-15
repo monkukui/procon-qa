@@ -1,7 +1,6 @@
 # PROCON-QA
 Source code of https://procon-qa.herokuapp.com.
 
-$a = x^2$
 
 競技プログラミング専用の Q&A サイトです．
 
