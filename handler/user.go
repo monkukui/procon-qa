@@ -2,10 +2,11 @@ package handler
 
 import (
 	"fmt"
-	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
 	"net/http"
 	"strconv"
+
+	"github.com/labstack/echo"
+	"github.com/monkukui/procon-qa/model"
 )
 
 // users のサイズを取得する
@@ -70,20 +71,20 @@ func DeleteUser(c echo.Context) error {
 func UpdateUser(c echo.Context) error {
 	uid := userIDFromToken(c)
 	user := model.FindUser(&model.User{ID: uid})
-  if user.ID == 0 {
+	if user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
-  postUser := new(model.User);
+	postUser := new(model.User)
 	if err := c.Bind(postUser); err != nil {
 		return err
 	}
-  if postUser.Name == "" {
+	if postUser.Name == "" {
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
 			Message: "invalid name",
 		}
-  }
+	}
 	if u := model.FindUser(&model.User{Name: postUser.Name}); u.ID != 0 && user.Name != u.Name {
 		return &echo.HTTPError{
 			Code:    http.StatusConflict,
@@ -91,15 +92,14 @@ func UpdateUser(c echo.Context) error {
 		}
 	}
 
-  user.Name = postUser.Name
-  user.TwitterId = postUser.TwitterId
+	user.Name = postUser.Name
+	user.TwitterId = postUser.TwitterId
 
-  fmt.Println(user)
+	fmt.Println(user)
 
-  model.UpdateUser(&user)
-  return c.JSON(http.StatusOK, user.IntoReturnUser())
+	model.UpdateUser(&user)
+	return c.JSON(http.StatusOK, user.IntoReturnUser())
 }
-
 
 func UpdateUserNotification(c echo.Context) error {
 
@@ -113,8 +113,8 @@ func UpdateUserNotification(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 	user := model.FindUser(&model.User{ID: uid})
-  user.NotificationFlag = (flag == 1)
-  model.UpdateUser(&user)
-  return c.JSON(http.StatusOK, user.IntoReturnUser())
+	user.NotificationFlag = (flag == 1)
+	model.UpdateUser(&user)
+	return c.JSON(http.StatusOK, user.IntoReturnUser())
 
 }

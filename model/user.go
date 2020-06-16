@@ -6,35 +6,35 @@ type User struct {
 	ID               int    `json:"id" gorm:"praimary_key"`
 	Name             string `json:"name"`
 	Password         string `json:"password"`
-  TwitterId        string `json:"twitter_id"`
+	TwitterId        string `json:"twitter_id"`
 	FavoriteAnswer   int    `json:"favorite_answer"`
 	FavoriteQuestion int    `json:"favorite_question"`
 	FavoriteSum      int    `json:"favorite_sum"`
 
-  NotificationFlag bool `json:"notification_flag"`
+	NotificationFlag bool `json:"notification_flag"`
 }
 
 // パスワードは json として送る必要がない
 type ReturnUser struct {
 	ID               int    `json:"id" gorm:"praimary_key"`
 	Name             string `json:"name"`
-  TwitterId        string `json:"twitter_id"`
+	TwitterId        string `json:"twitter_id"`
 	FavoriteAnswer   int    `json:"favorite_answer"`
 	FavoriteQuestion int    `json:"favorite_question"`
 	FavoriteSum      int    `json:"favorite_sum"`
 
-  NotificationFlag bool `json:"notification_flag"`
+	NotificationFlag bool `json:"notification_flag"`
 }
 
 func (u User) IntoReturnUser() ReturnUser {
 	var retUser ReturnUser
 	retUser.ID = u.ID
 	retUser.Name = u.Name
-  retUser.TwitterId = u.TwitterId
+	retUser.TwitterId = u.TwitterId
 	retUser.FavoriteAnswer = u.FavoriteAnswer
 	retUser.FavoriteQuestion = u.FavoriteQuestion
 	retUser.FavoriteSum = u.FavoriteSum
-  retUser.NotificationFlag = u.NotificationFlag
+	retUser.NotificationFlag = u.NotificationFlag
 	return retUser
 }
 
@@ -66,7 +66,6 @@ func FindUsers(u *User) Users {
 	return users
 }
 
-
 // 条件を満たす「質問」を, 固定長取得する
 // page := ページ番号( 1-indexed ),  length := 1 ページあたりのアイテム数
 func FindUsersWithPage(u *User, page int, length int, orderMode string) Users {
@@ -81,11 +80,11 @@ func UpdateUser(u *User) error {
 		"id":                u.ID,
 		"name":              u.Name,
 		"password":          u.Password,
-    "twitter_id":        u.TwitterId,
+		"twitter_id":        u.TwitterId,
 		"favorite_question": u.FavoriteQuestion,
 		"favorite_answer":   u.FavoriteAnswer,
 		"favorite_sum":      u.FavoriteSum,
-    "notification_flag": u.NotificationFlag,
+		"notification_flag": u.NotificationFlag,
 	}).RowsAffected
 	if rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to update", u)
@@ -96,7 +95,7 @@ func UpdateUser(u *User) error {
 // user を 1 つ削除
 func DeleteUser(u *User) error {
 
-  if rows := db.Where(User{ID: u.ID}).Delete(&User{}).RowsAffected; rows == 0 {
+	if rows := db.Where(User{ID: u.ID}).Delete(&User{}).RowsAffected; rows == 0 {
 		return fmt.Errorf("Could not find Todo (%v) to delete", u)
 	}
 

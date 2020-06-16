@@ -2,7 +2,6 @@
 
 package model
 
-
 type QuestionGood struct {
 	ID  int `json:"id" gorm:"praimary_key"`
 	UID int `json:"uid"` //  いいねをした人
@@ -21,31 +20,31 @@ func FindQuestionGoods(g *QuestionGood) QuestionGoods {
 
 // good を 1 つ削除
 func DeleteQuestionGood(g *QuestionGood) error {
-  db.Where(QuestionGood{ID: g.ID}).Delete(&QuestionGood{})
+	db.Where(QuestionGood{ID: g.ID}).Delete(&QuestionGood{})
 
 	question := FindQuestions(&Question{ID: g.QID})[0]
-  question.FavoriteCount--
-  UpdateQuestion(&question)
+	question.FavoriteCount--
+	UpdateQuestion(&question)
 
-  // user.FavoriteQuestion をインクリメント
-  user := FindUser(&User{ID: question.UID})
-  user.FavoriteQuestion--
-  user.FavoriteSum--
-  UpdateUser(&user)
+	// user.FavoriteQuestion をインクリメント
+	user := FindUser(&User{ID: question.UID})
+	user.FavoriteQuestion--
+	user.FavoriteSum--
+	UpdateUser(&user)
 	return nil
 }
 
-// good を 1 つ作成　
+// good を 1 つ作成
 func CreateQuestionGood(g *QuestionGood) {
 	question := FindQuestions(&Question{ID: g.QID})[0]
 
-  question.FavoriteCount++
-  UpdateQuestion(&question)
+	question.FavoriteCount++
+	UpdateQuestion(&question)
 
-  // user.FavoriteQuestion をインクリメント
-  user := FindUser(&User{ID: question.UID})
-  user.FavoriteQuestion++
-  user.FavoriteSum++
-  UpdateUser(&user)
+	// user.FavoriteQuestion をインクリメント
+	user := FindUser(&User{ID: question.UID})
+	user.FavoriteQuestion++
+	user.FavoriteSum++
+	UpdateUser(&user)
 	db.Create(g)
 }

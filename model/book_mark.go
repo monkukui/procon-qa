@@ -19,7 +19,7 @@ func CreateBookMark(b *BookMark) {
 // いいねを取得
 // 例えば, UID QID 指定で，存在するかを判定できそう
 func FindBookMarks(b *BookMark) BookMarks {
-  var marks BookMarks
+	var marks BookMarks
 	db.Where(b).Order("id desc").Find(&marks)
 	return marks
 }

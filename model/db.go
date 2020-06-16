@@ -1,10 +1,11 @@
 package model
 
 import (
+	"os"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // Use PostgreSQL in gorm
 	"github.com/lib/pq"
-	"os"
 	// _ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
