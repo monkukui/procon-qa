@@ -1,211 +1,220 @@
 <template>
   <div class="question-form">
     <v-card flat>
-      <v-snackbar v-model="snackbar"
+      <v-snackbar
         absolute
+        outlined
         top
         right
         color="success"
+        v-model="snackbar"
+        :vertical="vertical"
       >
-        <span>Registration successful!</span>
-        <v-icon dark>mdi-checkbox-marked-circle</v-icon>
+        <span>質問を投稿しました!!</span>
+        <v-btn
+          text
+          to="/"
+          @click="snackbar = false"
+        >
+          <strong>質問ページを見に行く</strong>
+        </v-btn>
       </v-snackbar>
+
       <v-form ref="form" @submit.prevent="submit">
         <v-container fluid>
           <v-row>
-            <v-col cols="12" sm="7">
+            <v-col cols="12" sm="8">
               <v-text-field
                 v-model="form.title"
+                @mouseover="focusTitle"
+                @focus="focusTitle"
                 :rules="rules.title"
                 color="blue darken-2"
                 label="タイトル"
                 required
+                single-line
+                outlined
               ></v-text-field>
-            </v-col>
+              <div class="mavon-editor" @mouseover="focusBody">
+                <mavon-editor
+                  v-model="form.body"
+                  language="ja"
+                  placeholder='質問本文'
+                  :toolbars="markdownOption"
+                />
+              </div>
 
-            <v-col cols="12" sm="7">
-              <v-textarea
-                v-model="form.body"
-                :rules="rules.body"
-                color="teal"
-                required
-              >
-                <template v-slot:label>
-                  <div>
-                    本文
-                  </div>
-                </template>
-              </v-textarea>
-            </v-col>
-
-            <v-col cols="12" sm="6">
-              <v-select
-                v-model="form.state"
-                :items="states"
-                color="pink"
-                label="ステータス(任意)"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="6">
+              <br>
               <v-text-field
                 v-model="form.url"
+                @mouseover="focusUrl"
+                @focus="focusUrl"
                 :rules="rules.url"
-                color="pink"
+                color="blue darken-2"
                 label="URL(任意)"
+                single-line
+                outlined
               ></v-text-field>
+              <v-btn
+                :disabled="!formIsValid"
+                color="primary"
+                type="submit"
+                x-large
+              >送信</v-btn>
             </v-col>
-
-            <v-col cols="12">
-              <v-checkbox
-                v-model="form.terms"
-                color="green"
-              >
-                <template v-slot:label>
-                  <div @click.stop="">
-                    Do you accept the
-                    <a href="javascript:;" @click.stop="terms = true">terms</a>
-                    and
-                    <a href="javascript:;" @click.stop="conditions = true">conditions?</a>
-                  </div>
-                </template>
-              </v-checkbox>
+            <v-col>
+              <div v-if="focus=='title'">
+                <TitleTips />
+              </div>
+              <div v-if="focus=='body'">
+                <BodyTips />
+              </div>
+              <div v-if="focus=='url'">
+                <UrlTips />
+              </div>
             </v-col>
           </v-row>
         </v-container>
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn
-            :disabled="!formIsValid"
-            color="primary"
-            type="submit"
-            x-large
-          >送信</v-btn>
-        </v-card-actions>
       </v-form>
-      <v-dialog v-model="terms" width="70%">
-        <v-card>
-          <v-card-title class="title">Terms</v-card-title>
-          <v-card-text v-for="n in 5" :key="n">
-            {{ content }}
-          </v-card-text>
-          <v-card-actions>
-            <div class="flex-grow-1"></div>
-            <v-btn
-              text
-              color="purple"
-              @click="terms = false"
-            >Ok</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <v-dialog v-model="conditions" width="70%">
-        <v-card>
-          <v-card-title class="title">Conditions</v-card-title>
-          <v-card-text v-for="n in 5" :key="n">
-            {{ content }}
-          </v-card-text>
-          <v-card-actions>
-            <div class="flex-grow-1"></div>
-            <v-btn
-              text
-              color="purple"
-              @click="conditions = false"
-            >Ok</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-card>
   </div>
 </template>
 
 <script>
-// TODO ts にする ... ? 
-// 正直 ts にするのめんどくさくなってきた
-  export default {
-    data () {
-      const defaultForm = Object.freeze({
-        title: '',
-        body: '',
-        state: '',
-        url: '',
-        terms: false,
-      })
-      return {
-        form: Object.assign({}, defaultForm),
-        rules: {
-          title: [val => (val || '').length > 0 || 'この項目は必須です'],
-          body: [val => (val || '').length > 0 || 'この項目は必須です'],
-        },
-        states: ['CE', 'MLE', 'TLE', 'RE', 'OLE', 'IE', 'WA', 'AC', 'WJ', 'WR'],
-        conditions: false,
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.`,
-        snackbar: false,
-        terms: false,
-        defaultForm,
-      }
-    },
-    computed: {
-      getDate () {
-        let now = new Date();
-        var Year = String(now.getFullYear());
-        var Month = String(now.getMonth()+1);
-        var Day = String(now.getDate());
-        var Hour = String(now.getHours());
-        var Min = String(now.getMinutes());
-        var Sec = String(now.getSeconds());
 
-        if(Hour.length == 1) Hour = '0' + Hour;
-        if(Min.length == 1) Min = '0' + Hour;
-        if(Sec.length == 1) Sec = '0' + Hour;
-        return Year + '年' + Month + '月' + Day + '日' + Hour + ':' + Min + ':' + Sec;
+import TitleTips from '@/components/TitleTips.vue';
+import BodyTips from '@/components/BodyTips.vue';
+import UrlTips from '@/components/UrlTips.vue';
+
+export default {
+  components: {
+    TitleTips,
+    BodyTips,
+    UrlTips,
+  },
+  data() {
+    const defaultForm = Object.freeze({
+      title: '',
+      body: '',
+      state: '',
+      url: '',
+    });
+    return {
+      focus: 'title',
+      form: Object.assign({}, defaultForm),
+      rules: {
+        title: [(val) => (val || '').length > 0 || 'この項目は必須です'],
+        body: [(val) => (val || '').length > 0 || 'この項目は必須です'],
       },
-      formIsValid () {
-        return (
-          this.form.title &&
-          this.form.body &&
-          this.form.terms
-        )
+      states: ['CE', 'MLE', 'TLE', 'RE', 'OLE', 'IE', 'WA', 'AC', 'WJ', 'WR'],
+      conditions: false,
+      content: `誓約書`,
+      snackbar: false,
+      terms: false,
+      markdownOption: {
+        bold: true,
+        italic: true,
+        header: true,
+        underline: true,
+        strikethrough: true,
+        mark: true,
+        quote: true,
+        ol: true,
+        ul: true,
+        code: true,
+        table: true,
+        help: true,
+        alignleft: true,
+        aligncenter: true,
+        alignright: true,
+        subfield: true,
+        preview: true,
+        // false
+        link: false,
+        imagelink: false,
+        superscript: false,
+        subscript: false,
+        undo: false,
+        redo: false,
+        fullscreen: false,
+        readmodel: false,
+        htmlcode: false,
+        trash: false,
+        save: false,
+        navigation: false,
       },
+    };
+  },
+  computed: {
+    formIsValid() {
+      return (
+        this.form.title &&
+        this.form.body
+      );
     },
-    methods: {
-      resetForm() {
-        this.form = Object.assign({}, this.defaultForm);
-        this.$refs.form.reset();
-      },
-      getToken() {
-        return localStorage.getItem('token');
-      },
-      submit () {
-        
-        const url = 'api/questions';
-        const method = 'POST';
-        const headers = {
-          'Authorization': `Bearer ${this.getToken()}`,
-          'Content-Type': 'application/json; charset=UTF-8'
+  },
+  methods: {
+    resetForm() {
+      this.form = Object.assign({}, this.defaultForm);
+      this.$refs.form.reset();
+    },
+    focusTitle() {
+      this.focus = 'title';
+    },
+    focusBody() {
+      this.focus = 'body';
+    },
+    focusUrl() {
+      this.focus = 'url';
+    },
+    getToken() {
+      return localStorage.getItem('token');
+    },
+    submit() {
+      if (this.getToken() === null) {
+        alert('server error');
+        return;
+      }
+      const url = 'api/questions';
+      const method = 'POST';
+      const headers = {
+        'Authorization': `Bearer ${this.getToken()}`,
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+
+      // ここで url は "https://" or "http://" しか受け付けない（サーバ再度側でも弾いている）
+      if (this.form.url === undefined) {
+        this.form.url = '';
+      }
+      const checkUrl = this.form.url + 'xxxxxxxxxx';
+      if (checkUrl !== 'xxxxxxxxxx' && checkUrl.substr(0, 7) !== 'http://' && checkUrl.substr(0, 8) !== 'https://') {
+        alert('url は https:// か http:// から始まるものにしてください');
+        return;
+      }
+
+      const body = JSON.stringify({
+        title: this.form.title,
+        body: this.form.body,
+        url: this.form.url,
+      });
+
+      fetch(url, {method, headers, body}).then((response) => {
+        if (response.ok) {
+          return response.json();
         }
-        const body = JSON.stringify({
-          title: this.form.title,
-          body: this.form.body,
-          date: this.getDate,
-          state: this.form.state,
-          url: this.form.url,
-        });
-        
-        fetch(url, {method, headers, body}).then(response => {
-          if(response.ok) {
-            return response.json();
-          }
-        }).then(json => {
-          if(typeof json === 'undefined') {
-            return;
-          }
-        });
-        this.snackbar = true;
-        this.resetForm();
-      },
+        alert('server error');
+      }).then((json) => {
+        const toUrl = '#/completed?qid=' + json.id;
+        location.href = toUrl;
+        location.reload();
+      });
     },
-  }
+  },
+};
 </script>
 
 <style scoped>
+.mavon-editor {
+  z-index: 0;
+}
 </style>

@@ -1,50 +1,126 @@
 <template>
   <div class="question-panel">
     <v-card
-      max-width="1000"
       class="mx-auto"
       color="white"
     >
-      <v-card-title>
-        <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link >
-      </v-card-title>
-      <v-btn
-        class="tag"
-        color="blue-grey lighten-4"
-        x-small
-      >
-        タグ {{ question.tid }}
-      </v-btn>
-      <v-divider class="mx-4"></v-divider>
-  
-      <v-row style="margin-left: 1%;">
-        <v-col md="1">
-          <SquarePanel 
+      <div v-if="isReady">
+        <v-card-title>
+          <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link>
+        <v-spacer />
+        <TwitterIcon
+          :twitterId="userTwitterId"
+          :uid="uid"
+          size="36"
+          apiSize="n"
+        />
+        <span style="font-size: 14px;">
+          <UserName
+            :name="userName"
+            :uid="question.uid"
+          />
+        </span>
+        </v-card-title>
+        <!--v-btn
+          class="tag"
+          color="blue-grey lighten-4"
+          x-small
+        >
+          タグ {{ question.tid }}
+        </v-btn-->
+        <v-divider class="mx-4"></v-divider>
+        <v-row style="margin-left: 1%;">
+          <v-chip
+            outlined
+            class="ma-2"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
+          >
+            <span class="chip-text">
+              回答数{{ question.answerCount }}
+            </span>
+          </v-chip>
+          <v-chip
+            outlined
+            class="ma-2"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
+          >
+            <span class="chip-text">
+              閲覧数{{ question.browseCount }}
+            </span>
+          </v-chip>
+          <v-chip
+            outlined
+            class="ma-2"
+            color="rgb(66, 66, 66, 0.6)"
+            text-color="rgb(66, 66, 66, 0.6)"
+          >
+            <span class="chip-text">
+              いいね{{ question.favoriteCount }}
+            </span>
+          </v-chip>
+          <v-chip
+            v-if="question.completed"
+            outlined
+            class="ma-2"
+            color="rgb(116, 181, 103)"
+            text-color="rgb(116, 181, 103)"
+          >
+            <span class="chip-text">
+              解決済み
+            </span>
+          </v-chip>
+          <v-chip
+            v-else
+            outlined
+            class="ma-2"
+            color="rgb(231,175,95)"
+            text-color="rgb(231,175,95)"
+          >
+            <span class="chip-text">
+              未解決
+            </span>
+          </v-chip>
+
+          <!--SquarePanel 
             message="回答数"
-            num=3
+            :num="question.answerCount"
+            color="blue-grey"
           />
-        </v-col>
-        <v-col md="1">
-          <SquarePanel 
+          <SquarePanel
             message="閲覧数"
-            num=10
+            :num="question.browseCount"
+            color="blue-grey"
           />
-        </v-col>
-        <v-col md="1">
+          <SquarePanel
+            message="いいね"
+            :num="question.favoriteCount"
+            color="blue-grey"
+          />
           <SquarePanel
             v-if="question.completed"
             message="解決済"
+            color="#5cb85c"
           />
           <SquarePanel
-            v-else
+            v-if="!question.completed"
             message="未解決"
-          />
-        </v-col>
-        <div class="flex-grow-1"></div>
-        <div style="margin-left:auto; margin-right: 5%; margin-top: 5%;">
-          <span>{{ question.date }} {{ userName }}</span>
-        </div>
-      </v-row>
+            color="#f0ad4e"
+          /-->
+          <div class="flex-grow-1"></div>
+          <div style="margin-left:auto; margin-top: 20px; margin-right: 20px;">
+            <span class="date">{{ question.date }}</span>
+          </div>
+        </v-row>
+      </div>
+      <div v-else class="text-center">
+        <v-progress-circular
+          :size="100"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
     </v-card>
     
   </div>
@@ -53,25 +129,44 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit, Watch } from 'vue-property-decorator';
 import SquarePanel from '@/components/SquarePanel.vue';
+import UserName from '@/components/UserName.vue';
+import TwitterIcon from '@/components/TwitterIcon.vue';
+import { Question } from '@/models/Question.ts';
 
 @Component({
   components: {
+    UserName,
     SquarePanel,
+    TwitterIcon,
   },
 })
 export default class QuestionPanel extends Vue {
-  @Prop()
+  @Prop({required: true})
   private questionId!: number;
 
   // データベース Question 通り
-  private question = {
+  private question: Question = {
+    id: 0,
     title: 'title title title title title',
     body: 'body body body body body',
     completed: false,
+    date: '',
+
+    favoriteCount: 0,
+    answerCount: 0,
+    browseCount: 0,
   };
+
+  private isReady: boolean = false;
 
   // 質問者の名前
   private userName: string = '';
+
+  // 質問者の uid
+  private uid: string = '';
+
+  // 質問者の twitter Id
+  private userTwitterId: string = '';
 
   // コンポーネントが作られた時に呼び出される関数
   private created(): void {
@@ -86,7 +181,7 @@ export default class QuestionPanel extends Vue {
 
   private init(): void {
     // TODO api/question/:id (GET) を叩く
-    const url = 'api/question/' + String(this.questionId);
+    const url = '/api/no-auth/question/' + String(this.questionId);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
 
     fetch(url, {headers}).then((response) => {
@@ -101,8 +196,7 @@ export default class QuestionPanel extends Vue {
   }
 
   private setUser(): void {
-
-    const url = 'api/user/' + String(this.question.uid);
+    const url = 'api/no-auth/user/' + String(this.question.uid);
     const headers = {Authorization: `Bearer ${this.getToken()}`};
     fetch(url, {headers}).then((response) => {
       if (response.ok) {
@@ -111,6 +205,9 @@ export default class QuestionPanel extends Vue {
       return [];
     }).then((json) => {
       this.userName = json.name;
+      this.uid = json.id;
+      this.userTwitterId = json.twitter_id;
+      this.isReady = true;
     });
   }
 
@@ -125,13 +222,14 @@ export default class QuestionPanel extends Vue {
 .question-panel {
   margin: 3%;
 }
-
 .tag {
   margin-bottom: 1%;
   margin-left: 2%;
 }
-
 .title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #0288D1;
   text-decoration: none;
 }
@@ -139,12 +237,13 @@ export default class QuestionPanel extends Vue {
   color: #29B6F6;
   text-decoration: none;
 }
-
 .small {
   font-size: 75%;
 }
-
-.question-panel {
+.date {
+  color: rgb(151, 151, 151);
 }
-  
+.chip-text {
+  font-weight: bold;
+}
 </style>

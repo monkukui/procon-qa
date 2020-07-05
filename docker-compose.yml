@@ -1,0 +1,26 @@
+version: "3"
+services:
+    postgres:
+        container_name: postgres
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+    app:
+        container_name: app
+        depends_on:
+            - postgres
+        build: .
+        ports:
+            - "0.0.0.0:8080:8080"
+        environment:
+            - STAGE=TEST
+            - PORT=8080
+        entrypoint: 
+            - sh
+            - ./wait-for-postgres.sh
+            - postgres:5432
+            - -t
+            - "1"
+            - --
+            - ./main

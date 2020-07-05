@@ -1,0 +1,34 @@
+{
+  "name": "procon-qa",
+  "version": "1.0.0",
+  "description": "#### postgresSQL の起動 必要に応じて `postgres` をインストールする必要あり ``` postgres -D /usr/local/var/postgres ``` 実行 `hoge` と言う名前の DB だけ作成する",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monkukui/procon-qa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monkukui/procon-qa/issues"
+  },
+  "homepage": "https://github.com/monkukui/procon-qa#readme",
+  "dependencies": {
+    "core-util-is": "^1.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@storybook/addon-actions": "^5.3.13",
+    "@storybook/addon-links": "^5.3.13",
+    "@storybook/addons": "^5.3.13",
+    "@storybook/vue": "^5.3.13",
+    "babel-loader": "^8.0.6",
+    "babel-preset-vue": "^2.0.2"
+  }
+}

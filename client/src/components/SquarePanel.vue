@@ -1,11 +1,12 @@
 <template>
   <div>
-    <v-item v-slot:default="{ active, toggle }">
-      <v-card
-        class="d-flex align-center"
+    <!-- before -->
+    <!--v-item v-slot:default="{ active, toggle }">
+      <v-list-item-avatar
+        class="tile"
+        size="60"
         :color="color"
-        @click="toggle"
-        height="60"
+        tile
       >
         <v-scroll-y-transition>
           <div
@@ -13,12 +14,23 @@
           >
             <div style="color: white;" class="font-weight-bold">
               {{ message }}
+              <br>
               {{ num }}
             </div>
           </div>
         </v-scroll-y-transition>
-      </v-card>
-    </v-item>
+      </v-list-item-avatar>
+    </v-item-->
+    
+    <!-- FIXME  最悪の分岐-->
+    <v-chip
+      :color="color"
+      text-color="white"
+      
+    >
+      {{ message }}
+    </v-chip>
+
   </div>
 </template>
 
@@ -26,25 +38,19 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
-@Component({
-  componens: {
-  },
-})
+@Component
 export default class SquarePanel extends Vue {
   @Prop()
-  private num: number;
+  private num!: number;
   @Prop()
-  private message: string;
-
-  private color: string = 'blue-grey';
-
-  private created(): void {
-    if(this.message == '解決済') this.color = '#5cb85c';
-    else if(this.message == '未解決') this.color = '#f0ad4e';
-  }
+  private message!: string;
+  @Prop()
+  private color!: string;
 }
 </script>
 
 <style>
-
+.tile{
+  border-radius: 15%;
+}
 </style>

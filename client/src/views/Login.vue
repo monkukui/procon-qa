@@ -1,11 +1,36 @@
 <template>
   <div class="login">
-    <p>LOGIN</p>
-    <input v-model="name" />
-    <input v-model="password" />
-    <button type="button" name="button" @click="login">login</button>
-    {{ name }}
-    {{ password }}
+    <v-container>
+      <h1>ログイン</h1>
+      <hr>
+        <v-row>
+          <v-col
+            cols="12"
+            md="4"
+          >
+            <v-text-field
+              v-model="name"
+              :counter="14"
+              label="ユーザ名"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col
+            cols="12"
+            md="4"
+          >
+            <v-text-field
+              v-model="password"
+              :type="show ? 'text' : 'password'"
+              @click:append="show = !show"
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              label="パスワード"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      <v-btn large color="primary" @click="login">ログイン</v-btn> または <v-btn outlined depressed large to="/signup">新規登録</v-btn>
+    </v-container>
   </div>
 </template>
 
@@ -19,6 +44,7 @@ export default class Login extends Vue {
 
   private name: string = '';
   private password: string = '';
+  private show: boolean = false;
 
   private login(): void {
     const url = '/login';
@@ -45,6 +71,7 @@ export default class Login extends Vue {
       if (token.length > 0) {
         localStorage.setItem('token', token);
         this.$router.push('/');
+        location.reload();
       }
     });
   }

@@ -5,6 +5,12 @@ import Question from './views/Question.vue';
 import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import QuestionForm from './views/QuestionForm.vue';
+import UserPage from './views/UserPage.vue';
+import TagSearch from './views/TagSearch.vue';
+import About from './views/About.vue';
+import Completed from './views/Completed.vue';
+import UserNotification from './views/UserNotification.vue';
+import DataBase from './views/DataBase.vue';
 
 Vue.use(Router);
 
@@ -36,12 +42,37 @@ export default new Router({
       component: QuestionForm,
     },
     {
+      path: '/userpage',
+      name: 'userpage',
+      component: UserPage,
+    },
+    {
+      path: '/tagsearch',
+      name: 'tagsearch',
+      component: TagSearch,
+    },
+    {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: About,
+    },
+    {
+      path: '/completed',
+      name: 'completed',
+      component: Completed,
+    },
+    {
+      path: '/notification',
+      name: 'notification',
+      component: UserNotification,
+    },
+    {
+      path: '/database',
+      name: 'database',
+      component: DataBase,
     },
   ],
+  scrollBehavior() {
+    return {x: 0, y: 0};
+  },
 });

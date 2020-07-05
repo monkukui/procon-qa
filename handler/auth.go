@@ -1,13 +1,16 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/x-color/simple-webapp/model"
+	"github.com/monkukui/procon-qa/model"
+	"golang.org/x/crypto/bcrypt"
+	// "github.com/x-color/simple-webapp/model"
 )
 
 type jwtCustomClaims struct {
@@ -43,10 +46,15 @@ func Signup(c echo.Context) error {
 		}
 	}
 
-	model.CreateUser(user)
-	user.Password = ""
+	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	user.Password = string(hash)
 
-	return c.JSON(http.StatusCreated, user)
+	user.NotificationFlag = false
+	model.CreateUser(user)
+	return c.JSON(http.StatusCreated, user.IntoReturnUser())
 }
 
 func Login(c echo.Context) error {
@@ -56,7 +64,14 @@ func Login(c echo.Context) error {
 	}
 
 	user := model.FindUser(&model.User{Name: u.Name})
-	if user.ID == 0 || user.Password != u.Password {
+	if user.ID == 0 {
+		return &echo.HTTPError{
+			Code:    http.StatusUnauthorized,
+			Message: "invalid name or password",
+		}
+	}
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password)); err != nil {
+		// 失敗
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
 			Message: "invalid name or password",
@@ -67,7 +82,7 @@ func Login(c echo.Context) error {
 		user.ID,
 		user.Name,
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
+			ExpiresAt: time.Now().Add(time.Hour * 24 * 365 * 50).Unix(),
 		},
 	}
 
@@ -87,4 +102,14 @@ func userIDFromToken(c echo.Context) int {
 	claims := user.Claims.(*jwtCustomClaims)
 	uid := claims.UID
 	return uid
+}
+
+func Token(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+	fmt.Println("uid ======= ")
+	fmt.Println(uid)
+	return c.JSON(http.StatusOK, uid)
 }

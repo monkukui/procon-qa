@@ -12,7 +12,6 @@ export default class PagiNation extends Vue {
   @Prop()
   private contents!: string; // ボタンの上に表示させる文字列
 
-
   // 親コンポーネントに発火する
   // 親コンポーネントでは @click="myMethod" のようにする
   @Emit()
