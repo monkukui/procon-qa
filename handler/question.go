@@ -51,7 +51,7 @@ func GetQuestionsWithPage(c echo.Context) error {
 	mode := "id desc"
 
 	if modeId == 2 {
-		mode = "answer_count desc"
+		mode = "answer_count"
 	} else if modeId == 3 {
 		mode = "browse_count desc"
 	} else if modeId == 4 {
