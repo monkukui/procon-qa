@@ -44,9 +44,13 @@
           <v-col col="12" sm="8">
             <v-row>
               <v-col col="12" sm="10">
-                <img src="../assets/rectangle_logo.jpg" alt="ロゴ" width="70%" height="auto">
+                <img src="../assets/rectangle_logo.jpg" alt="ロゴ" width="50%" height="auto">
               </v-col>
             </v-row>
+            <div style="margin-left: 1%;">
+              <h2>競技プログラミング専用の Q&A サイト</h2>
+              <p><router-link class="about" to="./about">このサイトについて</router-link></p>
+            </div>
             <QuestionSetting 
               @click="changeMode"
               :curMode="mode"
@@ -101,5 +105,16 @@ export default class Home extends Vue {
 
 <style scoped>
 .main-topic {
+}
+.about {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #0288D1;
+  text-decoration: none;
+}
+.about:hover {
+  color: #29B6F6;
+  text-decoration: none;
 }
 </style>
