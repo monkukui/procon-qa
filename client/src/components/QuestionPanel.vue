@@ -3,10 +3,14 @@
     <v-card
       class="mx-auto"
       color="white"
+      hover
+      :to="{ name: 'question', query: { questionId: this.questionId }}"
     >
       <div v-if="isReady">
         <v-card-title>
-          <router-link class="title" :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link>
+          <router-link
+            class="title"
+            :to="{ name: 'question', query: { questionId: this.questionId }}" >{{ question.title }}</router-link>
         <v-spacer />
         <TwitterIcon
           :twitterId="userTwitterId"
