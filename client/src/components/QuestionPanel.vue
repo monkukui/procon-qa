@@ -1,6 +1,7 @@
 <template>
   <div class="question-panel">
     <v-card
+      min-height="120"
       class="mx-auto"
       color="white"
       hover
@@ -119,11 +120,16 @@
         </v-row>
       </div>
       <div v-else class="text-center">
-        <v-progress-circular
+        <v-skeleton-loader
+          class="mx-auto"
+          type="list-item-three-line"
+          height="120"
+        ></v-skeleton-loader>
+        <!--v-progress-circular
           :size="100"
           color="primary"
           indeterminate
-        ></v-progress-circular>
+        ></v-progress-circular-->
       </div>
     </v-card>
     
