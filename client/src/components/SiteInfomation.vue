@@ -12,45 +12,76 @@
       >
         <v-toolbar-title class="title">サイト情報</v-toolbar-title>
       </v-app-bar>
-      <v-list-item three-line>
-        <v-list-item-content>
-          <br>
-          <v-list dense>
-            <v-list-item v-if="isReadyTotalQuestion">
-              <v-list-item-content>
-                <v-list-item-title>質問数</v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-content>
-                <v-list-item-title>{{ totalQuestions }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item v-if="isReadyTotalAnswer">
-              <v-list-item-content>
-                <v-list-item-title>回答数</v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-content>
-                <v-list-item-title>{{ totalAnswers }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item v-if="isReadyTotalUser">
-              <v-list-item-content>
-                <v-list-item-title>ユーザ数</v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-content>
-                <v-list-item-title>{{ totalUsers }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item v-if="isReadyCompletedRate">
-              <v-list-item-content>
-                <v-list-item-title>解決済み</v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-content>
-                <v-list-item-title>{{ completedRate }} %</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-list-item-content>
-      </v-list-item>
+      <div v-if="
+        isReadyTotalUser &&
+        isReadyTotalAnswer && 
+        isReadyCompletedRate && 
+        isReadyTotalQuestion &&
+        isReadyTotalAnswerGood && 
+        isReadyTotalQuestionGood
+      ">
+        <v-list-item three-line>
+          <v-list-item-content>
+            <br>
+            <v-list dense>
+              <v-list-item v-if="isReadyTotalQuestion">
+                <v-list-item-content>
+                  <v-list-item-title>質問数</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>{{ totalQuestions }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item v-if="isReadyTotalAnswer">
+                <v-list-item-content>
+                  <v-list-item-title>回答数</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>{{ totalAnswers }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item v-if="isReadyTotalUser">
+                <v-list-item-content>
+                  <v-list-item-title>ユーザ数</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>{{ totalUsers }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item v-if="isReadyCompletedRate">
+                <v-list-item-content>
+                  <v-list-item-title>解決済み</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>{{ completedRate }} %</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <div v-else>
+        <v-skeleton-loader
+          class="mx-auto"
+          max-width="344"
+          type="list-item"
+        ></v-skeleton-loader>
+        <v-skeleton-loader
+          class="mx-auto"
+          max-width="344"
+          type="list-item"
+        ></v-skeleton-loader>
+        <v-skeleton-loader
+          class="mx-auto"
+          max-width="344"
+          type="list-item"
+        ></v-skeleton-loader>
+        <v-skeleton-loader
+          class="mx-auto"
+          max-width="344"
+          type="list-item"
+        ></v-skeleton-loader>
+      </div>
     </v-card>
   </div>
 </template>
