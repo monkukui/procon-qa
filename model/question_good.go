@@ -20,7 +20,7 @@ func FindQuestionGoods(g *QuestionGood) QuestionGoods {
 
 // good を 1 つ削除
 func DeleteQuestionGood(g *QuestionGood) error {
-	db.Where(QuestionGood{ID: g.ID}).Delete(&QuestionGood{})
+	db.Where(g).Delete(&QuestionGood{})
 
 	question := FindQuestions(&Question{ID: g.QID})[0]
 	question.FavoriteCount--
