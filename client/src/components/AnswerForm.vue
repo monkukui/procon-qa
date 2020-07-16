@@ -1,5 +1,23 @@
 <template>
   <div class="answer-form">
+    <v-snackbar
+      v-model="snackbar"
+      right
+      color="success"
+    >
+      <strong>{{ snackbarText }}</strong>
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="pink"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <div v-if="!isLoggedIn">
       <v-alert
         outlined
@@ -84,7 +102,9 @@ export default class AnswerForm extends Vue {
   private uid!: string;
   private fa: boolean = false;
   private tr: boolean = true;
+  private snackbar: boolean = false;
   private questionId!: number;
+  private snackbarText: string = "回答を送信しました";
   private text: string = '';
   private isLoggedIn: boolean = false;
   private created(): void {
@@ -134,7 +154,7 @@ export default class AnswerForm extends Vue {
 
     // コメントする側の id が uid と同じなら，通知を発行しない
     if (this.uid === claims.uid) {
-      alert('回答を送信しました');
+      this.snackbar = true;
       this.text = '';
       return;
     }
@@ -152,7 +172,7 @@ export default class AnswerForm extends Vue {
     fetch(url, {method, headers, body}).then((response) => {
       if (response.ok) {
         this.userUpdate();
-        alert('回答を送信しました');
+        this.snackbar = true;
         this.text = '';
       }
     });
