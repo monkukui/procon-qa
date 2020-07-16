@@ -3,19 +3,19 @@
     <!--v-avatar color="indigo">
       <v-icon dark>mdi-account-circle</v-icon>
     </v-avatar-->
-    <span v-if="twitterId">
+    <!-- span v-if="twitterId">
       <router-link 
         class="name"
         :to="{ name: 'userpage', query: { uid: this.uid }}"
       >
-        <!--v-avatar :size=size>
+        <v-avatar :size=size>
           <img
             :src=imgUrl
             alt="icon"
           >
-        </v-avatar-->
+        </v-avatar>
       </router-link>
-    </span>
+    </span-->
   </div>
 </template>
 
