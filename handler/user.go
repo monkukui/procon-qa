@@ -116,5 +116,4 @@ func UpdateUserNotification(c echo.Context) error {
 	user.NotificationFlag = (flag == 1)
 	model.UpdateUser(&user)
 	return c.JSON(http.StatusOK, user.IntoReturnUser())
-
 }

@@ -123,11 +123,22 @@ export default class AnswerForm extends Vue {
   private postNotification(): void {
     const url = 'api/notification/' + this.uid + '/' + this.questionId + '/1';
     const method = 'POST';
-
-    if (this.getToken() === null) {
+    
+    const token = this.getToken();
+    if (token === null) {
       alert('server error');
       return;
     }
+
+    const claims = JSON.parse(atob(token.split('.')[1]));
+
+    // コメントする側の id が uid と同じなら，通知を発行しない
+    if (this.uid === claims.uid) {
+      alert('回答を送信しました');
+      this.text = '';
+      return;
+    }
+
     const headers = {
       'Authorization': `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json; charset=UTF-8',

@@ -42,8 +42,11 @@ func PostNotification(c echo.Context) error {
 	notification.QID = qid
 	notification.Type = t
 	notification.Watched = false
-	fmt.Println(notification)
 
+  // 自分に対する投稿なら，通知しない
+  if uid == ouid {
+    return c.String(http.StatusOK, "")
+  }
 	model.CreateNotification(notification)
 	return c.JSON(http.StatusCreated, notification)
 }
