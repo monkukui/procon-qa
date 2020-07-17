@@ -5,6 +5,9 @@
         :uid="comment.uid"
         :body="comment.body"
         :date="comment.date"
+        :id="comment.id"
+        type="3"
+        @comment="postComment"
       />
     </div>
     

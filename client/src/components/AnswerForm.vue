@@ -104,7 +104,7 @@ export default class AnswerForm extends Vue {
   private tr: boolean = true;
   private snackbar: boolean = false;
   private questionId!: number;
-  private snackbarText: string = "回答を送信しました";
+  private snackbarText: string = '回答を送信しました';
   private text: string = '';
   private isLoggedIn: boolean = false;
   private created(): void {
@@ -143,7 +143,6 @@ export default class AnswerForm extends Vue {
   private postNotification(): void {
     const url = 'api/notification/' + this.uid + '/' + this.questionId + '/1';
     const method = 'POST';
-    
     const token = this.getToken();
     if (token === null) {
       alert('server error');

@@ -87,9 +87,6 @@ export default class CommentForm extends Vue {
 
   // 通知を発行
   private postNotification(): void {
-    
-    
-
     const url = 'api/notification/' + this.uid + '/' + this.qid + '/' + this.type;
     const method = 'POST';
 

@@ -57,3 +57,22 @@ func PostAnswerComment(c echo.Context) error {
 func CountAnswerComment(c echo.Context) error {
 	return c.JSON(http.StatusOK, len(model.FindAnswerComments(&model.AnswerComment{})))
 }
+
+func DeleteAnswerComment(c echo.Context) error {
+	uid := userIDFromToken(c)
+	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+		return echo.ErrNotFound
+	}
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+	// uid が question の uid と一致していなければダメ
+	if uid != model.FindAnswerComments(&model.AnswerComment{ID: id})[0].UID {
+		return echo.ErrNotFound
+	}
+	if err := model.DeleteAnswerComment(&model.AnswerComment{ID: id, UID: uid}); err != nil {
+		return echo.ErrNotFound
+	}
+	return c.NoContent(http.StatusNoContent)
+}
