@@ -73,7 +73,7 @@ func newRouter() *echo.Echo {
 	api.PUT("/answer/:id/favorite", handler.FavoriteAnswer)        // いいね
 	// users
 	api.GET("/user/:uid", handler.GetUser)       // user_id から ユーザー名を取得
-	api.DELETE("/user/:uid", handler.DeleteUser) // user_id から ユーザー名を取得
+	api.DELETE("/user/:uid", handler.DeleteUser) // user_id から ユーザー名を削除
 
 	// question_good
 	api.GET("/question-good/:uid/:qid", handler.QuestionFavorited) // いいね状態かどうか
@@ -88,6 +88,8 @@ func newRouter() *echo.Echo {
 	// Comment
 	api.POST("/question-comment", handler.PostQuestionComment) // 質問へのコメントの投稿
 	api.POST("/answer-comment", handler.PostAnswerComment)     // 回答へのコメントの投稿
+	api.DELETE("/question-comment/:id", handler.DeleteQuestionComment)                 // 質問の削除
+	api.DELETE("/answer-comment/:id", handler.DeleteAnswerComment)                 // 質問の削除
 
 	// Notification
 	api.POST("/notification/:uid/:qid/:type", handler.PostNotification) // 質問へのコメントの投稿

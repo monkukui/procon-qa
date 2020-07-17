@@ -18,6 +18,8 @@
             :name="name"
             :uid="uid"
           />
+          <br>
+          <v-icon v-if="name===userName" color="error" @click="deleteComment">mdi-delete</v-icon>
         </div>
       </v-col>
     </v-row>
@@ -42,12 +44,35 @@ export default class CommentPanel extends Vue {
   private body!: string;
   @Prop()
   private date!: string;
+  @Prop()
+  private id!: string;
+  @Prop()
+  private type!: string; // "2" -> for question, "3" -> for answer
 
   private name: string = '';
+  private userName: string = '';
   private twitterId: string = '';
 
   private created(): void {
     this.setUser();
+    if (this.getToken() != null) {
+      const claims = JSON.parse(atob(this.getToken().split('.')[1]));
+      this.userName = claims.name;
+    }
+  }
+
+  private deleteComment(): void {
+
+    const url = 'api/' + (this.type === '2' ? 'question' : 'answer') + '-comment/' + this.id;
+    const method = 'DELETE';
+    const headers = {Authorization: `Bearer ${this.getToken()}`};
+
+    fetch(url, {method, headers}).then((response) => {
+      if (response.ok) {
+        // 質問を削除しました
+        this.$emit('comment');
+      }
+    });
   }
 
   private setUser(): void {
@@ -61,6 +86,10 @@ export default class CommentPanel extends Vue {
       this.name = json.name;
       this.twitterId = json.twitter_id;
     });
+  }
+
+  private getToken(): any {
+    return localStorage.getItem('token');
   }
 }
 </script>
