@@ -1,7 +1,12 @@
 <template>
   <div class="answers">
-
     <div v-if="isReady">
+      <span v-if="answers.length > 0">
+        <h2>{{ answers.length }} 件の回答</h2>
+      </span>
+      <span v-else>
+        <h2>まだ回答がありません</h2>
+      </span>
       <div v-for="(value, index) in answers" :key=index>
         <AnswerPanelDetail
           :answerId="value.id"

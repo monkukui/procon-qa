@@ -110,7 +110,7 @@
               x-large
               v-on="on"
             >
-              <v-icon @click="alert = !alert">mdi-delete</v-icon>
+              <v-icon>mdi-delete</v-icon>
             </v-btn> 
           </template>
           <v-card>
