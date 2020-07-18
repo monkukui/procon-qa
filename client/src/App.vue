@@ -55,7 +55,7 @@
               </v-list-item-content>
             </v-list-item>
             
-            <v-list-item
+            <!--v-list-item
               key="タグ検索"
               link
               to="/tagsearch"
@@ -67,7 +67,7 @@
               <v-list-item-content>
                 <v-list-item-title>タグ検索</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item-->
             
             <v-list-item
               key="このサイトについて"
