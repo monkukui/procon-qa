@@ -1,9 +1,9 @@
 package lib
 
 import (
+	"fmt"
 	"github.com/monkukui/procon-qa/model"
-  "sort"
-  "fmt"
+	"sort"
 )
 
 func min(a, b int) int {
@@ -14,9 +14,9 @@ func min(a, b int) int {
 }
 
 func EditDistance(s, t string) int {
-  s1 := []rune(s)
-  s2 := []rune(t)
-  dp := make([][]int, len(s1)+1)
+	s1 := []rune(s)
+	s2 := []rune(t)
+	dp := make([][]int, len(s1)+1)
 	for i := range dp {
 		dp[i] = make([]int, len(s2)+1)
 	}
@@ -43,38 +43,38 @@ func EditDistance(s, t string) int {
 
 // Distance 順にソート（ここから）
 type QuestionWithDistance struct {
-  Question model.Question
-  Distance int
+	Question model.Question
+	Distance int
 }
 
 type ByDistance []QuestionWithDistance
 
-func (a ByDistance) Len() int { return len(a) }
-func (a ByDistance) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a ByDistance) Len() int           { return len(a) }
+func (a ByDistance) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a ByDistance) Less(i, j int) bool { return a[i].Distance < a[j].Distance }
 
 //（ここまで）
 
 func GetSortedQuestionsByEditDistance(allQuestions model.Questions, queryTitle string) model.Questions {
 
-  var arr ByDistance
-  for _, v := range allQuestions {
-    arr = append(arr, QuestionWithDistance{
-      Question: v,
-      Distance: EditDistance(v.Title, queryTitle),
-    })
-  }
+	var arr ByDistance
+	for _, v := range allQuestions {
+		arr = append(arr, QuestionWithDistance{
+			Question: v,
+			Distance: EditDistance(v.Title, queryTitle),
+		})
+	}
 
-  sort.Sort(ByDistance(arr));
+	sort.Sort(ByDistance(arr))
 
-  // 上位 k 件を返す
-  var questions = model.Questions{}
-  k := 10
-  for i := 0; i < k && i < len(arr); i++ {
-    fmt.Println(arr[i].Question.Title)
-    fmt.Println(arr[i].Distance)
-    questions = append(questions, arr[i].Question)
-  }
+	// 上位 k 件を返す
+	var questions = model.Questions{}
+	k := 10
+	for i := 0; i < k && i < len(arr); i++ {
+		fmt.Println(arr[i].Question.Title)
+		fmt.Println(arr[i].Distance)
+		questions = append(questions, arr[i].Question)
+	}
 
-  return questions;
+	return questions
 }

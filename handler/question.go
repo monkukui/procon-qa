@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
 	"github.com/monkukui/procon-qa/lib"
+	"github.com/monkukui/procon-qa/model"
 )
 
 // 質問を全取得する
@@ -70,12 +70,12 @@ func GetQuestionsWithEditDistance(c echo.Context) error {
 
 	allQuestions := model.FindQuestions(&model.Question{})
 
-  queryQuestion := new(model.Question)
+	queryQuestion := new(model.Question)
 	if err := c.Bind(queryQuestion); err != nil {
 		return err
 	}
 
-  sortedQuestoins := lib.GetSortedQuestionsByEditDistance(allQuestions, queryQuestion.Title)
+	sortedQuestoins := lib.GetSortedQuestionsByEditDistance(allQuestions, queryQuestion.Title)
 
 	return c.JSON(http.StatusOK, sortedQuestoins)
 }
