@@ -55,8 +55,8 @@
               </v-list-item-content>
             </v-list-item>
             
-            <!--v-list-item
-              key="タグ検索"
+            <v-list-item
+              key="タイトル検索"
               link
               to="/tagsearch"
               @click="clickLink"
@@ -65,9 +65,9 @@
                 <v-icon>mdi-magnify</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>タグ検索</v-list-item-title>
+                <v-list-item-title>曖昧検索</v-list-item-title>
               </v-list-item-content>
-            </v-list-item-->
+            </v-list-item>
             
             <v-list-item
               key="このサイトについて"
