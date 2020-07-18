@@ -9,6 +9,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/lib"
 )
 
 // 質問を全取得する
@@ -62,6 +63,21 @@ func GetQuestionsWithPage(c echo.Context) error {
 
 	questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength, mode)
 	return c.JSON(http.StatusOK, questions)
+}
+
+// 質問を編集距離順に k 件取得
+func GetQuestionsWithEditDistance(c echo.Context) error {
+
+	allQuestions := model.FindQuestions(&model.Question{})
+
+  queryQuestion := new(model.Question)
+	if err := c.Bind(queryQuestion); err != nil {
+		return err
+	}
+
+  sortedQuestoins := lib.GetSortedQuestionsByEditDistance(allQuestions, queryQuestion.Title)
+
+	return c.JSON(http.StatusOK, sortedQuestoins)
 }
 
 // pageId で質問をページ取得する

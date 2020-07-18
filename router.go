@@ -16,6 +16,7 @@ func newRouter() *echo.Echo {
 	e.Static("/css", "client/dist/css")
 	e.Static("/fonts", "client/dist/fonts")
 	e.Static("/img", "client/dist/img")
+  e.Static("/", "client/dist/favicon.ico")
 	e.File("/", "client/dist/index.html")
 	e.File("/signup", "public/signup.html")
 	e.POST("/signup", handler.Signup)
@@ -28,6 +29,7 @@ func newRouter() *echo.Echo {
 	// 認証なしで呼べる api たち
 	noAuth := e.Group("/api/no-auth")
 	noAuth.GET("/questions", handler.GetAllQuestions)                                  // 質問の全取得
+  noAuth.POST("/questions/editdistance", handler.GetQuestionsWithEditDistance)
 	noAuth.GET("/questions/count", handler.GetQuestionSize)                            // 質問の個数を取得
 	noAuth.GET("/completed-questions/count", handler.GetCompletedQuestionSize)         // 解決済みの質問の個数を取得
 	noAuth.GET("/answers/count", handler.GetAnswerSize)                                // 回答の個数を取得
