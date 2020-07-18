@@ -65,7 +65,7 @@
                 <v-icon>mdi-magnify</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>曖昧検索</v-list-item-title>
+                <v-list-item-title>検索</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             

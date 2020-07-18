@@ -1,7 +1,6 @@
 package lib
 
 import (
-	"fmt"
 	"github.com/monkukui/procon-qa/model"
 	"sort"
 )
@@ -13,9 +12,7 @@ func min(a, b int) int {
 	return b
 }
 
-func EditDistance(s, t string) int {
-	s1 := []rune(s)
-	s2 := []rune(t)
+func EditDistance(s1, s2 []rune) int {
 	dp := make([][]int, len(s1)+1)
 	for i := range dp {
 		dp[i] = make([]int, len(s2)+1)
@@ -59,9 +56,25 @@ func GetSortedQuestionsByEditDistance(allQuestions model.Questions, queryTitle s
 
 	var arr ByDistance
 	for _, v := range allQuestions {
+    title := []rune(v.Title)
+    name := []rune(model.FindUser(&model.User{ID: v.UID}).Name)
+    query := []rune(queryTitle)
+    distance := EditDistance(query, title)
+
+    // title
+    for i := 0; i < len(title) - len(query) + 1; i++ {
+      distance = min(distance, EditDistance(query, title[i:i+len(query)]))
+    }
+
+    // name
+    distance = min(distance, EditDistance(query, name))
+    for i := 0; i < len(name) - len(query) + 1; i++ {
+      distance = min(distance, EditDistance(query, name[i:i+len(query)]))
+    }
+
 		arr = append(arr, QuestionWithDistance{
 			Question: v,
-			Distance: EditDistance(v.Title, queryTitle),
+			Distance: EditDistance(title, query),
 		})
 	}
 
@@ -71,8 +84,6 @@ func GetSortedQuestionsByEditDistance(allQuestions model.Questions, queryTitle s
 	var questions = model.Questions{}
 	k := 10
 	for i := 0; i < k && i < len(arr); i++ {
-		fmt.Println(arr[i].Question.Title)
-		fmt.Println(arr[i].Distance)
 		questions = append(questions, arr[i].Question)
 	}
 
