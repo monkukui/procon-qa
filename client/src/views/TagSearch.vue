@@ -1,6 +1,6 @@
 <template>
   <div class="tag-search">
-    <h1>タイトル検索</h1>
+    <h1>質問検索</h1>
     <br>
     <v-alert
       border="top"
