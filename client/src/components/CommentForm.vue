@@ -81,6 +81,7 @@ export default class CommentForm extends Vue {
         // 親コンポーネントに発火させる
         this.$emit('comment');
         this.postNotification();
+        this.text = '';
       }
     });
   }
