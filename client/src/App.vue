@@ -56,7 +56,7 @@
             </v-list-item>
             
             <v-list-item
-              key="曖昧検索"
+              key="タイトル検索"
               link
               to="/tagsearch"
               @click="clickLink"
