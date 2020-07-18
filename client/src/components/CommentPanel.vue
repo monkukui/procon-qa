@@ -19,7 +19,33 @@
             :uid="uid"
           />
           <br>
-          <v-icon v-if="name===userName" color="error" @click="deleteComment">mdi-delete</v-icon>
+          <v-menu left :offset-x="tr">
+            <template v-slot:activator="{ on }">
+              <v-btn icon 
+                color="error"
+                :disabled="name != userName"
+                small 
+                v-on="on"
+              >
+                <v-icon @click="alert = !alert">mdi-delete</v-icon>
+              </v-btn> 
+            </template>
+            <v-card>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>本当に削除しますか？</v-list-item-title>
+                    <v-list-item-subtitle>この操作は取り消せません．</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text @click="menu = false">キャンセル</v-btn>
+                <v-btn color="error" @click="deleteComment">削除する</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-menu>
         </div>
       </v-col>
     </v-row>
