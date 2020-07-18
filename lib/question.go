@@ -32,8 +32,7 @@ func EditDistance(s1, s2 []rune) int {
 				dist = 0
 			}
 			dp[i+1][j+1] = min(dp[i][j+1]+1, min(dp[i+1][j]+1, dp[i][j]+dist))
-		}
-	}
+		} }
 
 	return dp[len(s1)][len(s2)]
 }
@@ -67,7 +66,7 @@ func GetSortedQuestionsByEditDistance(allQuestions model.Questions, queryTitle s
 
 		arr = append(arr, QuestionWithDistance{
 			Question: v,
-			Distance: EditDistance(title, query),
+			Distance: distance,
 		})
 	}
 
