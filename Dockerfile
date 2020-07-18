@@ -22,6 +22,8 @@ COPY ./handler ./handler
 
 COPY ./model ./model
 
+COPY ./lib ./lib
+
 RUN CGO_ENABLED=0 go build -o main main.go router.go
 
 FROM busybox
