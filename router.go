@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/monkukui/procon-qa/handler"
@@ -11,7 +13,10 @@ func newRouter() *echo.Echo {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	e.Use(middleware.HTTPSRedirect())
+	// ローカルでテストする時にhttpsにリダイレクトされるのを防ぐ
+	if os.Getenv("STAGE") != "TEST" {
+		e.Use(middleware.HTTPSRedirect())
+	}
 
 	e.Static("/js", "client/dist/js")
 	e.Static("/css", "client/dist/css")
