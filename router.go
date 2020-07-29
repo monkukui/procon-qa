@@ -11,6 +11,7 @@ func newRouter() *echo.Echo {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.HTTPSRedirect())
 
 	e.Static("/js", "client/dist/js")
 	e.Static("/css", "client/dist/css")
