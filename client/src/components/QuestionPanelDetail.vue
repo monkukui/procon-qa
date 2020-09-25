@@ -407,7 +407,7 @@ export default class QuestionPanelDetail extends Vue {
   z-index: 0;
 }
 .question-title {
-  font-size: 50px;
+  font-size: 30px;
   letter-spacing: 0.05em;
   color: rgb(66, 66, 66);
 }
