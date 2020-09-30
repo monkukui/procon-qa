@@ -1,8 +1,10 @@
 # PROCON-QA
 Source code of https://procon-qa.herokuapp.com.
 
-
 競技プログラミング専用の Q&A サイトです．
+
+<img width="389" alt="スクリーンショット 2020-09-30 22 53 51" src="https://user-images.githubusercontent.com/47474057/94694486-dd100580-036f-11eb-8989-ee6dc7efae30.png">
+
 
 ## Requirements
 - npm 5.14.2
