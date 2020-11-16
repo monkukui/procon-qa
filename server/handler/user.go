@@ -6,12 +6,12 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
 )
 
 // users のサイズを取得する
 func GetUserSize(c echo.Context) error {
-	return c.JSON(http.StatusOK, len(model.FindUsers(&model.User{})))
+	return c.JSON(http.StatusOK, len(entity.FindUsers(&entity.User{})))
 }
 
 func GetUser(c echo.Context) error {
@@ -19,7 +19,7 @@ func GetUser(c echo.Context) error {
 	if err != nil {
 		return echo.ErrNotFound
 	}
-	user := model.FindUser(&model.User{ID: UserID})
+	user := entity.FindUser(&entity.User{ID: UserID})
 	return c.JSON(http.StatusOK, user.IntoReturnUser())
 }
 
@@ -41,14 +41,14 @@ func GetUsersWithPage(c echo.Context) error {
 		mode = "favorite_answer desc"
 	}
 
-	users := model.FindUsersWithPage(&model.User{}, PageID, PageLength, mode)
+	users := entity.FindUsersWithPage(&entity.User{}, PageID, PageLength, mode)
 	return c.JSON(http.StatusOK, users.IntoReturnUsers())
 }
 
 // user を削除する
 func DeleteUser(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -61,7 +61,7 @@ func DeleteUser(c echo.Context) error {
 		fmt.Println("他人のアカウントです")
 	}
 
-	if err := model.DeleteUser(&model.User{ID: uid}); err != nil {
+	if err := entity.DeleteUser(&entity.User{ID: uid}); err != nil {
 		fmt.Println("削除できませんでした")
 	}
 
@@ -70,12 +70,12 @@ func DeleteUser(c echo.Context) error {
 
 func UpdateUser(c echo.Context) error {
 	uid := userIDFromToken(c)
-	user := model.FindUser(&model.User{ID: uid})
+	user := entity.FindUser(&entity.User{ID: uid})
 	if user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
-	postUser := new(model.User)
+	postUser := new(entity.User)
 	if err := c.Bind(postUser); err != nil {
 		return err
 	}
@@ -85,7 +85,7 @@ func UpdateUser(c echo.Context) error {
 			Message: "invalid name",
 		}
 	}
-	if u := model.FindUser(&model.User{Name: postUser.Name}); u.ID != 0 && user.Name != u.Name {
+	if u := entity.FindUser(&entity.User{Name: postUser.Name}); u.ID != 0 && user.Name != u.Name {
 		return &echo.HTTPError{
 			Code:    http.StatusConflict,
 			Message: "name already exists",
@@ -97,7 +97,7 @@ func UpdateUser(c echo.Context) error {
 
 	fmt.Println(user)
 
-	model.UpdateUser(&user)
+	entity.UpdateUser(&user)
 	return c.JSON(http.StatusOK, user.IntoReturnUser())
 }
 
@@ -112,8 +112,8 @@ func UpdateUserNotification(c echo.Context) error {
 	if err != nil {
 		return echo.ErrNotFound
 	}
-	user := model.FindUser(&model.User{ID: uid})
+	user := entity.FindUser(&entity.User{ID: uid})
 	user.NotificationFlag = (flag == 1)
-	model.UpdateUser(&user)
+	entity.UpdateUser(&user)
 	return c.JSON(http.StatusOK, user.IntoReturnUser())
 }

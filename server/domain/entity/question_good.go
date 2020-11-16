@@ -1,6 +1,6 @@
 // 質問に対するいいね
 
-package model
+package entity
 
 type QuestionGood struct {
 	ID  int `json:"id" gorm:"praimary_key"`

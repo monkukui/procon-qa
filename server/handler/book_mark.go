@@ -6,7 +6,7 @@ import (
 
 	// "fmt"
 	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
 )
 
 func QuestionBookMarked(c echo.Context) error {
@@ -20,6 +20,6 @@ func QuestionBookMarked(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	goods := model.FindBookMarks(&model.BookMark{UID: uid, QID: qid})
+	goods := entity.FindBookMarks(&entity.BookMark{UID: uid, QID: qid})
 	return c.JSON(http.StatusOK, len(goods) != 0)
 }

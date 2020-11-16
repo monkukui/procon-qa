@@ -8,34 +8,34 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/lib"
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
+	"github.com/monkukui/procon-qa/server/lib"
 )
 
 // 質問を全取得する
 func GetAllQuestions(c echo.Context) error {
-	// todos := model.FindTodos(&model.Todo{UID: uid})
-	// &model.Question{} とすることで, 条件なしで取得する <=> 全取得 となる
+	// todos := entity.FindTodos(&entity.Todo{UID: uid})
+	// &entity.Question{} とすることで, 条件なしで取得する <=> 全取得 となる
 
-	questions := model.FindQuestions(&model.Question{})
+	questions := entity.FindQuestions(&entity.Question{})
 	return c.JSON(http.StatusOK, questions)
 }
 
 // questions のサイズを取得する
 func GetQuestionSize(c echo.Context) error {
-	return c.JSON(http.StatusOK, len(model.FindQuestions(&model.Question{})))
+	return c.JSON(http.StatusOK, len(entity.FindQuestions(&entity.Question{})))
 }
 
 // 解決済みの質問のサイズを取得
 func GetCompletedQuestionSize(c echo.Context) error {
-	return c.JSON(http.StatusOK, len(model.FindQuestions(&model.Question{Completed: true})))
+	return c.JSON(http.StatusOK, len(entity.FindQuestions(&entity.Question{Completed: true})))
 }
 
 // 質問をページ取得する
 func GetQuestionsWithPage(c echo.Context) error {
 	// 質問の取得にユーザの情報はいらない
 	// uid := userIDFromToken(c)
-	// if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	// if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 	// 	return echo.ErrNotFound
 	// }
 
@@ -61,16 +61,16 @@ func GetQuestionsWithPage(c echo.Context) error {
 		mode = "completed"
 	}
 
-	questions := model.FindQuestionsWithPage(&model.Question{}, PageID, PageLength, mode)
+	questions := entity.FindQuestionsWithPage(&entity.Question{}, PageID, PageLength, mode)
 	return c.JSON(http.StatusOK, questions)
 }
 
 // 質問を編集距離順に k 件取得
 func GetQuestionsWithEditDistance(c echo.Context) error {
 
-	allQuestions := model.FindQuestions(&model.Question{})
+	allQuestions := entity.FindQuestions(&entity.Question{})
 
-	queryQuestion := new(model.Question)
+	queryQuestion := new(entity.Question)
 	if err := c.Bind(queryQuestion); err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func GetQuestionsWithEditDistance(c echo.Context) error {
 // pageId で質問をページ取得する
 func GetUserQuestionsWithPage(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -94,7 +94,7 @@ func GetUserQuestionsWithPage(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id")
+	questions := entity.FindQuestionsWithPage(&entity.Question{UID: uid}, PageID, PageLength, "id")
 	return c.JSON(http.StatusOK, questions)
 }
 
@@ -106,7 +106,7 @@ func GetUserQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -117,7 +117,7 @@ func GetUserQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questions := model.FindQuestionsWithPage(&model.Question{UID: uid}, PageID, PageLength, "id desc")
+	questions := entity.FindQuestionsWithPage(&entity.Question{UID: uid}, PageID, PageLength, "id desc")
 	return c.JSON(http.StatusOK, questions)
 }
 
@@ -127,11 +127,11 @@ func GetUserQuestionSize(c echo.Context) error {
 	if err != nil {
 		return echo.ErrNotFound
 	}
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
-	fmt.Println(len(model.FindQuestions(&model.Question{UID: uid})))
-	return c.JSON(http.StatusOK, len(model.FindQuestions(&model.Question{UID: uid})))
+	fmt.Println(len(entity.FindQuestions(&entity.Question{UID: uid})))
+	return c.JSON(http.StatusOK, len(entity.FindQuestions(&entity.Question{UID: uid})))
 }
 
 // pageId, userId で質問をページ取得する
@@ -142,7 +142,7 @@ func GetUserAnswers(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -157,7 +157,7 @@ func GetUserAnswers(c echo.Context) error {
 	// TODO 質問の新着順にするか，回答の新着順にするかは議論の余地がありそう（誰と議論するんですか？）
 	// 表示させるのは質問なのだから，質問の新着順にするで良さそう
 	// となると，qid の新着順にすると良さそう
-	answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
+	answers := entity.FindAnswers(&entity.Answer{UID: uid}, "id")
 
 	// このユーザが関与した質問の qid リストを重複無しで構築
 	var qidList []int
@@ -186,9 +186,9 @@ func GetUserAnswers(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	var questions model.Questions
+	var questions entity.Questions
 	for i := 0; i < PageLength && lb+i < len(uniqQidList); i++ {
-		q := model.FindQuestions(&model.Question{ID: uniqQidList[lb+i]})
+		q := entity.FindQuestions(&entity.Question{ID: uniqQidList[lb+i]})
 		if len(q) != 1 {
 			return echo.ErrNotFound
 		}
@@ -205,7 +205,7 @@ func GetUserAnswerSize(c echo.Context) error {
 	}
 
 	// ユーザーの回答を取得
-	answers := model.FindAnswers(&model.Answer{UID: uid}, "id")
+	answers := entity.FindAnswers(&entity.Answer{UID: uid}, "id")
 
 	// このユーザが関与した質問の qid リストを重複無しで構築
 	var qidList []int
@@ -232,7 +232,7 @@ func GetUserAnswerSize(c echo.Context) error {
 func GetQuestion(c echo.Context) error {
 	// 認証必要なし
 	// uid := userIDFromToken(c)
-	// if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	// if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 	// 	return echo.ErrNotFound
 	// }
 
@@ -241,14 +241,14 @@ func GetQuestion(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	question := model.FindQuestions(&model.Question{ID: QuestionID})[0]
+	question := entity.FindQuestions(&entity.Question{ID: QuestionID})[0]
 	return c.JSON(http.StatusOK, question)
 }
 
 // いいねをする（or 取り消す）
 func FavoriteQuestion(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -257,7 +257,7 @@ func FavoriteQuestion(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questions := model.FindQuestions(&model.Question{ID: questionID})
+	questions := entity.FindQuestions(&entity.Question{ID: questionID})
 	if len(questions) == 0 {
 		return echo.ErrNotFound
 	}
@@ -268,13 +268,13 @@ func FavoriteQuestion(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	goods := model.FindQuestionGoods(&model.QuestionGood{UID: uid, QID: questionID})
+	goods := entity.FindQuestionGoods(&entity.QuestionGood{UID: uid, QID: questionID})
 
 	if len(goods) == 0 { // いいねをする
-		model.CreateQuestionGood(&model.QuestionGood{UID: uid, QID: questionID})
+		entity.CreateQuestionGood(&entity.QuestionGood{UID: uid, QID: questionID})
 
 	} else { // いいねを取り消す
-		model.DeleteQuestionGood(&model.QuestionGood{UID: uid, QID: questionID})
+		entity.DeleteQuestionGood(&entity.QuestionGood{UID: uid, QID: questionID})
 	}
 
 	return c.NoContent(http.StatusNoContent)
@@ -283,7 +283,7 @@ func FavoriteQuestion(c echo.Context) error {
 // ブックマークをする（or 取り消す）
 func BookMarkQuestion(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -292,17 +292,17 @@ func BookMarkQuestion(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questions := model.FindQuestions(&model.Question{ID: questionID})
+	questions := entity.FindQuestions(&entity.Question{ID: questionID})
 	if len(questions) == 0 {
 		return echo.ErrNotFound
 	}
 
-	marks := model.FindBookMarks(&model.BookMark{UID: uid, QID: questionID})
+	marks := entity.FindBookMarks(&entity.BookMark{UID: uid, QID: questionID})
 
 	if len(marks) == 0 { // ブックマークをする
-		model.CreateBookMark(&model.BookMark{UID: uid, QID: questionID})
+		entity.CreateBookMark(&entity.BookMark{UID: uid, QID: questionID})
 	} else { // いいねを取り消す
-		model.DeleteBookMark(&model.BookMark{UID: uid, QID: questionID})
+		entity.DeleteBookMark(&entity.BookMark{UID: uid, QID: questionID})
 	}
 
 	return c.NoContent(http.StatusNoContent)
@@ -316,7 +316,7 @@ func GetBookMarkedQuestionSize(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	books := model.FindBookMarks(&model.BookMark{UID: uid})
+	books := entity.FindBookMarks(&entity.BookMark{UID: uid})
 
 	return c.JSON(http.StatusOK, len(books))
 }
@@ -329,7 +329,7 @@ func GetBookMarkedQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	books := model.FindBookMarks(&model.BookMark{UID: uid})
+	books := entity.FindBookMarks(&entity.BookMark{UID: uid})
 
 	PageID, err := strconv.Atoi(c.Param("page"))
 	PageLength := 10
@@ -344,9 +344,9 @@ func GetBookMarkedQuestions(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	var questions model.Questions
+	var questions entity.Questions
 	for i := 0; i < PageLength && lb+i < len(books); i++ {
-		q := model.FindQuestions(&model.Question{ID: books[lb+i].QID})
+		q := entity.FindQuestions(&entity.Question{ID: books[lb+i].QID})
 		if len(q) != 1 {
 			return echo.ErrNotFound
 		}
@@ -363,14 +363,14 @@ func BrowseQuestion(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questions := model.FindQuestions(&model.Question{ID: questionID})
+	questions := entity.FindQuestions(&entity.Question{ID: questionID})
 	if len(questions) == 0 {
 		return echo.ErrNotFound
 	}
 
 	question := questions[0]
 	question.BrowseCount++
-	if err := model.UpdateQuestion(&question); err != nil {
+	if err := entity.UpdateQuestion(&question); err != nil {
 		return echo.ErrNotFound
 	}
 	return c.NoContent(http.StatusNoContent)
@@ -378,7 +378,7 @@ func BrowseQuestion(c echo.Context) error {
 
 // 質問を投稿する
 func PostQuestion(c echo.Context) error {
-	question := new(model.Question)
+	question := new(entity.Question)
 	// question に 送信されてきたデータを bind している
 	if err := c.Bind(question); err != nil {
 		return err
@@ -408,7 +408,7 @@ func PostQuestion(c echo.Context) error {
 	// if question.Url[]
 
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -424,7 +424,7 @@ func PostQuestion(c echo.Context) error {
 	nowJST := nowUTC.In(jst)
 	question.Date = nowJST.Format("2006/01/02 15:04:05")
 
-	model.CreateQuestion(question)
+	entity.CreateQuestion(question)
 
 	return c.JSON(http.StatusCreated, question)
 }
@@ -432,7 +432,7 @@ func PostQuestion(c echo.Context) error {
 // 質問を削除する
 func DeleteQuestion(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -442,12 +442,12 @@ func DeleteQuestion(c echo.Context) error {
 	}
 
 	// uid が question の uid と一致していなければダメ
-	if uid != model.FindQuestions(&model.Question{ID: questionID})[0].UID {
+	if uid != entity.FindQuestions(&entity.Question{ID: questionID})[0].UID {
 		return echo.ErrNotFound
 	}
 
 	// ID: questionID, UID: uid とすることで, 別のユーザが他人の投稿を削除できないようになってる
-	if err := model.DeleteQuestion(&model.Question{ID: questionID, UID: uid}); err != nil {
+	if err := entity.DeleteQuestion(&entity.Question{ID: questionID, UID: uid}); err != nil {
 		return echo.ErrNotFound
 	}
 
@@ -457,7 +457,7 @@ func DeleteQuestion(c echo.Context) error {
 func UpdateQuestionCompleted(c echo.Context) error {
 
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -466,13 +466,13 @@ func UpdateQuestionCompleted(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	questions := model.FindQuestions(&model.Question{ID: questionID, UID: uid})
+	questions := entity.FindQuestions(&entity.Question{ID: questionID, UID: uid})
 	if len(questions) == 0 {
 		return echo.ErrNotFound
 	}
 	question := questions[0]
 	question.Completed = !questions[0].Completed
-	if err := model.UpdateQuestion(&question); err != nil {
+	if err := entity.UpdateQuestion(&question); err != nil {
 		return echo.ErrNotFound
 	}
 

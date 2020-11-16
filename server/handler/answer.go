@@ -6,25 +6,18 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-
-	// c-color さんに依存しちゃってる...
-	// なんとか再現性があるように作り変えることができないもんかね...?
-	// でも, wifi なくても起動できるんだよなぁ
-	// どこを参照しているんだろう.....
-	// "github.com/x-color/simple-webapp/model"
-	// ? できたのか ?
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
 )
 
 // answers のサイズを取得する
 func GetAnswerSize(c echo.Context) error {
-	return c.JSON(http.StatusOK, len(model.FindAnswers(&model.Answer{}, "id desc")))
+	return c.JSON(http.StatusOK, len(entity.FindAnswers(&entity.Answer{}, "id desc")))
 }
 
 // 質問に紐ずいた, 回答を全取得する
 func GetAnswersForQuestion(c echo.Context) error {
 	// uid := userIDFromToken(c)
-	// if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	// if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 	//	return echo.ErrNotFound
 	// }
 
@@ -43,14 +36,14 @@ func GetAnswersForQuestion(c echo.Context) error {
 		mode = "favorite_count desc"
 	}
 
-	answers := model.FindAnswers(&model.Answer{QID: QuestionID}, mode)
+	answers := entity.FindAnswers(&entity.Answer{QID: QuestionID}, mode)
 	return c.JSON(http.StatusOK, answers)
 }
 
 // userId/pageId で質問をページ取得する
 func GetUserAnswersWithPage(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -61,7 +54,7 @@ func GetUserAnswersWithPage(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	answers := model.FindAnswersWithPage(&model.Answer{UID: uid}, PageID, PageLength)
+	answers := entity.FindAnswersWithPage(&entity.Answer{UID: uid}, PageID, PageLength)
 	return c.JSON(http.StatusOK, answers)
 }
 
@@ -69,7 +62,7 @@ func GetUserAnswersWithPage(c echo.Context) error {
 func GetAnswer(c echo.Context) error {
 
 	// uid := userIDFromToken(c)
-	// if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	// if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 	// 	return echo.ErrNotFound
 	// }
 
@@ -78,13 +71,13 @@ func GetAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	answer := model.FindAnswers(&model.Answer{ID: AnswerID}, "id desc")[0]
+	answer := entity.FindAnswers(&entity.Answer{ID: AnswerID}, "id desc")[0]
 	return c.JSON(http.StatusOK, answer)
 }
 
 // 回答を投稿する
 func PostAnswer(c echo.Context) error {
-	answer := new(model.Answer)
+	answer := new(entity.Answer)
 	// answer に 送信されてきたデータを bind している
 	if err := c.Bind(answer); err != nil {
 		return err
@@ -101,7 +94,7 @@ func PostAnswer(c echo.Context) error {
 
 	uid := userIDFromToken(c)
 
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -116,7 +109,7 @@ func PostAnswer(c echo.Context) error {
 
 	answer.Date = nowJST.Format("2006/01/02 15:04:05")
 
-	model.CreateAnswer(answer)
+	entity.CreateAnswer(answer)
 
 	return c.JSON(http.StatusCreated, answer)
 }
@@ -124,7 +117,7 @@ func PostAnswer(c echo.Context) error {
 // 回答を削除する
 func DeleteAnswer(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -133,7 +126,7 @@ func DeleteAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	if err := model.DeleteAnswer(&model.FindAnswers(&model.Answer{ID: answerID}, "id desc")[0]); err != nil {
+	if err := entity.DeleteAnswer(&entity.FindAnswers(&entity.Answer{ID: answerID}, "id desc")[0]); err != nil {
 		return echo.ErrNotFound
 	}
 
@@ -143,7 +136,7 @@ func DeleteAnswer(c echo.Context) error {
 // いいねをする
 func FavoriteAnswer(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -152,7 +145,7 @@ func FavoriteAnswer(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	answers := model.FindAnswers(&model.Answer{ID: answerID}, "id")
+	answers := entity.FindAnswers(&entity.Answer{ID: answerID}, "id")
 	if len(answers) == 0 {
 		return echo.ErrNotFound
 	}
@@ -164,13 +157,13 @@ func FavoriteAnswer(c echo.Context) error {
 	}
 
 	// question と同じロジック
-	goods := model.FindAnswerGoods(&model.AnswerGood{UID: uid, AID: answerID})
+	goods := entity.FindAnswerGoods(&entity.AnswerGood{UID: uid, AID: answerID})
 
 	if len(goods) == 0 { // いいねをする
-		model.CreateAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
+		entity.CreateAnswerGood(&entity.AnswerGood{UID: uid, AID: answerID})
 
 	} else { // いいねを取り消す
-		model.DeleteAnswerGood(&model.AnswerGood{UID: uid, AID: answerID})
+		entity.DeleteAnswerGood(&entity.AnswerGood{UID: uid, AID: answerID})
 	}
 
 	return c.NoContent(http.StatusNoContent)

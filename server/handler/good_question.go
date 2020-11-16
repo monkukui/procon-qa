@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
 )
 
 func QuestionFavorited(c echo.Context) error {
@@ -19,10 +19,10 @@ func QuestionFavorited(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	goods := model.FindQuestionGoods(&model.QuestionGood{UID: uid, QID: qid})
+	goods := entity.FindQuestionGoods(&entity.QuestionGood{UID: uid, QID: qid})
 	return c.JSON(http.StatusOK, len(goods) != 0)
 }
 
 func CountQuestionGood(c echo.Context) error {
-	return c.JSON(http.StatusOK, len(model.FindQuestionGoods(&model.QuestionGood{})))
+	return c.JSON(http.StatusOK, len(entity.FindQuestionGoods(&entity.QuestionGood{})))
 }

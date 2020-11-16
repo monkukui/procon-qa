@@ -1,16 +1,14 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
 	"golang.org/x/crypto/bcrypt"
-	// "github.com/x-color/simple-webapp/model"
 )
 
 type jwtCustomClaims struct {
@@ -27,7 +25,7 @@ var Config = middleware.JWTConfig{
 }
 
 func Signup(c echo.Context) error {
-	user := new(model.User)
+	user := new(entity.User)
 	if err := c.Bind(user); err != nil {
 		return err
 	}
@@ -39,7 +37,7 @@ func Signup(c echo.Context) error {
 		}
 	}
 
-	if u := model.FindUser(&model.User{Name: user.Name}); u.ID != 0 {
+	if u := entity.FindUser(&entity.User{Name: user.Name}); u.ID != 0 {
 		return &echo.HTTPError{
 			Code:    http.StatusConflict,
 			Message: "name already exists",
@@ -53,17 +51,17 @@ func Signup(c echo.Context) error {
 	user.Password = string(hash)
 
 	user.NotificationFlag = false
-	model.CreateUser(user)
+	entity.CreateUser(user)
 	return c.JSON(http.StatusCreated, user.IntoReturnUser())
 }
 
 func Login(c echo.Context) error {
-	u := new(model.User)
+	u := new(entity.User)
 	if err := c.Bind(u); err != nil {
 		return err
 	}
 
-	user := model.FindUser(&model.User{Name: u.Name})
+	user := entity.FindUser(&entity.User{Name: u.Name})
 	if user.ID == 0 {
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
@@ -106,10 +104,8 @@ func userIDFromToken(c echo.Context) int {
 
 func Token(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
-	fmt.Println("uid ======= ")
-	fmt.Println(uid)
 	return c.JSON(http.StatusOK, uid)
 }

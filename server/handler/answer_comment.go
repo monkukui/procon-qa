@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
 )
 
 // aid からコメントを全取得する
@@ -17,12 +17,12 @@ func GetAnswerComments(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	comments := model.FindAnswerComments(&model.AnswerComment{AID: aid})
+	comments := entity.FindAnswerComments(&entity.AnswerComment{AID: aid})
 	return c.JSON(http.StatusOK, comments)
 }
 
 func PostAnswerComment(c echo.Context) error {
-	comment := new(model.AnswerComment)
+	comment := new(entity.AnswerComment)
 	if err := c.Bind(comment); err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func PostAnswerComment(c echo.Context) error {
 	}
 
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -49,18 +49,18 @@ func PostAnswerComment(c echo.Context) error {
 	nowJST := nowUTC.In(jst)
 	comment.Date = nowJST.Format("2006/01/02 15:04:05")
 
-	model.CreateAnswerComment(comment)
+	entity.CreateAnswerComment(comment)
 
 	return c.JSON(http.StatusCreated, comment)
 }
 
 func CountAnswerComment(c echo.Context) error {
-	return c.JSON(http.StatusOK, len(model.FindAnswerComments(&model.AnswerComment{})))
+	return c.JSON(http.StatusOK, len(entity.FindAnswerComments(&entity.AnswerComment{})))
 }
 
 func DeleteAnswerComment(c echo.Context) error {
 	uid := userIDFromToken(c)
-	if user := model.FindUser(&model.User{ID: uid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: uid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 	id, err := strconv.Atoi(c.Param("id"))
@@ -68,10 +68,10 @@ func DeleteAnswerComment(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 	// uid が question の uid と一致していなければダメ
-	if uid != model.FindAnswerComments(&model.AnswerComment{ID: id})[0].UID {
+	if uid != entity.FindAnswerComments(&entity.AnswerComment{ID: id})[0].UID {
 		return echo.ErrNotFound
 	}
-	if err := model.DeleteAnswerComment(&model.AnswerComment{ID: id, UID: uid}); err != nil {
+	if err := entity.DeleteAnswerComment(&entity.AnswerComment{ID: id, UID: uid}); err != nil {
 		return echo.ErrNotFound
 	}
 	return c.NoContent(http.StatusNoContent)

@@ -1,8 +1,9 @@
 package lib
 
 import (
-	"github.com/monkukui/procon-qa/model"
 	"sort"
+
+	"github.com/monkukui/procon-qa/server/entity"
 )
 
 func min(a, b int) int {
@@ -32,14 +33,15 @@ func EditDistance(s1, s2 []rune) int {
 				dist = 0
 			}
 			dp[i+1][j+1] = min(dp[i][j+1]+1, min(dp[i+1][j]+1, dp[i][j]+dist))
-		} }
+		}
+	}
 
 	return dp[len(s1)][len(s2)]
 }
 
 // Distance 順にソート（ここから）
 type QuestionWithDistance struct {
-	Question model.Question
+	Question entity.Question
 	Distance int
 }
 
@@ -51,18 +53,18 @@ func (a ByDistance) Less(i, j int) bool { return a[i].Distance < a[j].Distance }
 
 //（ここまで）
 
-func GetSortedQuestionsByEditDistance(allQuestions model.Questions, queryTitle string) model.Questions {
+func GetSortedQuestionsByEditDistance(allQuestions entity.Questions, queryTitle string) entity.Questions {
 
 	var arr ByDistance
 	for _, v := range allQuestions {
-    title := []rune(v.Title)
-    query := []rune(queryTitle)
-    distance := EditDistance(query, title)
+		title := []rune(v.Title)
+		query := []rune(queryTitle)
+		distance := EditDistance(query, title)
 
-    // title
-    for i := 0; i < len(title) - len(query) + 1; i++ {
-      distance = min(distance, EditDistance(query, title[i:i+len(query)]))
-    }
+		// title
+		for i := 0; i < len(title)-len(query)+1; i++ {
+			distance = min(distance, EditDistance(query, title[i:i+len(query)]))
+		}
 
 		arr = append(arr, QuestionWithDistance{
 			Question: v,
@@ -73,7 +75,7 @@ func GetSortedQuestionsByEditDistance(allQuestions model.Questions, queryTitle s
 	sort.Sort(ByDistance(arr))
 
 	// 上位 k 件を返す
-	var questions = model.Questions{}
+	var questions = entity.Questions{}
 	k := 10
 	for i := 0; i < k && i < len(arr); i++ {
 		questions = append(questions, arr[i].Question)

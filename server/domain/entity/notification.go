@@ -4,7 +4,7 @@
 // type = 2：質問へのコメント
 // type = 3：回答へのコメント
 
-package model
+package entity
 
 import "fmt"
 

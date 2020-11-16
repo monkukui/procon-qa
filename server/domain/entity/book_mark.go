@@ -1,6 +1,4 @@
-// 質問に対するブックマーク
-
-package model
+package entity
 
 import "fmt"
 

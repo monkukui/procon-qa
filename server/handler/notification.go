@@ -6,12 +6,12 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
 )
 
 func PostNotification(c echo.Context) error {
 
-	notification := new(model.Notification)
+	notification := new(entity.Notification)
 	// notification.body を bind
 	if err := c.Bind(notification); err != nil {
 		return err
@@ -33,7 +33,7 @@ func PostNotification(c echo.Context) error {
 	// uid を取得 ここでは ouid になるな(動作主なので)
 	ouid := userIDFromToken(c)
 	fmt.Println(ouid)
-	if user := model.FindUser(&model.User{ID: ouid}); user.ID == 0 {
+	if user := entity.FindUser(&entity.User{ID: ouid}); user.ID == 0 {
 		return echo.ErrNotFound
 	}
 
@@ -47,7 +47,7 @@ func PostNotification(c echo.Context) error {
 	if uid == ouid {
 		return c.String(http.StatusOK, "")
 	}
-	model.CreateNotification(notification)
+	entity.CreateNotification(notification)
 	return c.JSON(http.StatusCreated, notification)
 }
 
@@ -57,10 +57,10 @@ func GetNotification(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	items := model.FindNotifications(&model.Notification{UID: uid})
+	items := entity.FindNotifications(&entity.Notification{UID: uid})
 	for _, item := range items {
 		item.Watched = true // 既読をつける
-		model.UpdateNotification(&item)
+		entity.UpdateNotification(&item)
 	}
 
 	return c.JSON(http.StatusOK, items)

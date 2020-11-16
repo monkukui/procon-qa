@@ -6,7 +6,7 @@ import (
 
 	// "fmt"
 	"github.com/labstack/echo"
-	"github.com/monkukui/procon-qa/model"
+	"github.com/monkukui/procon-qa/server/entity"
 )
 
 func AnswerFavorited(c echo.Context) error {
@@ -20,10 +20,10 @@ func AnswerFavorited(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	goods := model.FindAnswerGoods(&model.AnswerGood{UID: uid, AID: aid})
+	goods := entity.FindAnswerGoods(&entity.AnswerGood{UID: uid, AID: aid})
 	return c.JSON(http.StatusOK, len(goods) != 0)
 }
 
 func CountAnswerGood(c echo.Context) error {
-	return c.JSON(http.StatusOK, len(model.FindAnswerGoods(&model.AnswerGood{})))
+	return c.JSON(http.StatusOK, len(entity.FindAnswerGoods(&entity.AnswerGood{})))
 }

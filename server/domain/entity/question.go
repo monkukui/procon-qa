@@ -1,6 +1,6 @@
 // Question に関する定義と処理内容を記述する
 
-package model
+package entity
 
 import "fmt"
 
