@@ -55,14 +55,14 @@ func GetSortedQuestionsByEditDistance(allQuestions model.Questions, queryTitle s
 
 	var arr ByDistance
 	for _, v := range allQuestions {
-    title := []rune(v.Title)
-    query := []rune(queryTitle)
-    distance := EditDistance(query, title)
+	title := []rune(v.Title)
+	query := []rune(queryTitle)
+	distance := EditDistance(query, title)
 
-    // title
-    for i := 0; i < len(title) - len(query) + 1; i++ {
-      distance = min(distance, EditDistance(query, title[i:i+len(query)]))
-    }
+	// title
+	for i := 0; i < len(title) - len(query) + 1; i++ {
+		distance = min(distance, EditDistance(query, title[i:i+len(query)]))
+	}
 
 		arr = append(arr, QuestionWithDistance{
 			Question: v,
