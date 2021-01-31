@@ -1,8 +1,9 @@
 package lib
 
 import (
-	"github.com/monkukui/procon-qa/model"
 	"sort"
+
+	"github.com/monkukui/procon-qa/model"
 )
 
 func min(a, b int) int {
@@ -32,7 +33,8 @@ func EditDistance(s1, s2 []rune) int {
 				dist = 0
 			}
 			dp[i+1][j+1] = min(dp[i][j+1]+1, min(dp[i+1][j]+1, dp[i][j]+dist))
-		} }
+		}
+	}
 
 	return dp[len(s1)][len(s2)]
 }
@@ -55,14 +57,14 @@ func GetSortedQuestionsByEditDistance(allQuestions model.Questions, queryTitle s
 
 	var arr ByDistance
 	for _, v := range allQuestions {
-	title := []rune(v.Title)
-	query := []rune(queryTitle)
-	distance := EditDistance(query, title)
+		title := []rune(v.Title)
+		query := []rune(queryTitle)
+		distance := EditDistance(query, title)
 
-	// title
-	for i := 0; i < len(title) - len(query) + 1; i++ {
-		distance = min(distance, EditDistance(query, title[i:i+len(query)]))
-	}
+		// title
+		for i := 0; i < len(title)-len(query)+1; i++ {
+			distance = min(distance, EditDistance(query, title[i:i+len(query)]))
+		}
 
 		arr = append(arr, QuestionWithDistance{
 			Question: v,
