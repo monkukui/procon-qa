@@ -79,6 +79,15 @@ export default class UserUpdateForms extends Vue {
       name: this.name,
       twitter_id: this.twitterId,
     });
+
+    for (let i = 0; i < this.name.length - 1; i++) {
+      if ('a' <= this.name[i] && this.name[i] <= 'z') continue;
+      if ('A' <= this.name[i] && this.name[i] <= 'Z') continue;
+      if ('0' <= this.name[i] && this.name[i] <= '9') continue;
+      alert('パスワードは、英字と数字からなる文字列にしてください');
+      return;
+    }
+
     fetch(url, {method, headers, body}).then((response) => {
       if (response.ok) {
         alert('更新されました');

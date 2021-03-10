@@ -57,12 +57,10 @@
         text
         type="success"
       >
-        パスワードは<strong>ハッシュ化</strong>して保存されます．<br>
-        ユーザ登録をすれば，質問を投稿したり，質問に回答することができます．<br>
-        ユーザ名は，<strong>14 文字以内</strong>にしてください<br>
-        新規登録直後に，ログインが要求されます．ご了承ください<br>
-      
-
+        パスワードは<strong>ハッシュ化</strong>して保存されます<br>
+        ユーザ登録をすれば、質問を投稿したり、質問に回答することができます<br>
+        ユーザ名は、<strong>14 文字以内</strong>の<strong>英字と数字からなる文字列</strong>にしてください<br>
+        新規登録直後に、ログインが要求されます。ご了承ください<br>
       </v-alert>
       <v-btn large color="primary" @click="signup">登録</v-btn>
     </v-container>
@@ -96,12 +94,20 @@ export default class SignUp extends Vue {
     });
 
     if (this.name.length > 14) {
-      alert('ユーザ名が長すぎます');
+      alert('ユーザ名は、14 文字以下にしてください。');
       return;
     }
 
     if (this.password !== this.passwordAgain) {
       alert('パスワードが一致しません');
+      return;
+    }
+
+    for (let i = 0; i < this.name.length - 1; i++) {
+      if ('a' <= this.name[i] && this.name[i] <= 'z') continue;
+      if ('A' <= this.name[i] && this.name[i] <= 'Z') continue;
+      if ('0' <= this.name[i] && this.name[i] <= '9') continue;
+      alert('パスワードは、英字と数字からなる文字列にしてください');
       return;
     }
 
